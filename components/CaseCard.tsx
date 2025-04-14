@@ -1,7 +1,9 @@
 import { Case } from '../types';
 import { motion } from 'framer-motion';
-import { FaTwitter } from 'react-icons/fa';
+import { FaTwitter, FaCopy } from 'react-icons/fa';
 import Image from 'next/image';
+import { useState } from 'react';
+import Toast from './Toast';
 
 interface CaseCardProps {
   case: Case;
@@ -9,6 +11,18 @@ interface CaseCardProps {
 }
 
 export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) {
+  const [showCopied, setShowCopied] = useState(false);
+
+  const handleCopyPrompt = async () => {
+    try {
+      await navigator.clipboard.writeText(caseData.prompt);
+      setShowCopied(true);
+      setTimeout(() => setShowCopied(false), 2000);
+    } catch (err) {
+      console.error('复制失败:', err);
+    }
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -46,15 +60,30 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
         </div>
         
         <div className="mb-3">
-          <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-1">
-            提示词：
-          </h4>
-          <p className="text-sm text-gray-600 dark:text-gray-400 line-clamp-3">
-            {caseData.prompt}
-          </p>
+          <div className="flex items-center justify-between mb-2">
+            <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+              提示词：
+            </h4>
+            <button
+              onClick={handleCopyPrompt}
+              className="relative flex items-center gap-1 text-xs text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300"
+            >
+              <FaCopy className="w-3.5 h-3.5" />
+              复制
+            </button>
+          </div>
+          <div className="relative bg-amber-50/50 dark:bg-amber-900/10 rounded-lg p-3 font-mono text-sm text-gray-800 dark:text-gray-200 overflow-x-auto border border-amber-100 dark:border-amber-900/20">
+            <pre className="whitespace-pre-wrap break-words">
+              {caseData.prompt}
+            </pre>
+          </div>
         </div>
         
-        
+        {caseData.requiresReferenceImage && (
+          <div className="text-sm text-yellow-600 dark:text-yellow-400 mb-3">
+            需要上传参考图片
+          </div>
+        )}
         
         <div className="flex flex-wrap gap-2 mb-4">
           {caseData.tags.map((tag) => (
@@ -77,6 +106,8 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
           查看原文
         </a>
       </div>
+
+      <Toast message="提示词已复制到剪贴板" isVisible={showCopied} />
     </motion.div>
   );
 } 
