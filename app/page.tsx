@@ -2,9 +2,11 @@
 
 import { useState, useMemo } from 'react';
 import CaseCard from '../components/CaseCard';
-import { cases } from '../lib/data';
+import { cases, authors } from '../lib/data';
 import TabFilter from '../components/TabFilter';
 import { FaTwitter, FaGithub, FaShareAlt } from 'react-icons/fa';
+import { MobileDrawer } from '../components/MobileDrawer';
+import { DesktopNav } from '../components/DesktopNav';
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -68,53 +70,44 @@ export default function Home() {
   };
 
   const handleShare = async () => {
-    const shareData = {
-      title: 'Awesome GPT-4 Images',
-      text: '收集整理 GPT-4 Vision 图像创作精选案例，激发你的创作灵感！',
-      url: window.location.href
-    };
-
-    try {
-      if (navigator.share) {
-        await navigator.share(shareData);
-      } else {
-        await navigator.clipboard.writeText(window.location.href);
-        setShowShareTooltip(true);
-        setTimeout(() => setShowShareTooltip(false), 2000);
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: 'Awesome GPT-4 Images',
+          text: '精选 GPT-4 Vision 图像创作案例展示',
+          url: window.location.href,
+        });
+      } catch (error) {
+        console.log('分享失败');
       }
-    } catch (err) {
-      console.error('分享失败:', err);
+    } else {
+      await navigator.clipboard.writeText(window.location.href);
+      setShowShareTooltip(true);
+      setTimeout(() => setShowShareTooltip(false), 2000);
     }
   };
 
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-      <div className="container mx-auto px-4">
-        {/* 顶部操作栏 */}
-        <div className="fixed top-4 right-4 z-50 flex items-center gap-4">
-          <a
-            href="https://github.com/wowmarcomei/awesome-gpt-images"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-200"
-          >
-            <FaGithub className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-          </a>
-          <button
-            onClick={handleShare}
-            className="flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-200"
-          >
-            <FaShareAlt className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-          </button>
-        </div>
+      {/* 移动端抽屉菜单 */}
+      <MobileDrawer
+        authors={authors}
+        selectedAuthor={selectedAuthor}
+        onAuthorClick={(name) => setSelectedAuthor(name === selectedAuthor ? null : name)}
+        onShare={handleShare}
+      />
 
+      {/* 桌面端导航 */}
+      <DesktopNav onShare={handleShare} />
+
+      <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-center mb-8 text-gray-900 dark:text-white">
           Awesome GPT-4 Images ✨
         </h1>
 
         <div className="flex flex-col lg:flex-row gap-8">
-          {/* 左侧作者列表 - 在移动端变为可折叠面板 */}
-          <div className="w-full lg:w-72 lg:shrink-0">
+          {/* 左侧作者列表 - 仅在桌面端显示 */}
+          <div className="hidden lg:block w-72 shrink-0">
             <div className="sticky top-4 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4">
               <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white flex items-center gap-2">
                 <span className="w-1 h-6 bg-blue-500 rounded-full"></span>
@@ -124,7 +117,7 @@ export default function Home() {
                 {authors.map((author) => (
                   <button
                     key={author.name}
-                    onClick={() => handleAuthorClick(author.name)}
+                    onClick={() => setSelectedAuthor(author.name === selectedAuthor ? null : author.name)}
                     className={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm transition-all duration-200 ${
                       selectedAuthor === author.name
                         ? 'bg-blue-500 text-white shadow-md'
@@ -193,6 +186,83 @@ export default function Home() {
             )}
           </div>
         </div>
+
+        {/* Footer */}
+        <footer className="mt-20 border-t border-gray-200 dark:border-gray-700">
+          <div className="max-w-7xl mx-auto px-4 py-12">
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* 项目信息 */}
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                  <FaGithub className="w-5 h-5" />
+                  项目信息
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">
+                  本项目旨在收集和展示优秀的 GPT-4 Vision 图像创作案例，为创作者提供灵感和参考。
+                </p>
+                <a
+                  href="https://github.com/wowmarcomei/awesome-gpt-images"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm font-medium text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                >
+                  <FaGithub className="w-4 h-4" />
+                  访问项目
+                </a>
+              </div>
+
+              {/* 灵感来源 */}
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                  <span className="i-carbon-idea w-5 h-5" />
+                  灵感来源
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">
+                  感谢 jamez-bondos 的开源项目提供灵感，启发了本项目的开发。
+                </p>
+                <a
+                  href="https://github.com/jamez-bondos/awesome-gpt4o-images"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm font-medium text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                >
+                  <FaGithub className="w-4 h-4" />
+                  原项目
+                </a>
+              </div>
+
+              {/* 创作者 */}
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                  <FaTwitter className="w-5 h-5 text-blue-400" />
+                  创作者
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">
+                  感谢以下创作者的精彩分享和贡献
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {authors.map((author) => (
+                    <a
+                      key={author.name}
+                      href={author.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-sm hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
+                    >
+                      <FaTwitter className="w-3.5 h-3.5" />
+                      {author.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* 底部版权信息 */}
+            <div className="mt-12 pt-6 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
+              <p>© {new Date().getFullYear()} Awesome GPT-4 Images</p>
+            </div>
+          </div>
+        </footer>
       </div>
     </main>
   );

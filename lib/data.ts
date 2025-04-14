@@ -313,4 +313,11 @@ export const cases: Case[] = [
     requiresReferenceImage: true,
     tags: ["Funko", "公仔", "等距视角", "包装"]
   }
+];
+
+export const authors = [
+  { name: 'balconychy', count: 5, twitter: 'https://twitter.com/balconychy' },
+  { name: 'dotey', count: 10, twitter: 'https://twitter.com/dotey' },
+  { name: 'AnimeAI', count: 2, twitter: 'https://twitter.com/AnimeAI' },
+  { name: 'ZHO_ZHO_ZHO', count: 7, twitter: 'https://twitter.com/ZHO_ZHO_ZHO' },
 ]; 
