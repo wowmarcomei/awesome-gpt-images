@@ -79,11 +79,7 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
           </div>
         </div>
         
-        {caseData.requiresReferenceImage && (
-          <div className="text-sm text-yellow-600 dark:text-yellow-400 mb-3">
-            需要上传参考图片
-          </div>
-        )}
+        
         
         <div className="flex flex-wrap gap-2 mb-4">
           {caseData.tags.map((tag) => (

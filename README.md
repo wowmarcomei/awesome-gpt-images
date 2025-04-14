@@ -1,84 +1,91 @@
-# Awesome GPT-4o Images ✨
+# Awesome GPT-4 Images ✨
 
-A showcase of amazing image generation cases using GPT-4o, built with Next.js.
+一个精心收集的 GPT-4 Vision 图像创作案例展示网站，旨在为创作者提供灵感和参考。
 
-[![简体中文](https://img.shields.io/badge/简体中文-点击查看-orange)](README_zh.md)
+[![English](https://img.shields.io/badge/English-View-blue)](README_EN.md)
 
-## 🚀 Features
+## 🌟 特色功能
 
-- 🎨 Beautiful card-based UI for showcasing GPT-4o image generation cases
-- 🔍 Real-time search functionality
-- 🏷️ Tag-based filtering
-- 🌙 Dark mode support
-- 📱 Fully responsive design
-- ⚡ Smooth animations with Framer Motion
+- 📸 精选案例展示
+  - 高质量的 GPT-4 Vision 创作案例
+  - 包含详细的提示词说明
+  - 支持查看原始创作链接
 
-## 🛠️ Tech Stack
+- 🔍 强大的筛选功能
+  - 标签分类筛选
+  - 作者筛选
+  - 关键词搜索
 
-- [Next.js 14](https://nextjs.org/) - React framework
-- [TypeScript](https://www.typescriptlang.org/) - Type safety
-- [Tailwind CSS](https://tailwindcss.com/) - Styling
-- [Framer Motion](https://www.framer.com/motion/) - Animations
-- [React Icons](https://react-icons.github.io/react-icons/) - Icon library
+- 💡 便捷的提示词管理
+  - 代码框式提示词展示
+  - 一键复制功能
+  - 优雅的复制成功提示
 
-## 📦 Installation
+- 🎨 精美的用户界面
+  - 响应式卡片布局
+  - 深色模式支持
+  - 流畅的动画效果
 
-1. Clone the repository:
+## 🛠️ 技术栈
+
+- **前端框架**: Next.js
+- **样式方案**: Tailwind CSS
+- **动画效果**: Framer Motion
+- **图标**: React Icons
+- **图片优化**: Next.js Image
+- **类型检查**: TypeScript
+
+## 🚀 本地开发
+
+1. 克隆项目
 ```bash
-git clone https://github.com/yourusername/awesome-gpt-images.git
-```
-
-2. Install dependencies:
-```bash
+git clone https://github.com/wowmarcomei/awesome-gpt-images.git
 cd awesome-gpt-images
-npm install
 ```
 
-3. Run the development server:
+2. 安装依赖
+```bash
+npm install
+# 或
+yarn install
+```
+
+3. 启动开发服务器
 ```bash
 npm run dev
+# 或
+yarn dev
 ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+4. 在浏览器中打开 [http://localhost:3000](http://localhost:3000)
 
-## 🚀 Roadmap
+## 🤝 贡献指南
 
-### Phase 1 (Current)
-- [x] Basic card layout
-- [x] Search functionality
-- [x] Dark mode support
-- [x] Responsive design
+欢迎提交新的案例！请确保您的提交包含：
 
-### Phase 2 (In Progress)
-- [ ] Pagination
-- [ ] Advanced filtering
-- [ ] Case detail pages
-- [ ] Image optimization
+- 高质量的创作成果
+- 完整的提示词
+- 作者信息
+- 原始链接
+- 适当的标签分类
 
-### Phase 3 (Planned)
-- [ ] Case submission form
-- [ ] User authentication
-- [ ] Favorites system
-- [ ] Social sharing
+## 📝 许可证
 
-## 🤝 Contributing
+MIT License
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+## 💖 致谢
 
-## 📝 License
+- 感谢 [jamez-bondos/awesome-gpt4o-images](https://github.com/jamez-bondos/awesome-gpt4o-images) 项目提供灵感
+- 感谢所有创作者的精彩分享和贡献
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## 📮 联系方式
 
-## 🙏 Acknowledgments
+如有任何问题或建议，欢迎通过以下方式联系：
 
-Special thanks to all the creators who shared their amazing GPT-4o image generation cases:
+- 提交 Issue
+- 创建 Pull Request
+- 发送邮件至 [your-email@example.com]
 
-- [@ZHO_ZHO_ZHO](https://x.com/ZHO_ZHO_ZHO)
-- [@gizakdag](https://x.com/gizakdag)
-- [@dotey](https://x.com/dotey)
-- [@balconychy](https://x.com/balconychy)
-- [@0xdlk](https://x.com/0xdlk)
-- [@richardchang](https://x.com/richardchang)
-- [@op7418](https://x.com/op7418)
-- [@hellokaton](https://x.com/hellokaton)
-- And many more contributors! 
+---
+
+如果这个项目对您有帮助，请考虑给它一个 ⭐️ 
