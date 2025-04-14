@@ -312,12 +312,264 @@ export const cases: Case[] = [
     prompt: "把照片中的人物变成 Funko Pop 公仔包装盒的风格，以等距视角（isometric）呈现，并在包装盒上标注标题为\"JAMES BOND\"。包装盒内展示的是照片中人物形象，旁边搭配有人物的必备物品。",
     requiresReferenceImage: true,
     tags: ["Funko", "公仔", "等距视角", "包装"]
+  },
+  {
+    id: 25,
+    title: "极简主义 3D 插画",
+    author: {
+      name: "0xdlk",
+      twitter: "https://x.com/0xdlk"
+    },
+    originalLink: "https://x.com/0xdlk/status/1906843247432929642",
+    imageUrl: "/examples/example_minimalist_3d_toilet.png",
+    prompt: "Generate a toilet with the following JSON profile: { \"art_style_profile\": { \"style_name\": \"Minimalist 3D Illustration\", \"visual_elements\": { \"shape_language\": \"Rounded edges, smooth and soft forms with simplified geometry\", \"colors\": { \"primary_palette\": [\"Soft beige, light gray, warm orange\"], \"accent_colors\": [\"Warm orange for focal elements\"], \"shading\": \"Soft gradients with smooth transitions, avoiding harsh shadows or highlights\" } } } }",
+    requiresReferenceImage: false,
+    tags: ["3D", "极简", "插画"]
+  },
+  {
+    id: 26,
+    title: "名画人物麦片广告",
+    author: {
+      name: "ZHO_ZHO_ZHO",
+      twitter: "https://x.com/ZHO_ZHO_ZHO"
+    },
+    originalLink: "https://x.com/ZHO_ZHO_ZHO/status/1909542765857587310",
+    imageUrl: "/examples/example_master_oats_ad.png",
+    prompt: "《大师麦片》：根据我上传的照片的人物特征判断，为他生成一个符合他特质的燕麦片搭配（比如蔬菜、水果、酸奶、粗粮等等）和包装设计，然后生成他作为麦片包装盒封面人物 加 相应麦片搭配的广告封面，人物要保持特征、可爱Q版3d、c4d渲染风格",
+    requiresReferenceImage: true,
+    tags: ["广告", "名画", "创意", "3D"]
+  },
+  {
+    id: 27,
+    title: "Q 版表情包制作",
+    author: {
+      name: "dotey",
+      twitter: "https://x.com/dotey"
+    },
+    originalLink: "https://x.com/dotey/status/1909800530739679488",
+    imageUrl: "/examples/example_chibi_emoji_pack.png",
+    prompt: "创作一套全新的 chibi sticker，共六个独特姿势，以用户形象为主角：1. 双手比出剪刀手，俏皮地眨眼；2. 泪眼汪汪、嘴唇微微颤动，呈现可爱哭泣的表情；3. 张开双臂，做出热情的大大拥抱姿势；4. 侧卧入睡，靠着迷你枕头，带着甜甜的微笑；5. 自信满满地向前方伸手指，周围点缀闪亮特效；6. 手势飞吻，周围飘散出爱心表情。",
+    requiresReferenceImage: true,
+    tags: ["Q版", "表情包", "系列"]
+  },
+  {
+    id: 28,
+    title: "扁平贴纸设计",
+    author: {
+      name: "ZHO_ZHO_ZHO",
+      twitter: "https://x.com/ZHO_ZHO_ZHO"
+    },
+    originalLink: "https://x.com/ZHO_ZHO_ZHO/status/1908044836953108490",
+    imageUrl: "/examples/example_flat_sticker_pearl_earring.jpeg",
+    prompt: "把这张照片设计成一个极简扁平插画风格的Q版贴纸，厚白边，保留人物特征，风格要可爱一些，人物要超出圆形区域边框，圆形区域要为纯色不要3d感，透明背景",
+    requiresReferenceImage: true,
+    tags: ["扁平", "贴纸", "设计"]
+  },
+  {
+    id: 29,
+    title: "名画人物 OOTD",
+    author: {
+      name: "ZHO_ZHO_ZHO",
+      twitter: "https://x.com/ZHO_ZHO_ZHO"
+    },
+    originalLink: "https://x.com/ZHO_ZHO_ZHO/status/1909892294217781714",
+    imageUrl: "/examples/example_pearl_earring_ootd.png",
+    prompt: "为图片人物生成不同职业风的OOTD，时尚穿搭和配饰，和人物色系一致的纯色背景，Q版 3d，c4d渲染，保持人脸特征，姿势都要保持一致，人物的比例腿很修长",
+    requiresReferenceImage: true,
+    tags: ["时尚", "穿搭", "3D", "名画"]
+  },
+  {
+    id: 30,
+    title: "35mm 胶片风格飞岛",
+    author: {
+      name: "dotey",
+      twitter: "https://x.com/dotey"
+    },
+    originalLink: "https://x.com/dotey/status/1905020833451348283",
+    imageUrl: "/examples/example_35mm_moscow_flying_island.jpeg",
+    prompt: "35 mm photo of Moscow floating in the sky on a flying islands",
+    requiresReferenceImage: false,
+    tags: ["胶片", "风景", "创意"]
+  },
+  {
+    id: 31,
+    title: "动漫贴纸集合",
+    author: {
+      name: "richardchang",
+      twitter: "https://x.com/richardchang"
+    },
+    originalLink: "https://x.com/richardchang/status/1909086122959139312",
+    imageUrl: "/examples/example_naruto_stickers.jpeg",
+    prompt: "Naruto stickers",
+    requiresReferenceImage: false,
+    tags: ["动漫", "贴纸", "火影忍者"]
+  },
+  {
+    id: 32,
+    title: "纸艺剪贴风格招聘广告",
+    author: {
+      name: "dotey",
+      twitter: "https://x.com/dotey"
+    },
+    originalLink: "https://x.com/dotey/status/1905021792642564406",
+    imageUrl: "/examples/example_paper_cutout_job_ad.jpeg",
+    prompt: "The image shows professional drivers of cars and trucks at work, impressive urban and rural speeds, a positive team environment and modern visuals of the fleet - all this advertises a vacancy for drivers with competitive pay, flexible working hours and a clear call to institutions: \"Apply today - we will start tomorrow!\"",
+    requiresReferenceImage: false,
+    tags: ["纸艺", "广告", "招聘"]
+  },
+  {
+    id: 33,
+    title: "全家福婚纱照",
+    author: {
+      name: "balconychy",
+      twitter: "https://x.com/balconychy"
+    },
+    originalLink: "https://x.com/balconychy/status/1909426314643222595",
+    imageUrl: "/examples/example_family_wedding_photo_q.jpeg",
+    prompt: "将照片里的转换成Q版 3D人物，父母婚礼服饰，孩子是美丽的花童。父母，西式婚礼服饰，父亲礼服，母亲婚纱。孩子手捧鲜花。背景是五彩鲜花做的拱门。除了人物是3D Q版，环境其他都是写实。整体放在一个相框里。",
+    requiresReferenceImage: true,
+    tags: ["Q版", "3D", "婚纱", "全家福"]
+  },
+  {
+    id: 34,
+    title: "手绘信息图卡片",
+    author: {
+      name: "dotey",
+      twitter: "https://x.com/dotey"
+    },
+    originalLink: "https://x.com/dotey/status/1907903480678985784",
+    imageUrl: "/examples/example_hand_drawn_infographic_cognition.jpeg",
+    prompt: "创作一张手绘风格的信息图卡片，比例为9:16竖版。卡片主题鲜明，背景为带有纸质肌理的米色或米白色，整体设计体现质朴、亲切的手绘美感。卡片上方以红黑相间、对比鲜明的大号毛笔草书字体突出标题。",
+    requiresReferenceImage: false,
+    tags: ["手绘", "信息图", "排版"]
+  },
+  {
+    id: 35,
+    title: "毛茸茸南瓜灯",
+    author: {
+      name: "gizakdag",
+      twitter: "https://x.com/gizakdag"
+    },
+    originalLink: "https://x.com/gizakdag/status/1911075302941622512",
+    imageUrl: "/examples/example_fluffy_pumpkin.jpeg",
+    prompt: "Transform a simple flat vector icon of [🎃] into a soft, 3D fluffy object. The shape is fully covered in fur, with hyperrealistic hair texture and soft shadows. The object is centered on a clean, light gray background and floats gently in space.",
+    requiresReferenceImage: false,
+    tags: ["3D", "毛绒", "创意"]
+  },
+  {
+    id: 36,
+    title: "极简主义 3D 插画 (文字版)",
+    author: {
+      name: "dotey",
+      twitter: "https://x.com/dotey"
+    },
+    originalLink: "https://x.com/dotey/status/1907131027253772399",
+    imageUrl: "/examples/example_minimalist_3d_toilet_txt.jpeg",
+    prompt: "画一个马桶：造型语言：圆润的边缘、平滑柔和的外形，采用简化几何造型。色彩：主色调：柔和米色、浅灰色、暖橙色。强调色：暖橙色用于焦点元素。明暗处理：柔和渐变，平滑过渡，避免强烈的阴影和高光。",
+    requiresReferenceImage: false,
+    tags: ["3D", "极简", "插画"]
+  },
+  {
+    id: 37,
+    title: "社交媒体帖子涂鸦",
+    author: {
+      name: "op7418",
+      twitter: "https://x.com/op7418"
+    },
+    originalLink: "https://x.com/op7418/status/1906208691877253536",
+    imageUrl: "/examples/example_social_media_doodle.jpeg",
+    prompt: "生成图片，把它打印出来，然后用红墨水疯狂地加上手写中文批注、涂鸦、乱画，如果你想的话，还可以加点小剪贴画",
+    requiresReferenceImage: true,
+    tags: ["涂鸦", "社交媒体", "创意"]
+  },
+  {
+    id: 38,
+    title: "手绘信息图卡片",
+    author: {
+      name: "dotey",
+      twitter: "https://x.com/dotey"
+    },
+    originalLink: "https://x.com/dotey/status/1907870919852179850",
+    imageUrl: "/examples/example_hand_drawn_infographic.jpeg",
+    prompt: "创作一张手绘风格的信息图卡片，比例为9:16竖版。卡片主题鲜明，背景为带有纸质肌理的米色或米白色，整体设计体现质朴、亲切的手绘美感。",
+    requiresReferenceImage: false,
+    tags: ["手绘", "信息图", "排版"]
+  },
+  {
+    id: 39,
+    title: "卡通插画",
+    author: {
+      name: "dotey",
+      twitter: "https://x.com/dotey"
+    },
+    originalLink: "https://x.com/dotey/status/1905103477879267823",
+    imageUrl: "/examples/example_fantasy_computer_head_portal.jpeg",
+    prompt: "A cartoon-style character with a smiling computer monitor as its head, wearing gloves and boots, happily jumping through a glowing, blue, circular portal in a lush, fantasy forest landscape.",
+    requiresReferenceImage: false,
+    tags: ["卡通", "插画", "奇幻"]
+  },
+  {
+    id: 40,
+    title: "日系双格漫画",
+    author: {
+      name: "hellokaton",
+      twitter: "https://x.com/hellokaton"
+    },
+    originalLink: "https://x.com/hellokaton/status/1910900979194646959",
+    imageUrl: "/examples/example_two_panel_manga_president.jpeg",
+    prompt: "创建一张日系萌系双格漫画，上下排列，主题：少女总统的工作日常。角色形象：将上传的附件转换为日系萌系卡通女生形象的风格，保留原图所有细节，如服饰（西装）、发型（明亮的金黄色）、五官等。",
+    requiresReferenceImage: true,
+    tags: ["漫画", "日系", "双格"]
+  },
+  {
+    id: 41,
+    title: "微型立体场景",
+    author: {
+      name: "dotey",
+      twitter: "https://x.com/dotey"
+    },
+    originalLink: "https://x.com/dotey/status/1911609122547449886",
+    imageUrl: "/examples/example_miniature_journey_west.jpeg",
+    prompt: "微型立体场景呈现，运用移轴摄影的技法，呈现出Q版【孙悟空三打白骨精】场景",
+    requiresReferenceImage: false,
+    tags: ["Q版", "微缩", "中国风"]
+  },
+  {
+    id: 42,
+    title: "3D Q版情侣水晶球",
+    author: {
+      name: "balconychy",
+      twitter: "https://x.com/balconychy"
+    },
+    originalLink: "https://x.com/balconychy/status/1909908568129655248",
+    imageUrl: "/examples/example_3d_q_snowglobe_couple.jpeg",
+    prompt: "将附图中的人物转换成水晶球场景。整体环境：水晶球放在窗户旁桌面上，背景模糊，暖色调。阳光透过球体，洒下点点金光，照亮了周围的黑暗。水晶球内部：人物是可爱Q版3D造型，相互之间满眼的爱意。",
+    requiresReferenceImage: true,
+    tags: ["Q版", "3D", "情侣", "水晶球"]
+  },
+  {
+    id: 43,
+    title: "Q版可爱俄罗斯套娃",
+    author: {
+      name: "ZHO_ZHO_ZHO",
+      twitter: "https://x.com/ZHO_ZHO_ZHO"
+    },
+    originalLink: "https://x.com/ZHO_ZHO_ZHO/status/1911669883315818497",
+    imageUrl: "/examples/example_matryoshka_pearl_earring.png",
+    prompt: "把图片人物生成变成 Q 版可爱俄罗斯套娃🪆，大到小一共五个，放在精致的木桌上，横幅4:3比例",
+    requiresReferenceImage: true,
+    tags: ["Q版", "套娃", "创意"]
   }
 ];
 
 export const authors = [
-  { name: 'balconychy', count: 5, twitter: 'https://twitter.com/balconychy' },
-  { name: 'dotey', count: 10, twitter: 'https://twitter.com/dotey' },
+  { name: 'balconychy', count: 7, twitter: 'https://twitter.com/balconychy' },
+  { name: 'dotey', count: 15, twitter: 'https://twitter.com/dotey' },
   { name: 'AnimeAI', count: 2, twitter: 'https://twitter.com/AnimeAI' },
-  { name: 'ZHO_ZHO_ZHO', count: 7, twitter: 'https://twitter.com/ZHO_ZHO_ZHO' },
+  { name: 'ZHO_ZHO_ZHO', count: 9, twitter: 'https://twitter.com/ZHO_ZHO_ZHO' },
+  { name: '0xdlk', count: 1, twitter: 'https://twitter.com/0xdlk' },
+  { name: 'richardchang', count: 1, twitter: 'https://twitter.com/richardchang' },
+  { name: 'gizakdag', count: 1, twitter: 'https://twitter.com/gizakdag' },
+  { name: 'op7418', count: 1, twitter: 'https://twitter.com/op7418' },
+  { name: 'hellokaton', count: 1, twitter: 'https://twitter.com/hellokaton' }
 ]; 
