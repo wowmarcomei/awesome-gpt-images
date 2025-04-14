@@ -20,7 +20,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      className="fixed md:absolute top-4 right-[120px] p-2.5 rounded-full bg-white/90 dark:bg-gray-800/90 hover:bg-gray-100 dark:hover:bg-gray-700/90 shadow-sm border border-gray-200 dark:border-gray-700 transition-all duration-200 ease-in-out backdrop-blur-sm z-50"
+      className="p-2.5 rounded-full bg-white/90 dark:bg-gray-800/90 hover:bg-gray-100 dark:hover:bg-gray-700/90 shadow-sm border border-gray-200 dark:border-gray-700 transition-all duration-200 ease-in-out backdrop-blur-sm"
       aria-label="切换主题"
     >
       {theme === 'dark' ? (

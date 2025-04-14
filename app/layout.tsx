@@ -4,7 +4,7 @@ import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from 'next-themes';
 import { cn } from '../lib/utils';
-import { ThemeToggle } from '../components/theme-toggle';
+import { NavButtons } from '../components/nav-buttons';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -99,10 +99,8 @@ export default function RootLayout({
           enableSystem={true}
           disableTransitionOnChange
         >
-          <div className="relative">
-            <ThemeToggle />
-            {children}
-          </div>
+          <NavButtons />
+          {children}
           <Analytics debug={process.env.NODE_ENV === 'development'} />
         </ThemeProvider>
       </body>
