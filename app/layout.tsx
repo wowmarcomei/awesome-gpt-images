@@ -1,6 +1,9 @@
-import type { Metadata } from 'next';
+import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
+import { Analytics } from '@vercel/analytics/react';
+import { ThemeProvider } from 'next-themes';
+import { cn } from '../lib/utils';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -87,9 +90,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="zh-CN">
-      <body className={`${inter.className} antialiased`}>
-        {children}
+    <html lang="zh-CN" suppressHydrationWarning>
+      <body className={cn('min-h-screen font-sans antialiased', inter.className)}>
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+          {children}
+          <Analytics debug={process.env.NODE_ENV === 'development'} />
+        </ThemeProvider>
       </body>
     </html>
   );
