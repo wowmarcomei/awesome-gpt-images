@@ -55,7 +55,7 @@ export default function CaseCard({ case: caseData }: CaseCardProps) {
         
         {caseData.requiresReferenceImage && (
           <div className="text-sm text-yellow-600 dark:text-yellow-400 mb-3">
-            ⚠️ 需要上传参考图片
+            
           </div>
         )}
         
