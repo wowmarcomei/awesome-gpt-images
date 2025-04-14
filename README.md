@@ -5,7 +5,7 @@
 ![demo](https://raw.githubusercontent.com/wowmarcomei/awesome-gpt-images/main/media/screen.gif)
 
 [![English](https://img.shields.io/badge/English-View-blue)](README_EN.md)
-[![Online Preview](https://img.shields.io/badge/预览-awesome--gpt--images-green)](https://awesome-gpt-images.vercel.app/)
+[![Online Preview](https://img.shields.io/badge/预览-awesome--gpt--images-green)](https://awesome-gpt-images.com)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwowmarcomei%2Fawesome-gpt-images)
 
 ## 🌟 特色功能
@@ -90,7 +90,7 @@ yarn dev
 
 ## 🌐 在线预览
 
-访问 [https://awesome-gpt-images.vercel.app/](https://awesome-gpt-images.vercel.app/) 查看在线演示。
+访问 [https://awesome-gpt-images.com/](https://awesome-gpt-images.com/) 查看在线演示。
 
 ## 🤝 贡献指南
 

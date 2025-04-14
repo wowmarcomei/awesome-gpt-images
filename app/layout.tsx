@@ -5,7 +5,7 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://awesome-gpt-images.vercel.app'),
+  metadataBase: new URL('https://awesome-gpt-images.com'),
   title: {
     default: 'Awesome GPT-4 Images - GPT-4 Vision 创作案例展示',
     template: '%s | Awesome GPT-4 Images'
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'zh_CN',
     alternateLocale: 'en_US',
-    url: 'https://awesome-gpt-images.vercel.app/',
+    url: 'https://awesome-gpt-images.com/',
     siteName: 'Awesome GPT-4 Images',
     title: 'Awesome GPT-4 Images - GPT-4 Vision 创作案例展示',
     description: '精选 GPT-4 Vision 图像创作案例展示，包含详细提示词、创作技巧和最佳实践。',
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     google: 'your-google-site-verification', // 需要添加 Google Search Console 验证码
   },
   alternates: {
-    canonical: 'https://awesome-gpt-images.vercel.app',
+    canonical: 'https://awesome-gpt-images.com',
     languages: {
       'en-US': '/en',
       'zh-CN': '/',
