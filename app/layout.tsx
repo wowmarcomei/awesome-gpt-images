@@ -4,6 +4,7 @@ import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from 'next-themes';
 import { cn } from '../lib/utils';
+import { ThemeToggle } from '../components/theme-toggle';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -91,9 +92,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN" suppressHydrationWarning>
-      <body className={cn('min-h-screen font-sans antialiased', inter.className)}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          {children}
+      <body className={cn('min-h-screen font-sans antialiased relative', inter.className)}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem={true}
+          disableTransitionOnChange
+        >
+          <div className="relative">
+            <ThemeToggle />
+            {children}
+          </div>
           <Analytics debug={process.env.NODE_ENV === 'development'} />
         </ThemeProvider>
       </body>
