@@ -1,4 +1,11 @@
+# *
 User-agent: *
 Allow: /
+Disallow: /api/*
+Disallow: /_next/*
 
-Sitemap: https://awesome-gpt-images.com/sitemap.xml 
+# Host
+Host: https://awesome-gpt-images.com
+
+# Sitemaps
+Sitemap: https://awesome-gpt-images.com/sitemap.xml
