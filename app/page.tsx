@@ -87,6 +87,11 @@ export default function Home() {
     }
   };
 
+  // 获取所有作者名称的字符串
+  const authorNames = useMemo(() => {
+    return Array.from(new Set(cases.map(c => c.author.name))).join('、');
+  }, []);
+
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
       <div className="container mx-auto px-4">
@@ -232,6 +237,83 @@ export default function Home() {
             )}
           </div>
         </div>
+
+        {/* 感谢信息 */}
+        <footer className="mt-20 border-t border-gray-200 dark:border-gray-700">
+          <div className="max-w-5xl mx-auto px-4 py-12">
+            <div className="grid md:grid-cols-2 gap-12">
+              {/* 左侧项目信息 */}
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                  <FaGithub className="w-5 h-5" />
+                  项目信息
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">
+                  本项目旨在收集和展示优秀的 GPT-4 Vision 图像创作案例，为创作者提供灵感和参考。
+                </p>
+                <div className="flex items-center gap-2">
+                  <a
+                    href="https://github.com/jamez-bondos/awesome-gpt4o-images"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm font-medium text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                  >
+                    <FaGithub className="w-4 h-4" />
+                    原项目仓库
+                  </a>
+                  <button
+                    onClick={handleShare}
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm font-medium text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+                  >
+                    <FaShareAlt className="w-4 h-4" />
+                    分享网站
+                  </button>
+                </div>
+              </div>
+
+              {/* 右侧创作者信息 */}
+              <div>
+                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                  <FaTwitter className="w-5 h-5 text-blue-400" />
+                  创作者
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300 mb-4">
+                  感谢以下创作者的精彩分享和贡献：
+                </p>
+                <div className="flex flex-wrap gap-2">
+                  {authors.map((author) => (
+                    <a
+                      key={author.name}
+                      href={author.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-sm hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
+                    >
+                      <FaTwitter className="w-3.5 h-3.5" />
+                      {author.name}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* 底部版权信息 */}
+            <div className="mt-12 pt-6 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
+              <p>
+                © {new Date().getFullYear()} Awesome GPT-4 Images. 基于{' '}
+                <a
+                  href="https://github.com/jamez-bondos/awesome-gpt4o-images"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300"
+                >
+                  awesome-gpt4o-images
+                </a>
+                {' '}项目开发
+              </p>
+            </div>
+          </div>
+        </footer>
       </div>
     </main>
   );
