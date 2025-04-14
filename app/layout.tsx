@@ -5,13 +5,27 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Awesome GPT-4 Images',
-  description: '精选 GPT-4 Vision 图像创作案例展示，为创作者提供灵感和参考。Collection of amazing GPT-4 Vision image creation showcases.',
-  keywords: 'GPT-4, Vision, AI, Image Generation, Prompts, Creative, Showcase, Examples',
-  authors: [{ name: 'wowmarcomei' }],
+  metadataBase: new URL('https://awesome-gpt-images.vercel.app'),
+  title: {
+    default: 'Awesome GPT-4 Images - GPT-4 Vision 创作案例展示',
+    template: '%s | Awesome GPT-4 Images'
+  },
+  description: '精选 GPT-4 Vision 图像创作案例展示，包含详细提示词、创作技巧和最佳实践。Collection of amazing GPT-4 Vision image creation showcases with detailed prompts and best practices.',
+  keywords: 'GPT-4, Vision, AI, Image Generation, Prompts, Creative, Showcase, Examples, 图像生成, 提示词, 人工智能, 创意展示',
+  authors: [{ name: 'wowmarcomei', url: 'https://github.com/wowmarcomei' }],
   creator: 'wowmarcomei',
   publisher: 'wowmarcomei',
-  robots: 'index, follow',
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
     type: 'website',
     locale: 'zh_CN',
@@ -19,7 +33,7 @@ export const metadata: Metadata = {
     url: 'https://awesome-gpt-images.vercel.app/',
     siteName: 'Awesome GPT-4 Images',
     title: 'Awesome GPT-4 Images - GPT-4 Vision 创作案例展示',
-    description: '精选 GPT-4 Vision 图像创作案例展示，为创作者提供灵感和参考。Collection of amazing GPT-4 Vision image creation showcases.',
+    description: '精选 GPT-4 Vision 图像创作案例展示，包含详细提示词、创作技巧和最佳实践。',
     images: [
       {
         url: '/og-image.png',
@@ -32,14 +46,24 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Awesome GPT-4 Images - GPT-4 Vision 创作案例展示',
-    description: '精选 GPT-4 Vision 图像创作案例展示，为创作者提供灵感和参考。',
+    description: '精选 GPT-4 Vision 图像创作案例展示，包含详细提示词、创作技巧和最佳实践。',
     creator: '@wowmarcomei',
     images: ['/og-image.png'],
   },
   viewport: {
     width: 'device-width',
     initialScale: 1,
-    maximumScale: 1,
+    maximumScale: 5,
+  },
+  verification: {
+    google: 'your-google-site-verification', // 需要添加 Google Search Console 验证码
+  },
+  alternates: {
+    canonical: 'https://awesome-gpt-images.vercel.app',
+    languages: {
+      'en-US': '/en',
+      'zh-CN': '/',
+    },
   },
   icons: {
     icon: '/favicon.ico',

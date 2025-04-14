@@ -3,6 +3,8 @@
 一个精心收集的 GPT-4 Vision 图像创作案例展示网站，旨在为创作者提供灵感和参考。
 
 [![English](https://img.shields.io/badge/English-View-blue)](README_EN.md)
+[![Online Preview](https://img.shields.io/badge/预览-awesome--gpt--images-green)](https://awesome-gpt-images.vercel.app/)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwowmarcomei%2Fawesome-gpt-images)
 
 ## 🌟 特色功能
 
@@ -58,6 +60,35 @@ yarn dev
 ```
 
 4. 在浏览器中打开 [http://localhost:3000](http://localhost:3000)
+
+## 📦 部署
+
+本项目使用 Vercel 部署。你可以选择以下方式之一进行部署：
+
+1. 一键部署
+   - 点击上方的 "Deploy with Vercel" 按钮
+   - 按照 Vercel 的提示完成部署
+
+2. 手动部署
+   ```bash
+   # 安装 Vercel CLI
+   npm i -g vercel
+   
+   # 登录 Vercel
+   vercel login
+   
+   # 部署项目
+   vercel
+   ```
+
+3. 通过 GitHub 部署
+   - Fork 本项目
+   - 在 Vercel 中导入你的 GitHub 仓库
+   - Vercel 会自动完成部署并在代码更新时自动重新部署
+
+## 🌐 在线预览
+
+访问 [https://awesome-gpt-images.vercel.app/](https://awesome-gpt-images.vercel.app/) 查看在线演示。
 
 ## 🤝 贡献指南
 

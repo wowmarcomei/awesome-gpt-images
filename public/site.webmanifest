@@ -1,22 +1,37 @@
 {
   "name": "Awesome GPT-4 Images",
   "short_name": "GPT-4 Images",
-  "description": "精选 GPT-4 Vision 图像创作案例展示",
+  "description": "精选 GPT-4 Vision 图像创作案例展示，包含详细提示词、创作技巧和最佳实践。",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "theme_color": "#111827",
   "orientation": "portrait-primary",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "/android-chrome-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
-  ]
+  ],
+  "shortcuts": [
+    {
+      "name": "最新案例",
+      "short_name": "最新",
+      "description": "查看最新的GPT-4 Vision创作案例",
+      "url": "/?sort=latest",
+      "icons": [{ "src": "/android-chrome-192x192.png", "sizes": "192x192" }]
+    }
+  ],
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "categories": ["productivity", "utilities", "ai", "creative"]
 } 
