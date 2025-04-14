@@ -4,12 +4,13 @@ import { useState, useMemo } from 'react';
 import CaseCard from '../components/CaseCard';
 import { cases } from '../lib/data';
 import TabFilter from '../components/TabFilter';
-import { FaTwitter } from 'react-icons/fa';
+import { FaTwitter, FaGithub, FaShareAlt } from 'react-icons/fa';
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [selectedAuthor, setSelectedAuthor] = useState<string | null>(null);
+  const [showShareTooltip, setShowShareTooltip] = useState(false);
 
   // 提取所有唯一的标签
   const allTags = useMemo(() => {
@@ -66,9 +67,55 @@ export default function Home() {
     setSelectedAuthor(selectedAuthor === authorName ? null : authorName);
   };
 
+  const handleShare = async () => {
+    const shareData = {
+      title: 'Awesome GPT-4 Images',
+      text: '收集整理 GPT-4 Vision 图像创作精选案例，激发你的创作灵感！',
+      url: window.location.href
+    };
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
+      } else {
+        await navigator.clipboard.writeText(window.location.href);
+        setShowShareTooltip(true);
+        setTimeout(() => setShowShareTooltip(false), 2000);
+      }
+    } catch (err) {
+      console.error('分享失败:', err);
+    }
+  };
+
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
       <div className="container mx-auto px-4">
+        {/* 顶部操作栏 */}
+        <div className="fixed top-4 right-4 z-50 flex items-center gap-4">
+          <a
+            href="https://github.com/wowmarcomei"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-200"
+          >
+            <FaGithub className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+          </a>
+          <div className="relative">
+            <button
+              onClick={handleShare}
+              className="flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-200"
+            >
+              <FaShareAlt className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+            </button>
+            {showShareTooltip && (
+              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm text-white bg-gray-900 rounded-lg whitespace-nowrap">
+                链接已复制
+                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rotate-45 w-2 h-2 bg-gray-900"></div>
+              </div>
+            )}
+          </div>
+        </div>
+
         <h1 className="text-4xl font-bold text-center mb-8 text-gray-900 dark:text-white">
           Awesome GPT-4 Images ✨
         </h1>
