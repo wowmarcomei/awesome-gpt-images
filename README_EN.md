@@ -2,6 +2,8 @@
 
 A curated collection of GPT-4 Vision image creation showcases, designed to inspire creators and provide valuable references.
 
+![demo](https://raw.githubusercontent.com/wowmarcomei/awesome-gpt-images/main/media/screen.gif)
+
 [![简体中文](https://img.shields.io/badge/简体中文-查看-blue)](README.md)
 
 ## 🌟 Features
@@ -86,6 +88,27 @@ For any questions or suggestions, feel free to:
 - Create a Pull Request
 - Send an email to [your-email@example.com]
 
+## 📋 Development Plan
+
+### Phase 1 (Completed)
+- [x] Basic card layout
+- [x] Search functionality
+- [x] Dark mode
+- [x] Responsive design
+
+### Phase 2 (In Progress)
+- [ ] Pagination
+- [ ] Advanced filtering
+- [ ] Case detail page
+- [ ] Image optimization
+- [ ] Multi-language support
+
+### Phase 3 (Planned)
+- [ ] Case submission form
+- [ ] User authentication
+- [ ] Favorite system
+- [ ] Social sharing
+
 ---
 
-If you find this project helpful, please consider giving it a ⭐️ 
+If this project helps you, please consider giving it a ⭐️ 

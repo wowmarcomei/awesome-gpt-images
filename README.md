@@ -2,6 +2,8 @@
 
 一个精心收集的 GPT-4 Vision 图像创作案例展示网站，旨在为创作者提供灵感和参考。
 
+![demo](https://raw.githubusercontent.com/wowmarcomei/awesome-gpt-images/main/media/screen.gif)
+
 [![English](https://img.shields.io/badge/English-View-blue)](README_EN.md)
 [![Online Preview](https://img.shields.io/badge/预览-awesome--gpt--images-green)](https://awesome-gpt-images.vercel.app/)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwowmarcomei%2Fawesome-gpt-images)
@@ -116,6 +118,27 @@ MIT License
 - 提交 Issue
 - 创建 Pull Request
 - 发送邮件至 [your-email@example.com]
+
+## 📋 开发计划
+
+### 第一阶段（已完成）
+- [x] 基础卡片布局
+- [x] 搜索功能
+- [x] 暗色模式
+- [x] 响应式设计
+
+### 第二阶段（进行中）
+- [ ] 分页功能
+- [ ] 高级筛选
+- [ ] 案例详情页
+- [ ] 图片优化
+- [ ] 支持多语言
+
+### 第三阶段（计划中）
+- [ ] 案例提交表单
+- [ ] 用户认证
+- [ ] 收藏系统
+- [ ] 社交分享
 
 ---
 
