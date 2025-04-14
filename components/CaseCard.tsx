@@ -5,9 +5,10 @@ import Image from 'next/image';
 
 interface CaseCardProps {
   case: Case;
+  onTagClick?: (tag: string) => void;
 }
 
-export default function CaseCard({ case: caseData }: CaseCardProps) {
+export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -15,7 +16,7 @@ export default function CaseCard({ case: caseData }: CaseCardProps) {
       transition={{ duration: 0.3 }}
       className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full"
     >
-      <div className="relative w-full pt-[75%]">
+      <div className="relative w-full pt-[75%] mt-4">
         <Image
           src={caseData.imageUrl}
           alt={caseData.title}
@@ -27,7 +28,7 @@ export default function CaseCard({ case: caseData }: CaseCardProps) {
         />
       </div>
       
-      <div className="p-4 flex-grow flex flex-col">
+      <div className="p-6 flex-grow flex flex-col">
         <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
           {caseData.title}
         </h3>
@@ -53,20 +54,17 @@ export default function CaseCard({ case: caseData }: CaseCardProps) {
           </p>
         </div>
         
-        {caseData.requiresReferenceImage && (
-          <div className="text-sm text-yellow-600 dark:text-yellow-400 mb-3">
-
-          </div>
-        )}
+        
         
         <div className="flex flex-wrap gap-2 mb-4">
           {caseData.tags.map((tag) => (
-            <span
+            <button
               key={tag}
-              className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 rounded-full text-gray-600 dark:text-gray-300"
+              onClick={() => onTagClick?.(tag)}
+              className="px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors cursor-pointer"
             >
               {tag}
-            </span>
+            </button>
           ))}
         </div>
         

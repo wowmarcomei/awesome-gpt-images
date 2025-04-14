@@ -1,14 +1,13 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { cases } from '../lib/data';
 import CaseCard from '../components/CaseCard';
+import { cases } from '../lib/data';
 import TabFilter from '../components/TabFilter';
-import { Case } from '../types';
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [activeTag, setActiveTag] = useState('全部');
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
 
   // 提取所有唯一的标签
   const allTags = useMemo(() => {
@@ -16,32 +15,41 @@ export default function Home() {
     cases.forEach(caseData => {
       caseData.tags.forEach(tag => tagSet.add(tag));
     });
-    return Array.from(tagSet);
+    return ['全部', ...Array.from(tagSet)];
   }, []);
 
   // 根据搜索词和标签筛选案例
   const filteredCases = useMemo(() => {
     return cases.filter(caseData => {
-      const matchesSearch = 
+      const matchesSearch = searchTerm === '' || 
         caseData.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         caseData.prompt.toLowerCase().includes(searchTerm.toLowerCase()) ||
         caseData.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
       
-      const matchesTag = activeTag === '全部' || caseData.tags.includes(activeTag);
+      const matchesTag = !selectedTag || caseData.tags.includes(selectedTag);
       
       return matchesSearch && matchesTag;
     });
-  }, [searchTerm, activeTag]);
+  }, [searchTerm, selectedTag]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
+  };
+
+  // 处理标签点击（包括卡片上的标签和顶部标签栏）
+  const handleTagClick = (tag: string) => {
+    if (tag === '全部') {
+      setSelectedTag(null);
+    } else {
+      setSelectedTag(selectedTag === tag ? null : tag);
+    }
   };
 
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-center mb-8 text-gray-900 dark:text-white">
-          Awesome GPT-4o Images ✨
+          Awesome GPT-4 Images ✨
         </h1>
         
         <div className="max-w-2xl mx-auto mb-8">
@@ -56,16 +64,32 @@ export default function Home() {
 
         <TabFilter
           tags={allTags}
-          activeTag={activeTag}
-          onTagChange={setActiveTag}
+          activeTag={selectedTag || '全部'}
+          onTagChange={handleTagClick}
         />
         
+        {selectedTag && (
+          <div className="container mx-auto mb-6 flex items-center justify-center">
+            <button
+              onClick={() => setSelectedTag(null)}
+              className="flex items-center px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 rounded-full hover:bg-blue-200 dark:hover:bg-blue-800"
+            >
+              清除筛选: {selectedTag}
+              <span className="ml-2 text-sm">×</span>
+            </button>
+          </div>
+        )}
+        
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredCases.map((caseData) => (
-            <CaseCard key={caseData.id} case={caseData} />
+          {filteredCases.map((caseItem) => (
+            <CaseCard
+              key={caseItem.id}
+              case={caseItem}
+              onTagClick={handleTagClick}
+            />
           ))}
         </div>
-        
+
         {filteredCases.length === 0 && (
           <div className="text-center py-8 text-gray-500 dark:text-gray-400">
             没有找到匹配的案例
