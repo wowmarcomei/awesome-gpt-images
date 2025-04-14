@@ -87,11 +87,6 @@ export default function Home() {
     }
   };
 
-  // 获取所有作者名称的字符串
-  const authorNames = useMemo(() => {
-    return Array.from(new Set(cases.map(c => c.author.name))).join('、');
-  }, []);
-
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
       <div className="container mx-auto px-4">
@@ -105,29 +100,21 @@ export default function Home() {
           >
             <FaGithub className="w-5 h-5 text-gray-700 dark:text-gray-300" />
           </a>
-          <div className="relative">
-            <button
-              onClick={handleShare}
-              className="flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-200"
-            >
-              <FaShareAlt className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-            </button>
-            {showShareTooltip && (
-              <div className="absolute bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-1 text-sm text-white bg-gray-900 rounded-lg whitespace-nowrap">
-                链接已复制
-                <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 rotate-45 w-2 h-2 bg-gray-900"></div>
-              </div>
-            )}
-          </div>
+          <button
+            onClick={handleShare}
+            className="flex items-center justify-center w-10 h-10 rounded-full bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-all duration-200"
+          >
+            <FaShareAlt className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+          </button>
         </div>
 
         <h1 className="text-4xl font-bold text-center mb-8 text-gray-900 dark:text-white">
           Awesome GPT-4 Images ✨
         </h1>
 
-        <div className="flex gap-8">
-          {/* 左侧作者列表 */}
-          <div className="w-72 shrink-0">
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* 左侧作者列表 - 在移动端变为可折叠面板 */}
+          <div className="w-full lg:w-72 lg:shrink-0">
             <div className="sticky top-4 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4">
               <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white flex items-center gap-2">
                 <span className="w-1 h-6 bg-blue-500 rounded-full"></span>
@@ -168,14 +155,6 @@ export default function Home() {
                   </button>
                 ))}
               </div>
-              {selectedAuthor && (
-                <button
-                  onClick={() => setSelectedAuthor(null)}
-                  className="mt-4 w-full px-4 py-2 text-sm text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 transition-colors flex items-center justify-center gap-2"
-                >
-                  <span>显示全部</span>
-                </button>
-              )}
             </div>
           </div>
 
@@ -196,31 +175,8 @@ export default function Home() {
               activeTag={selectedTag || '全部'}
               onTagChange={handleTagClick}
             />
-            
-            {(selectedTag || selectedAuthor) && (
-              <div className="mb-6 flex items-center justify-center gap-2">
-                {selectedTag && (
-                  <button
-                    onClick={() => setSelectedTag(null)}
-                    className="flex items-center px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 rounded-full hover:bg-blue-200 dark:hover:bg-blue-800"
-                  >
-                    标签: {selectedTag}
-                    <span className="ml-2 text-sm">×</span>
-                  </button>
-                )}
-                {selectedAuthor && (
-                  <button
-                    onClick={() => setSelectedAuthor(null)}
-                    className="flex items-center px-3 py-1 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 rounded-full hover:bg-blue-200 dark:hover:bg-blue-800"
-                  >
-                    作者: {selectedAuthor}
-                    <span className="ml-2 text-sm">×</span>
-                  </button>
-                )}
-              </div>
-            )}
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-6">
               {filteredCases.map((caseItem) => (
                 <CaseCard
                   key={caseItem.id}
@@ -237,83 +193,6 @@ export default function Home() {
             )}
           </div>
         </div>
-
-        {/* 感谢信息 */}
-        <footer className="mt-20 border-t border-gray-200 dark:border-gray-700">
-          <div className="max-w-7xl mx-auto px-4 py-12">
-            <div className="grid md:grid-cols-3 gap-8">
-              {/* 项目信息 */}
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                  <FaGithub className="w-5 h-5" />
-                  项目信息
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  本项目旨在收集和展示优秀的 GPT-4 Vision 图像创作案例，为创作者提供灵感和参考。
-                </p>
-                <a
-                  href="https://github.com/wowmarcomei/awesome-gpt-images"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm font-medium text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                >
-                  <FaGithub className="w-4 h-4" />
-                  访问项目
-                </a>
-              </div>
-
-              {/* 灵感来源 */}
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                  <span className="i-carbon-idea w-5 h-5" />
-                  灵感来源
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  感谢 jamez-bondos 的开源项目提供灵感，启发了本项目的开发。
-                </p>
-                <a
-                  href="https://github.com/jamez-bondos/awesome-gpt4o-images"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm font-medium text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
-                >
-                  <FaGithub className="w-4 h-4" />
-                  原项目
-                </a>
-              </div>
-
-              {/* 创作者 */}
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                  <FaTwitter className="w-5 h-5 text-blue-400" />
-                  创作者
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  感谢以下创作者的精彩分享和贡献
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {authors.map((author) => (
-                    <a
-                      key={author.name}
-                      href={author.twitter}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-sm hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
-                    >
-                      <FaTwitter className="w-3.5 h-3.5" />
-                      {author.name}
-                    </a>
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            {/* 底部版权信息 */}
-            <div className="mt-12 pt-6 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
-              <p>© {new Date().getFullYear()} Awesome GPT-4 Images</p>
-            </div>
-          </div>
-        </footer>
       </div>
     </main>
   );
