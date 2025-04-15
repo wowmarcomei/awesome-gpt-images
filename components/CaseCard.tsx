@@ -92,7 +92,7 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
           {/* Prompt */}
           <div className="flex-grow flex flex-col">
             <div className="relative flex-grow mb-3">
-              <pre className="h-[150px] overflow-y-auto p-4 bg-amber-50 dark:bg-gray-900 rounded-lg text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap font-mono border border-amber-200 dark:border-gray-700">
+              <pre className="h-[120px] overflow-y-auto p-4 bg-amber-50 dark:bg-gray-900 rounded-lg text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap font-mono border border-amber-200 dark:border-gray-700">
                 {caseData.prompt}
               </pre>
             </div>

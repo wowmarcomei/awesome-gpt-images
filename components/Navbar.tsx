@@ -4,16 +4,19 @@ import { useState, useEffect } from 'react';
 import { FaGithub } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import { FiMenu, FiX } from 'react-icons/fi';
+import { MdLightMode, MdDarkMode } from 'react-icons/md';
 import { ThemeToggle } from './theme-toggle';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '../lib/utils';
 import { LanguageSwitch } from './LanguageSwitch';
+import { useTheme } from 'next-themes';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { theme, setTheme } = useTheme();
 
   // 处理滚动效果
   useEffect(() => {
@@ -142,46 +145,71 @@ export function Navbar() {
             >
               <div className="flex flex-col h-full">
                 <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
-                  <span className="text-lg font-semibold text-gray-900 dark:text-white">菜单</span>
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src="/favicon/ms-icon-310x310.png"
+                      alt="Logo"
+                      width={24}
+                      height={24}
+                      className="object-contain"
+                    />
+                    <span className="text-base font-semibold text-gray-900 dark:text-white">菜单</span>
+                  </div>
                   <button
                     onClick={() => setIsOpen(false)}
                     className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                     aria-label="关闭菜单"
                   >
-                    <FiX className="w-5 h-5" />
+                    <FiX className="w-5 h-5 text-gray-500 dark:text-gray-400" />
                   </button>
                 </div>
-                <div className="p-4">
-                  <div className="flex items-center gap-3">
-                    <LanguageSwitch />
-                    <ThemeToggle />
+                <div className="p-4 space-y-3">
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-center">
+                      <LanguageSwitch />
+                    </div>
+                    <button
+                      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                      className={cn(
+                        "w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl transition-all",
+                        "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700",
+                        "text-gray-900 dark:text-white"
+                      )}
+                    >
+                      {theme === 'dark' ? (
+                        <MdLightMode className="w-5 h-5" />
+                      ) : (
+                        <MdDarkMode className="w-5 h-5" />
+                      )}
+                      <span className="text-sm font-medium">
+                        {theme === 'dark' ? '浅色模式' : '深色模式'}
+                      </span>
+                    </button>
                     <a
                       href="https://x.com/wowmarcomei"
                       target="_blank"
                       rel="noopener noreferrer"
                       className={cn(
-                        "p-2.5 rounded-full transition-all duration-200",
-                        "bg-gray-900 text-white dark:bg-white dark:text-gray-900",
-                        "hover:bg-gray-800 dark:hover:bg-gray-100",
-                        "focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700"
+                        "w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl transition-all",
+                        "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700",
+                        "text-gray-900 dark:text-white"
                       )}
-                      aria-label="Social"
                     >
                       <FaXTwitter className="w-5 h-5" />
+                      <span className="text-sm font-medium">Twitter</span>
                     </a>
                     <a
                       href="https://github.com/wowmarcomei/awesome-gpt-images"
                       target="_blank"
                       rel="noopener noreferrer"
                       className={cn(
-                        "p-2.5 rounded-full transition-all duration-200",
-                        "bg-gray-900 text-white dark:bg-white dark:text-gray-900",
-                        "hover:bg-gray-800 dark:hover:bg-gray-100",
-                        "focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700"
+                        "w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl transition-all",
+                        "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700",
+                        "text-gray-900 dark:text-white"
                       )}
-                      aria-label="GitHub 仓库"
                     >
                       <FaGithub className="w-5 h-5" />
+                      <span className="text-sm font-medium">GitHub</span>
                     </a>
                   </div>
                 </div>

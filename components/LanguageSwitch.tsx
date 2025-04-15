@@ -2,34 +2,24 @@
 
 import { useI18n } from '../lib/i18n/context';
 import { cn } from '../lib/utils';
+import { MdLanguage } from 'react-icons/md';
 
 export function LanguageSwitch() {
   const { language, setLanguage } = useI18n();
 
   return (
-    <div className="flex items-center gap-2 bg-gray-100 dark:bg-gray-800 rounded-full p-1">
-      <button
-        onClick={() => setLanguage('zh')}
-        className={cn(
-          "px-3 py-1.5 text-sm font-medium rounded-full transition-colors",
-          language === 'zh'
-            ? "bg-white text-gray-900 shadow-sm dark:bg-gray-700 dark:text-white"
-            : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-        )}
-      >
-        中文
-      </button>
-      <button
-        onClick={() => setLanguage('en')}
-        className={cn(
-          "px-3 py-1.5 text-sm font-medium rounded-full transition-colors",
-          language === 'en'
-            ? "bg-white text-gray-900 shadow-sm dark:bg-gray-700 dark:text-white"
-            : "text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-        )}
-      >
-        English
-      </button>
-    </div>
+    <button
+      onClick={() => setLanguage(language === 'zh' ? 'en' : 'zh')}
+      className={cn(
+        "w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl transition-all",
+        "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700",
+        "text-gray-900 dark:text-white"
+      )}
+    >
+      <MdLanguage className="w-5 h-5" />
+      <span className="text-sm font-medium">
+        {language === 'zh' ? '切换为英文' : 'Switch to Chinese'}
+      </span>
+    </button>
   );
 } 
