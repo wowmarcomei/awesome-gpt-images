@@ -1,4 +1,5 @@
 import { cn } from '../lib/utils';
+import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
 
 interface PaginationProps {
   currentPage: number;
@@ -15,13 +16,16 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
         className={cn(
-          'px-4 py-2 rounded-lg transition-colors',
+          'w-10 h-10 flex items-center justify-center rounded-lg transition-colors',
+          'bg-white dark:bg-gray-800',
           'border border-gray-200 dark:border-gray-700',
-          'hover:bg-gray-100 dark:hover:bg-gray-800',
+          'text-gray-900 dark:text-gray-100',
+          'hover:bg-gray-100 dark:hover:bg-gray-700',
           'disabled:opacity-50 disabled:cursor-not-allowed'
         )}
+        aria-label="上一页"
       >
-        上一页
+        <FiChevronLeft className="w-5 h-5" />
       </button>
       <div className="flex gap-2">
         {pages.map((page) => (
@@ -32,8 +36,12 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
               'w-10 h-10 rounded-lg transition-colors',
               'border border-gray-200 dark:border-gray-700',
               currentPage === page
-                ? 'bg-gray-900 text-white dark:bg-gray-100 dark:text-gray-900'
-                : 'hover:bg-gray-100 dark:hover:bg-gray-800'
+                ? 'bg-blue-500 text-white border-blue-500 dark:border-blue-500'
+                : [
+                    'bg-white dark:bg-gray-800',
+                    'text-gray-900 dark:text-gray-100',
+                    'hover:bg-gray-100 dark:hover:bg-gray-700'
+                  ]
             )}
           >
             {page}
@@ -44,13 +52,16 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
         className={cn(
-          'px-4 py-2 rounded-lg transition-colors',
+          'w-10 h-10 flex items-center justify-center rounded-lg transition-colors',
+          'bg-white dark:bg-gray-800',
           'border border-gray-200 dark:border-gray-700',
-          'hover:bg-gray-100 dark:hover:bg-gray-800',
+          'text-gray-900 dark:text-gray-100',
+          'hover:bg-gray-100 dark:hover:bg-gray-700',
           'disabled:opacity-50 disabled:cursor-not-allowed'
         )}
+        aria-label="下一页"
       >
-        下一页
+        <FiChevronRight className="w-5 h-5" />
       </button>
     </div>
   );
