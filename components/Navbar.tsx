@@ -122,32 +122,33 @@ export function Navbar() {
             >
               <div className="flex flex-col h-full">
                 <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
-                  <span className="text-lg font-semibold">菜单</span>
+                  <span className="text-lg font-semibold text-gray-900 dark:text-white">菜单</span>
                   <button
                     onClick={() => setIsOpen(false)}
                     className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                    aria-label="关闭菜单"
                   >
                     <FiX className="w-5 h-5" />
                   </button>
                 </div>
-                <div className="flex flex-col gap-2 p-4">
-                  <div className="flex justify-start">
+                <div className="p-4">
+                  <div className="flex items-center gap-3">
                     <ThemeToggle />
+                    <a
+                      href="https://github.com/wowmarcomei/awesome-gpt-images"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                        "p-2.5 rounded-full transition-all duration-200",
+                        "bg-gray-900 text-white dark:bg-white dark:text-gray-900",
+                        "hover:bg-gray-800 dark:hover:bg-gray-100",
+                        "focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700"
+                      )}
+                      aria-label="GitHub 仓库"
+                    >
+                      <FaGithub className="w-5 h-5" />
+                    </a>
                   </div>
-                  <a
-                    href="https://github.com/wowmarcomei/awesome-gpt-images"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(
-                      "flex items-center gap-2 px-4 py-2.5 rounded-lg",
-                      "bg-gray-900 text-white dark:bg-white dark:text-gray-900",
-                      "hover:bg-gray-800 dark:hover:bg-gray-100",
-                      "transition-all duration-200 ease-in-out"
-                    )}
-                  >
-                    <FaGithub className="w-5 h-5" />
-                    <span className="font-medium">GitHub</span>
-                  </a>
                 </div>
               </div>
             </motion.div>
