@@ -31,6 +31,19 @@ export function CategoryFilter({ onCategoryChange, selectedCategories }: Categor
     <div className="space-y-4">
       {/* 主分类行 */}
       <div className="flex flex-wrap gap-2">
+        <button
+          onClick={() => onCategoryChange('', '')}
+          className={cn(
+            "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
+            "border border-gray-200 dark:border-gray-700",
+            selectedCategories.size === 0
+              ? "bg-blue-500 text-white dark:bg-blue-500"
+              : "bg-white text-gray-700 dark:bg-gray-800 dark:text-gray-300",
+            "hover:bg-blue-100 dark:hover:bg-blue-900/50"
+          )}
+        >
+          全部
+        </button>
         {categories.map((category) => (
           <button
             key={category.id}
