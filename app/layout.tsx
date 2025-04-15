@@ -62,7 +62,7 @@ export const metadata: Metadata = {
     description: '探索 GPT-4 Vision 图像创作的无限可能！收录精选 GPT-4V 提示词案例，展示 AI 图像理解与创作的最佳实践。',
     images: [
       {
-        url: '/og-image/og-image.png',
+        url: 'https://awesome-gpt-images.com/og-image/og-image.png',
         width: 1088,
         height: 992,
         alt: 'Awesome GPT-4 Images - 探索 AI 图像理解的未来',
@@ -78,7 +78,7 @@ export const metadata: Metadata = {
     site: '@wowmarcomei',
     images: [
       {
-        url: '/og-image/og-image.png',
+        url: 'https://awesome-gpt-images.com/og-image/og-image.png',
         width: 1088,
         height: 992,
         alt: 'Awesome GPT-4 Images - 探索 AI 图像理解的未来',
