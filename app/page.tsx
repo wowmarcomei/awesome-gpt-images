@@ -7,12 +7,15 @@ import TabFilter from '../components/TabFilter';
 import { FaTwitter, FaGithub, FaShareAlt } from 'react-icons/fa';
 import { MobileDrawer } from '../components/MobileDrawer';
 import { DesktopNav } from '../components/DesktopNav';
+import Pagination from '../components/Pagination';
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedTag, setSelectedTag] = useState<string | null>(null);
   const [selectedAuthor, setSelectedAuthor] = useState<string | null>(null);
   const [showShareTooltip, setShowShareTooltip] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 9; // 每页显示9个卡片
 
   // 提取所有唯一的标签
   const allTags = useMemo(() => {
@@ -53,8 +56,18 @@ export default function Home() {
     });
   }, [searchTerm, selectedTag, selectedAuthor]);
 
+  // 计算分页数据
+  const paginatedCases = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filteredCases.slice(startIndex, endIndex);
+  }, [filteredCases, currentPage, itemsPerPage]);
+
+  const totalPages = Math.ceil(filteredCases.length / itemsPerPage);
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
+    setCurrentPage(1);
   };
 
   const handleTagClick = (tag: string) => {
@@ -63,10 +76,12 @@ export default function Home() {
     } else {
       setSelectedTag(selectedTag === tag ? null : tag);
     }
+    setCurrentPage(1);
   };
 
   const handleAuthorClick = (authorName: string) => {
     setSelectedAuthor(selectedAuthor === authorName ? null : authorName);
+    setCurrentPage(1);
   };
 
   const handleShare = async () => {
@@ -170,7 +185,7 @@ export default function Home() {
             />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-6">
-              {filteredCases.map((caseItem) => (
+              {paginatedCases.map((caseItem) => (
                 <CaseCard
                   key={caseItem.id}
                   case={caseItem}
@@ -183,6 +198,14 @@ export default function Home() {
               <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                 没有找到匹配的案例
               </div>
+            )}
+
+            {filteredCases.length > 0 && (
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
             )}
           </div>
         </div>
