@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from 'next-themes';
 import { cn } from '../lib/utils';
 import { Navbar } from '../components/Navbar';
+import { ScrollButton } from '../components/ScrollButton';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -194,6 +195,7 @@ export default function RootLayout({
           <div className="pt-12">
             {children}
           </div>
+          <ScrollButton />
           <Analytics debug={process.env.NODE_ENV === 'development'} />
         </ThemeProvider>
       </body>
