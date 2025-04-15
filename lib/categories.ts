@@ -55,6 +55,34 @@ export const categories: Category[] = [
           zh: '极简主义',
           en: 'Minimalist'
         }
+      },
+      {
+        id: 'retro',
+        name: {
+          zh: '复古',
+          en: 'Retro'
+        }
+      },
+      {
+        id: 'hand-drawn',
+        name: {
+          zh: '手绘',
+          en: 'Hand-drawn'
+        }
+      },
+      {
+        id: 'surreal',
+        name: {
+          zh: '超现实',
+          en: 'Surreal'
+        }
+      },
+      {
+        id: 'creative',
+        name: {
+          zh: '创意',
+          en: 'Creative'
+        }
       }
     ]
   },
@@ -70,6 +98,20 @@ export const categories: Category[] = [
         name: {
           zh: '婚礼',
           en: 'Wedding'
+        }
+      },
+      {
+        id: 'proposal',
+        name: {
+          zh: '求婚',
+          en: 'Proposal'
+        }
+      },
+      {
+        id: 'chinese-wedding',
+        name: {
+          zh: '中式婚礼',
+          en: 'Chinese Wedding'
         }
       },
       {
@@ -98,6 +140,34 @@ export const categories: Category[] = [
         name: {
           zh: '教育',
           en: 'Education'
+        }
+      },
+      {
+        id: 'food',
+        name: {
+          zh: '食物',
+          en: 'Food'
+        }
+      },
+      {
+        id: 'couple',
+        name: {
+          zh: '情侣',
+          en: 'Couple'
+        }
+      },
+      {
+        id: 'science',
+        name: {
+          zh: '科学',
+          en: 'Science'
+        }
+      },
+      {
+        id: 'masterpiece',
+        name: {
+          zh: '名画',
+          en: 'Masterpiece'
         }
       }
     ]
@@ -142,6 +212,43 @@ export const categories: Category[] = [
         name: {
           zh: '漫画',
           en: 'Manga'
+        }
+      },
+      {
+        id: 'illustration',
+        name: {
+          zh: '插画',
+          en: 'Illustration'
+        }
+      },
+      {
+        id: 'diorama',
+        name: {
+          zh: '立体场景',
+          en: 'Diorama'
+        }
+      },
+      {
+        id: 'figure',
+        name: {
+          zh: '公仔',
+          en: 'Figure'
+        }
+      }
+    ]
+  },
+  {
+    id: 'others',
+    name: {
+      zh: '杂项',
+      en: 'Others'
+    },
+    subcategories: [
+      {
+        id: 'creative',
+        name: {
+          zh: '其他',
+          en: 'Creative'
         }
       }
     ]
