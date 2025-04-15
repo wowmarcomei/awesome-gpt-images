@@ -34,12 +34,10 @@ export function CategoryFilter({ onCategoryChange, selectedCategories }: Categor
         <button
           onClick={() => onCategoryChange('', '')}
           className={cn(
-            "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
-            "border border-gray-200 dark:border-gray-700",
+            "h-9 px-5 rounded-full text-sm font-medium transition-all duration-200",
             selectedCategories.size === 0
-              ? "bg-blue-500 text-white dark:bg-blue-500"
-              : "bg-white text-gray-700 dark:bg-gray-800 dark:text-gray-300",
-            "hover:bg-blue-100 dark:hover:bg-blue-900/50"
+              ? "bg-blue-500 text-white shadow-sm hover:bg-blue-600"
+              : "bg-gray-50 text-gray-700 hover:bg-gray-100 dark:bg-gray-800/50 dark:text-gray-300 dark:hover:bg-gray-800"
           )}
         >
           全部
@@ -49,22 +47,19 @@ export function CategoryFilter({ onCategoryChange, selectedCategories }: Categor
             key={category.id}
             onClick={() => toggleCategory(category.id)}
             className={cn(
-              "px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200",
-              "border border-gray-200 dark:border-gray-700",
+              "h-9 px-5 rounded-full text-sm font-medium transition-all duration-200",
               expandedCategories.has(category.id)
-                ? "bg-gray-900 text-white dark:bg-white dark:text-gray-900"
-                : "bg-white text-gray-700 dark:bg-gray-800 dark:text-gray-300",
-              "hover:bg-gray-100 dark:hover:bg-gray-700"
+                ? "bg-gray-900 text-white shadow-sm dark:bg-white dark:text-gray-900"
+                : "bg-gray-50 text-gray-700 hover:bg-gray-100 dark:bg-gray-800/50 dark:text-gray-300 dark:hover:bg-gray-800",
+              "flex items-center gap-1.5"
             )}
           >
-            <span className="flex items-center gap-1">
-              {category.name}
-              {expandedCategories.has(category.id) ? (
-                <FiChevronUp className="w-4 h-4" />
-              ) : (
-                <FiChevronDown className="w-4 h-4" />
-              )}
-            </span>
+            {category.name}
+            {expandedCategories.has(category.id) ? (
+              <FiChevronUp className="w-4 h-4 opacity-80" />
+            ) : (
+              <FiChevronDown className="w-4 h-4 opacity-80" />
+            )}
           </button>
         ))}
       </div>
@@ -83,16 +78,16 @@ export function CategoryFilter({ onCategoryChange, selectedCategories }: Categor
               <button
                 key={id}
                 onClick={() => handleSubCategoryClick(categoryId, subCategoryId)}
-                className="inline-flex items-center gap-1 px-2 py-1 text-xs rounded-full bg-blue-50 text-blue-600 dark:bg-blue-900/30 dark:text-blue-400"
+                className="inline-flex items-center gap-1.5 h-7 px-3 text-xs font-medium rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400 dark:hover:bg-blue-900/50 transition-colors"
               >
                 {subCategory.name}
-                <FiX className="w-3 h-3" />
+                <FiX className="w-3.5 h-3.5" />
               </button>
             );
           })}
           <button
             onClick={() => onCategoryChange('', '')}
-            className="text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+            className="h-7 px-3 text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
           >
             清除全部
           </button>
@@ -112,11 +107,10 @@ export function CategoryFilter({ onCategoryChange, selectedCategories }: Categor
                       key={subCategory.id}
                       onClick={() => handleSubCategoryClick(category.id, subCategory.id)}
                       className={cn(
-                        "px-3 py-1 rounded-full text-sm transition-colors",
+                        "h-8 px-4 rounded-full text-sm font-medium transition-colors",
                         isSelected
-                          ? "bg-blue-500 text-white"
-                          : "bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300",
-                        "hover:bg-blue-100 dark:hover:bg-blue-900/50"
+                          ? "bg-blue-500 text-white shadow-sm hover:bg-blue-600"
+                          : "bg-gray-50 text-gray-600 hover:bg-gray-100 dark:bg-gray-800/50 dark:text-gray-300 dark:hover:bg-gray-800"
                       )}
                     >
                       {subCategory.name}
