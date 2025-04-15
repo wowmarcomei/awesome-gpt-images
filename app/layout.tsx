@@ -9,7 +9,7 @@ import { Navbar } from '../components/Navbar';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://awesome-gpt-images.vercel.app'),
+  metadataBase: new URL('https://awesome-gpt-images.com'),
   title: {
     default: 'Awesome GPT-4 Images - GPT-4 Vision 创作案例展示',
     template: '%s | Awesome GPT-4 Images'
@@ -56,15 +56,15 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'zh_CN',
     alternateLocale: 'en_US',
-    url: 'https://awesome-gpt-images.com/',
+    url: 'https://awesome-gpt-images.com',
     siteName: 'Awesome GPT-4 Images',
     title: 'Awesome GPT-4 Images - GPT-4 Vision 创作案例展示',
     description: '探索 GPT-4 Vision 图像创作的无限可能！收录精选 GPT-4V 提示词案例，展示 AI 图像理解与创作的最佳实践。',
     images: [
       {
         url: '/og-image/og-image.png',
-        width: 1200,
-        height: 630,
+        width: 1088,
+        height: 992,
         alt: 'Awesome GPT-4 Images - 探索 AI 图像理解的未来',
         type: 'image/png',
       },
@@ -75,11 +75,15 @@ export const metadata: Metadata = {
     title: 'Awesome GPT-4 Images - GPT-4 Vision 创作案例展示',
     description: '探索 GPT-4 Vision 图像创作的无限可能！收录精选 GPT-4V 提示词案例，展示 AI 图像理解与创作的最佳实践。',
     creator: '@wowmarcomei',
-    images: {
-      url: '/og-image/og-image.png',
-      alt: 'Awesome GPT-4 Images - 探索 AI 图像理解的未来',
-    },
     site: '@wowmarcomei',
+    images: [
+      {
+        url: '/og-image/og-image.png',
+        width: 1088,
+        height: 992,
+        alt: 'Awesome GPT-4 Images - 探索 AI 图像理解的未来',
+      }
+    ],
   },
   viewport: {
     width: 'device-width',
