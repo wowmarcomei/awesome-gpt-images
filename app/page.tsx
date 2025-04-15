@@ -5,8 +5,6 @@ import CaseCard from '../components/CaseCard';
 import { cases, authors } from '../lib/data';
 import TabFilter from '../components/TabFilter';
 import { FaTwitter, FaGithub, FaShareAlt } from 'react-icons/fa';
-import { MobileDrawer } from '../components/MobileDrawer';
-import { DesktopNav } from '../components/DesktopNav';
 import Pagination from '../components/Pagination';
 
 export default function Home() {
@@ -104,17 +102,6 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
-      {/* 移动端抽屉菜单 */}
-      <MobileDrawer
-        authors={authors}
-        selectedAuthor={selectedAuthor}
-        onAuthorClick={(name) => setSelectedAuthor(name === selectedAuthor ? null : name)}
-        onShare={handleShare}
-      />
-
-      {/* 桌面端导航 */}
-      <DesktopNav onShare={handleShare} />
-
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-center mb-8 text-gray-900 dark:text-white">
           Awesome GPT-4 Images ✨

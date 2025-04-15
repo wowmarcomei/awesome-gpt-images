@@ -4,7 +4,7 @@ import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from 'next-themes';
 import { cn } from '../lib/utils';
-import { NavButtons } from '../components/nav-buttons';
+import { Navbar } from '../components/Navbar';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -99,8 +99,10 @@ export default function RootLayout({
           enableSystem={true}
           disableTransitionOnChange
         >
-          <NavButtons />
-          {children}
+          <Navbar />
+          <div className="pt-16 md:pt-20">
+            {children}
+          </div>
           <Analytics debug={process.env.NODE_ENV === 'development'} />
         </ThemeProvider>
       </body>
