@@ -27,7 +27,7 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
-      className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col h-full"
+      className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col"
     >
       <div className="relative w-full pt-[75%] mt-4">
         <Image
@@ -41,7 +41,7 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
         />
       </div>
       
-      <div className="p-6 flex-grow flex flex-col">
+      <div className="p-6 flex flex-col">
         <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
           {caseData.title}
         </h3>
@@ -74,7 +74,7 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
           <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
             提示词：
           </h4>
-          <div className="relative bg-amber-50/50 dark:bg-amber-900/10 rounded-lg p-3 font-mono text-sm text-gray-800 dark:text-gray-200 overflow-x-auto border border-amber-100 dark:border-amber-900/20">
+          <div className="relative bg-amber-50/50 dark:bg-amber-900/10 rounded-lg p-3 font-mono text-sm text-gray-800 dark:text-gray-200 border border-amber-100 dark:border-amber-900/20 min-h-[120px] max-h-[120px] overflow-y-auto">
             <pre className="whitespace-pre-wrap break-words">
               {caseData.prompt}
             </pre>
@@ -95,7 +95,7 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
         
         <button
           onClick={handleCopyPrompt}
-          className="mt-auto block text-center py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300"
+          className="block text-center py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300"
         >
           获取 Prompt
         </button>
