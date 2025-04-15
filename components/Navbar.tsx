@@ -6,6 +6,7 @@ import { FiMenu, FiX } from 'react-icons/fi';
 import { ThemeToggle } from './theme-toggle';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import Image from 'next/image';
 import { cn } from '../lib/utils';
 
 export function Navbar() {
@@ -26,22 +27,38 @@ export function Navbar() {
       <header 
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-          isScrolled 
-            ? 'bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-800' 
-            : 'bg-transparent'
+          'bg-white/90 dark:bg-gray-900/90 backdrop-blur-md',
+          isScrolled && 'border-b border-gray-200 dark:border-gray-800'
         )}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex justify-between items-center h-16">
             {/* Logo和标题 */}
-            <Link 
-              href="/"
-              className="flex items-center gap-1.5 text-xl font-bold text-gray-900 dark:text-white hover:opacity-90 transition-opacity"
-            >
-              <span className="hidden sm:inline">Awesome</span>
-              <span>GPT-4 Images</span>
-              <span className="text-blue-500 ml-0.5">✨</span>
-            </Link>
+            <div className="flex items-center gap-3">
+              <Link 
+                href="/"
+                className="flex items-center"
+              >
+                <div className="relative w-12 h-12">
+                  <Image
+                    src="/favicon/ms-icon-310x310.png"
+                    alt="Logo"
+                    width={48}
+                    height={48}
+                    className="object-contain"
+                    priority
+                  />
+                </div>
+              </Link>
+              <Link 
+                href="/"
+                className="flex items-center gap-1 text-xl font-bold text-gray-900 dark:text-white hover:opacity-90 transition-opacity"
+              >
+                <span className="hidden sm:inline">Awesome</span>
+                <span>GPT-4 Images</span>
+                <span className="text-blue-500 ml-0.5">✨</span>
+              </Link>
+            </div>
 
             {/* 桌面端导航 */}
             <nav className="hidden md:flex items-center gap-3">

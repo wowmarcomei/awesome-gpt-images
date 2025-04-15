@@ -70,15 +70,64 @@ export const metadata: Metadata = {
     },
   },
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/apple-touch-icon.png',
-    other: {
-      rel: 'apple-touch-icon-precomposed',
-      url: '/apple-touch-icon-precomposed.png',
-    },
+    icon: [
+      { url: '/favicon/ms-icon-144x144.png', sizes: '144x144', type: 'image/png' },
+      { url: '/favicon/ms-icon-310x310.png', sizes: '310x310', type: 'image/png' },
+    ],
+    shortcut: '/favicon/ms-icon-144x144.png',
+    apple: [
+      { url: '/favicon/apple-icon-57x57.png', sizes: '57x57', type: 'image/png' },
+      { url: '/favicon/apple-icon-60x60.png', sizes: '60x60', type: 'image/png' },
+      { url: '/favicon/apple-icon-72x72.png', sizes: '72x72', type: 'image/png' },
+      { url: '/favicon/apple-icon-76x76.png', sizes: '76x76', type: 'image/png' },
+      { url: '/favicon/apple-icon-114x114.png', sizes: '114x114', type: 'image/png' },
+      { url: '/favicon/apple-icon-120x120.png', sizes: '120x120', type: 'image/png' },
+      { url: '/favicon/apple-icon-144x144.png', sizes: '144x144', type: 'image/png' },
+      { url: '/favicon/apple-icon-152x152.png', sizes: '152x152', type: 'image/png' },
+      { url: '/favicon/apple-icon-180x180.png', sizes: '180x180', type: 'image/png' },
+    ],
+    other: [
+      {
+        rel: 'apple-touch-icon-precomposed',
+        url: '/favicon/apple-icon-precomposed.png',
+      },
+      {
+        rel: 'android-chrome',
+        url: '/favicon/android-icon-192x192.png',
+        sizes: '192x192',
+      },
+      {
+        rel: 'android-chrome',
+        url: '/favicon/android-icon-144x144.png',
+        sizes: '144x144',
+      },
+      {
+        rel: 'android-chrome',
+        url: '/favicon/android-icon-96x96.png',
+        sizes: '96x96',
+      },
+      {
+        rel: 'android-chrome',
+        url: '/favicon/android-icon-72x72.png',
+        sizes: '72x72',
+      },
+      {
+        rel: 'android-chrome',
+        url: '/favicon/android-icon-48x48.png',
+        sizes: '48x48',
+      },
+      {
+        rel: 'android-chrome',
+        url: '/favicon/android-icon-36x36.png',
+        sizes: '36x36',
+      },
+      {
+        rel: 'msapplication-TileImage',
+        url: '/favicon/ms-icon-144x144.png',
+      },
+    ],
   },
-  manifest: '/site.webmanifest',
+  manifest: '/favicon/manifest.json',
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
     { media: '(prefers-color-scheme: dark)', color: '#111827' },
@@ -100,7 +149,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          <div className="pt-16 md:pt-20">
+          <div className="pt-12">
             {children}
           </div>
           <Analytics debug={process.env.NODE_ENV === 'development'} />
