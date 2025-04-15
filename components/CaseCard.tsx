@@ -24,11 +24,14 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
-      <div className="relative aspect-video">
-        <img
+      <div className="relative aspect-[12/12]">
+        <Image
           src={caseData.image}
           alt={caseData.title[currentLang]}
-          className="w-full h-full object-cover"
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority={false}
         />
       </div>
       
