@@ -3,8 +3,9 @@ export const zh = {
     all: '全部',
     selected: '已选择：',
     clearAll: '清除全部',
-    search: '搜索案例...',
-    noResults: '没有找到匹配的案例',
+    search: '搜索标题、提示词或标签',
+    noResults: '没有找到匹配的结果',
+    allAuthors: '全部作者',
   },
   categories: {
     style: '风格',

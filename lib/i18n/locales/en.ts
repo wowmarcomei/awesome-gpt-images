@@ -3,8 +3,9 @@ export const en = {
     all: 'All',
     selected: 'Selected:',
     clearAll: 'Clear All',
-    search: 'Search cases...',
-    noResults: 'No matching cases found',
+    search: 'Search title, prompt or tags',
+    noResults: 'No matching results found',
+    allAuthors: 'All Authors',
   },
   categories: {
     style: 'Style',

@@ -212,6 +212,20 @@ export default function Home() {
                 onChange={handleSearch}
                 className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
+              
+              {/* 移动端作者筛选下拉菜单 */}
+              <select
+                value={selectedAuthor || ''}
+                onChange={(e) => setSelectedAuthor(e.target.value || null)}
+                className="lg:hidden w-full mt-4 px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">{t('common.allAuthors')}</option>
+                {authors.map((author) => (
+                  <option key={author.name} value={author.name}>
+                    {author.name} ({author.count})
+                  </option>
+                ))}
+              </select>
             </div>
 
             <CategoryFilter
