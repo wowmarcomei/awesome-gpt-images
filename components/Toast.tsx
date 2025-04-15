@@ -31,16 +31,18 @@ export default function Toast({ message, show, onClose }: ToastProps) {
             className="fixed inset-0 bg-black/20 backdrop-blur-sm z-50"
           />
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 50 }}
-            className="fixed left-1/2 bottom-4 -translate-x-1/2 z-50"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.95 }}
+            className="fixed left-0 right-0 top-[50%] -translate-y-1/2 z-50 pointer-events-none"
           >
-            <div className="flex items-center gap-3 px-6 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl shadow-2xl">
-              <div className="flex items-center justify-center w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full">
-                <FaCheck className="w-4 h-4 text-green-500 dark:text-green-400" />
+            <div className="w-[90vw] max-w-sm mx-auto pointer-events-auto">
+              <div className="flex items-center gap-3 px-6 py-4 bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-xl shadow-2xl">
+                <div className="flex items-center justify-center w-8 h-8 bg-green-100 dark:bg-green-900/30 rounded-full">
+                  <FaCheck className="w-4 h-4 text-green-500 dark:text-green-400" />
+                </div>
+                <span className="text-base font-medium">{message}</span>
               </div>
-              <span className="text-base font-medium whitespace-nowrap">{message}</span>
             </div>
           </motion.div>
         </>

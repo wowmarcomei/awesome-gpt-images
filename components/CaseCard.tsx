@@ -66,12 +66,12 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
                 href={caseData.originalLink}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600 transition-colors"
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 text-sm font-medium rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400 dark:hover:bg-blue-900/50 transition-colors"
               >
-                {t('card.original')}
-                <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
+                {t('card.original')}
               </a>
             </div>
           </div>
@@ -91,14 +91,14 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
 
           {/* Prompt */}
           <div className="flex-grow flex flex-col">
-            <div className="p-3 bg-gray-50 dark:bg-gray-900 rounded-lg flex-grow">
-              <pre className="text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap font-mono h-full">
+            <div className="relative flex-grow mb-3">
+              <pre className="h-[150px] overflow-y-auto p-4 bg-amber-50 dark:bg-gray-900 rounded-lg text-sm text-gray-700 dark:text-gray-300 whitespace-pre-wrap font-mono border border-amber-200 dark:border-gray-700">
                 {caseData.prompt}
               </pre>
             </div>
             <button
               onClick={handleCopyPrompt}
-              className="mt-3 w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
+              className="w-full px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
             >
               {t('card.getPrompt')}
             </button>
