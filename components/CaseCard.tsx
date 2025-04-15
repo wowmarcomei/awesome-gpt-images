@@ -1,6 +1,6 @@
 import { Case } from '../types';
 import { motion } from 'framer-motion';
-import { FaTwitter, FaCopy } from 'react-icons/fa';
+import { FaTwitter, FaExternalLinkAlt } from 'react-icons/fa';
 import Image from 'next/image';
 import { useState } from 'react';
 import Toast from './Toast';
@@ -17,7 +17,6 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
     try {
       await navigator.clipboard.writeText(caseData.prompt);
       setShowCopied(true);
-      setTimeout(() => setShowCopied(false), 2000);
     } catch (err) {
       console.error('复制失败:', err);
     }
@@ -47,7 +46,7 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
           {caseData.title}
         </h3>
         
-        <div className="flex items-center mb-3">
+        <div className="flex items-center justify-between mb-3">
           <a
             href={caseData.author.twitter}
             target="_blank"
@@ -57,29 +56,30 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
             <FaTwitter className="mr-1" />
             <span className="text-sm">{caseData.author.name}</span>
           </a>
+          <a
+            href={caseData.originalLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium
+              bg-blue-50 text-blue-600 hover:bg-blue-100
+              dark:bg-blue-900/30 dark:text-blue-400 dark:hover:bg-blue-900/50
+              transition-colors group"
+          >
+            <span>查看原文</span>
+            <FaExternalLinkAlt className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </a>
         </div>
         
         <div className="mb-3">
-          <div className="flex items-center justify-between mb-2">
-            <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-              提示词：
-            </h4>
-            <button
-              onClick={handleCopyPrompt}
-              className="relative flex items-center gap-1 text-xs text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300"
-            >
-              <FaCopy className="w-3.5 h-3.5" />
-              复制
-            </button>
-          </div>
+          <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+            提示词：
+          </h4>
           <div className="relative bg-amber-50/50 dark:bg-amber-900/10 rounded-lg p-3 font-mono text-sm text-gray-800 dark:text-gray-200 overflow-x-auto border border-amber-100 dark:border-amber-900/20">
             <pre className="whitespace-pre-wrap break-words">
               {caseData.prompt}
             </pre>
           </div>
         </div>
-        
-        
         
         <div className="flex flex-wrap gap-2 mb-4">
           {caseData.tags.map((tag) => (
@@ -93,17 +93,19 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
           ))}
         </div>
         
-        <a
-          href={caseData.originalLink}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={handleCopyPrompt}
           className="mt-auto block text-center py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors duration-300"
         >
-          查看原文
-        </a>
+          获取 Prompt
+        </button>
       </div>
 
-      <Toast message="提示词已复制到剪贴板" isVisible={showCopied} />
+      <Toast 
+        message="提示词已复制到剪贴板" 
+        isVisible={showCopied} 
+        onClose={() => setShowCopied(false)} 
+      />
     </motion.div>
   );
 } 
