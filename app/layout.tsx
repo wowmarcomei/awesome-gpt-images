@@ -9,22 +9,44 @@ import { Navbar } from '../components/Navbar';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://awesome-gpt-images.com'),
+  metadataBase: new URL('https://awesome-gpt-images.vercel.app'),
   title: {
     default: 'Awesome GPT-4 Images - GPT-4 Vision 创作案例展示',
     template: '%s | Awesome GPT-4 Images'
   },
-  description: '精选 GPT-4 Vision 图像创作案例展示，包含详细提示词、创作技巧和最佳实践。Collection of amazing GPT-4 Vision image creation showcases with detailed prompts and best practices.',
-  keywords: 'GPT-4, Vision, AI, Image Generation, Prompts, Creative, Showcase, Examples, 图像生成, 提示词, 人工智能, 创意展示',
-  authors: [{ name: 'wowmarcomei', url: 'https://github.com/wowmarcomei' }],
+  description: '探索 GPT-4 Vision 图像创作的无限可能！收录精选 GPT-4V 提示词案例，展示 AI 图像理解与创作的最佳实践。包含详细的中英文提示词、创作技巧和实用指南。Explore the possibilities of GPT-4 Vision! A curated collection of GPT-4V prompts showcasing AI image understanding and creation best practices.',
+  keywords: [
+    'GPT-4 Vision',
+    'GPT-4V',
+    'AI Image Generation',
+    'Prompt Engineering',
+    'AI Prompts',
+    'Image Analysis',
+    'Computer Vision',
+    'AI Creative Tools',
+    'GPT-4 Examples',
+    'AI Image Understanding',
+    '人工智能图像生成',
+    '提示词工程',
+    'AI创意工具',
+    '计算机视觉',
+    'GPT-4案例',
+    'AI图像理解'
+  ].join(', '),
+  authors: [{ 
+    name: 'wowmarcomei',
+    url: 'https://github.com/wowmarcomei'
+  }],
   creator: 'wowmarcomei',
   publisher: 'wowmarcomei',
   robots: {
     index: true,
     follow: true,
+    nocache: true,
     googleBot: {
       index: true,
       follow: true,
+      noimageindex: false,
       'max-video-preview': -1,
       'max-image-preview': 'large',
       'max-snippet': -1,
@@ -37,30 +59,38 @@ export const metadata: Metadata = {
     url: 'https://awesome-gpt-images.com/',
     siteName: 'Awesome GPT-4 Images',
     title: 'Awesome GPT-4 Images - GPT-4 Vision 创作案例展示',
-    description: '精选 GPT-4 Vision 图像创作案例展示，包含详细提示词、创作技巧和最佳实践。',
+    description: '探索 GPT-4 Vision 图像创作的无限可能！收录精选 GPT-4V 提示词案例，展示 AI 图像理解与创作的最佳实践。',
     images: [
       {
         url: '/og-image.png',
         width: 1200,
         height: 630,
-        alt: 'Awesome GPT-4 Images Preview',
+        alt: 'Awesome GPT-4 Images - 探索 AI 图像理解的未来',
+        type: 'image/png',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Awesome GPT-4 Images - GPT-4 Vision 创作案例展示',
-    description: '精选 GPT-4 Vision 图像创作案例展示，包含详细提示词、创作技巧和最佳实践。',
+    description: '探索 GPT-4 Vision 图像创作的无限可能！收录精选 GPT-4V 提示词案例，展示 AI 图像理解与创作的最佳实践。',
     creator: '@wowmarcomei',
-    images: ['/og-image.png'],
+    images: {
+      url: '/og-image.png',
+      alt: 'Awesome GPT-4 Images - 探索 AI 图像理解的未来',
+    },
+    site: '@wowmarcomei',
   },
   viewport: {
     width: 'device-width',
     initialScale: 1,
     maximumScale: 5,
+    userScalable: true,
   },
   verification: {
     google: 'your-google-site-verification', // 需要添加 Google Search Console 验证码
+    yandex: 'yandex-verification',
+    bing: 'msvalidate.01',
   },
   alternates: {
     canonical: 'https://awesome-gpt-images.com',
@@ -132,6 +162,15 @@ export const metadata: Metadata = {
     { media: '(prefers-color-scheme: light)', color: '#ffffff' },
     { media: '(prefers-color-scheme: dark)', color: '#111827' },
   ],
+  category: 'technology',
+  classification: 'AI Tools, Image Generation, Computer Vision',
+  referrer: 'origin-when-cross-origin',
+  formatDetection: {
+    telephone: true,
+    date: true,
+    address: true,
+    email: true,
+  },
 };
 
 export default function RootLayout({
