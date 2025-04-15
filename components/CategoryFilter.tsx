@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Category, SubCategory, categories } from '../lib/categories';
 import { cn } from '../lib/utils';
 import { FiChevronDown, FiChevronUp, FiX } from 'react-icons/fi';
+import { useI18n } from '../lib/i18n/context';
 
 interface CategoryFilterProps {
   onCategoryChange: (categoryId: string, subCategoryId: string) => void;
@@ -12,6 +13,7 @@ interface CategoryFilterProps {
 
 export function CategoryFilter({ onCategoryChange, selectedCategories }: CategoryFilterProps) {
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
+  const { t } = useI18n();
 
   const toggleCategory = (categoryId: string) => {
     const newExpanded = new Set(expandedCategories);
@@ -40,7 +42,7 @@ export function CategoryFilter({ onCategoryChange, selectedCategories }: Categor
               : "bg-gray-50 text-gray-700 hover:bg-gray-100 dark:bg-gray-800/50 dark:text-gray-300 dark:hover:bg-gray-800"
           )}
         >
-          全部
+          {t('common.all')}
         </button>
         {categories.map((category) => (
           <button
@@ -54,7 +56,7 @@ export function CategoryFilter({ onCategoryChange, selectedCategories }: Categor
               "flex items-center gap-1.5"
             )}
           >
-            {category.name}
+            {t(`categories.${category.id}`)}
             {expandedCategories.has(category.id) ? (
               <FiChevronUp className="w-4 h-4 opacity-80" />
             ) : (
@@ -67,7 +69,7 @@ export function CategoryFilter({ onCategoryChange, selectedCategories }: Categor
       {/* 已选标签 */}
       {selectedCategories.size > 0 && (
         <div className="flex flex-wrap items-center gap-2 pt-2">
-          <span className="text-sm text-gray-500 dark:text-gray-400">已选择：</span>
+          <span className="text-sm text-gray-500 dark:text-gray-400">{t('common.selected')}</span>
           {Array.from(selectedCategories).map(id => {
             const [categoryId, subCategoryId] = id.split('::');
             const category = categories.find(c => c.id === categoryId);
@@ -89,7 +91,7 @@ export function CategoryFilter({ onCategoryChange, selectedCategories }: Categor
             onClick={() => onCategoryChange('', '')}
             className="h-7 px-3 text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 transition-colors"
           >
-            清除全部
+            {t('common.clearAll')}
           </button>
         </div>
       )}

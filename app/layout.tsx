@@ -6,34 +6,18 @@ import { ThemeProvider } from 'next-themes';
 import { cn } from '../lib/utils';
 import { Navbar } from '../components/Navbar';
 import { ScrollButton } from '../components/ScrollButton';
+import { I18nProvider } from '../lib/i18n/context';
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://awesome-gpt-images.com'),
+  metadataBase: new URL('https://awesome-gpt-images.vercel.app'),
   title: {
-    default: 'Awesome GPT-4 Images - GPT-4 Vision 创作案例展示',
+    default: 'Awesome GPT-4 Images',
     template: '%s | Awesome GPT-4 Images'
   },
-  description: '探索 GPT-4 Vision 图像创作的无限可能！收录精选 GPT-4V 提示词案例，展示 AI 图像理解与创作的最佳实践。包含详细的中英文提示词、创作技巧和实用指南。Explore the possibilities of GPT-4 Vision! A curated collection of GPT-4V prompts showcasing AI image understanding and creation best practices.',
-  keywords: [
-    'GPT-4 Vision',
-    'GPT-4V',
-    'AI Image Generation',
-    'Prompt Engineering',
-    'AI Prompts',
-    'Image Analysis',
-    'Computer Vision',
-    'AI Creative Tools',
-    'GPT-4 Examples',
-    'AI Image Understanding',
-    '人工智能图像生成',
-    '提示词工程',
-    'AI创意工具',
-    '计算机视觉',
-    'GPT-4案例',
-    'AI图像理解'
-  ].join(', '),
+  description: '精选 GPT-4 Vision 图像创作案例展示 | Curated GPT-4 Vision Image Creation Showcase',
+  keywords: ['GPT-4', 'Vision', 'AI', 'Image', 'Showcase', 'Prompt', '人工智能', '图像生成', '提示词'],
   authors: [{ 
     name: 'wowmarcomei',
     url: 'https://github.com/wowmarcomei'
@@ -54,13 +38,12 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    type: 'website',
-    locale: 'zh_CN',
-    alternateLocale: 'en_US',
-    url: 'https://awesome-gpt-images.com',
+    title: 'Awesome GPT-4 Images',
+    description: '精选 GPT-4 Vision 图像创作案例展示 | Curated GPT-4 Vision Image Creation Showcase',
+    url: 'https://awesome-gpt-images.vercel.app',
     siteName: 'Awesome GPT-4 Images',
-    title: 'Awesome GPT-4 Images - GPT-4 Vision 创作案例展示',
-    description: '探索 GPT-4 Vision 图像创作的无限可能！收录精选 GPT-4V 提示词案例，展示 AI 图像理解与创作的最佳实践。',
+    locale: 'zh_CN',
+    type: 'website',
     images: [
       {
         url: 'https://awesome-gpt-images.com/og-image/og-image.png?v=1',
@@ -73,10 +56,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Awesome GPT-4 Images - GPT-4 Vision 创作案例展示',
-    description: '探索 GPT-4 Vision 图像创作的无限可能！收录精选 GPT-4V 提示词案例，展示 AI 图像理解与创作的最佳实践。',
-    creator: '@wowmarcomei',
-    site: '@wowmarcomei',
+    title: 'Awesome GPT-4 Images',
+    description: '精选 GPT-4 Vision 图像创作案例展示 | Curated GPT-4 Vision Image Creation Showcase',
+    site: '@your-twitter-handle',
+    creator: '@your-twitter-handle',
     images: [
       {
         url: 'https://awesome-gpt-images.com/og-image/og-image.png?v=1',
@@ -93,7 +76,7 @@ export const metadata: Metadata = {
     userScalable: true,
   },
   verification: {
-    google: 'your-google-site-verification', // 需要添加 Google Search Console 验证码
+    google: 'your-google-site-verification',
     yandex: 'yandex-verification',
   },
   alternates: {
@@ -191,12 +174,14 @@ export default function RootLayout({
           enableSystem={true}
           disableTransitionOnChange
         >
-          <Navbar />
-          <div className="pt-12">
-            {children}
-          </div>
-          <ScrollButton />
-          <Analytics debug={process.env.NODE_ENV === 'development'} />
+          <I18nProvider>
+            <Navbar />
+            <div className="pt-12">
+              {children}
+            </div>
+            <ScrollButton />
+            <Analytics debug={process.env.NODE_ENV === 'development'} />
+          </I18nProvider>
         </ThemeProvider>
       </body>
     </html>

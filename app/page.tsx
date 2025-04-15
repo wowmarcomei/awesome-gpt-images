@@ -8,6 +8,7 @@ import { categories } from '../lib/categories';
 import { FaGithub, FaShareAlt } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import Pagination from '../components/Pagination';
+import { useI18n } from '../lib/i18n/context';
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
@@ -16,6 +17,7 @@ export default function Home() {
   const [showShareTooltip, setShowShareTooltip] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9; // 每页显示9个卡片
+  const { t } = useI18n();
 
   // 提取所有唯一的标签
   const allTags = useMemo(() => {
@@ -24,7 +26,7 @@ export default function Home() {
       caseData.tags.forEach(tag => tagSet.add(tag));
     });
     return Array.from(tagSet);
-  }, []);
+  }, [cases]);
 
   // 提取所有唯一的作者
   const authors = useMemo(() => {
@@ -39,22 +41,46 @@ export default function Home() {
       }
     });
     return Array.from(authorMap.values());
-  }, []);
+  }, [cases]);
 
   // 处理分类变化
   const handleCategoryChange = (categoryId: string, subCategoryId: string) => {
     const newSelected = new Set(selectedCategories);
-    const key = `${categoryId}::${subCategoryId}`;
     
     if (categoryId === '' && subCategoryId === '') {
       // 清除所有选择
       newSelected.clear();
-    } else if (newSelected.has(key)) {
-      // 取消选择
-      newSelected.delete(key);
+    } else if (categoryId === '') {
+      // 从卡片点击 Tag
+      // 查找对应的分类和子分类
+      let found = false;
+      const tagLower = subCategoryId.toLowerCase();
+      
+      // 遍历所有分类
+      for (const category of categories) {
+        for (const subCategory of category.subcategories) {
+          // 使用 name 进行匹配，而不是 id
+          if (subCategory.name.toLowerCase() === tagLower) {
+            const key = `${category.id}::${subCategory.id}`;
+            newSelected.clear(); // 清除之前的选择
+            newSelected.add(key);
+            found = true;
+            break;
+          }
+        }
+        if (found) break;
+      }
     } else {
-      // 添加选择
-      newSelected.add(key);
+      // 从分类筛选器点击
+      const key = `${categoryId}::${subCategoryId}`;
+      if (newSelected.has(key)) {
+        // 取消选择
+        newSelected.delete(key);
+      } else {
+        // 添加选择
+        newSelected.clear(); // 清除之前的选择
+        newSelected.add(key);
+      }
     }
     
     setSelectedCategories(newSelected);
@@ -75,13 +101,16 @@ export default function Home() {
             const [categoryId, subCategoryId] = selectedCategory.split('::');
             const category = categories.find(c => c.id === categoryId);
             const subCategory = category?.subcategories.find(sc => sc.id === subCategoryId);
-            return tag === subCategory?.name;
+            // 使用 name 进行匹配，而不是 id
+            return tag.toLowerCase() === subCategory?.name.toLowerCase();
           })
         );
       
-      return matchesSearch && matchesCategories;
+      const matchesAuthor = !selectedAuthor || caseData.author.name === selectedAuthor;
+      
+      return matchesSearch && matchesCategories && matchesAuthor;
     });
-  }, [searchTerm, selectedCategories]);
+  }, [searchTerm, selectedCategories, selectedAuthor, cases, categories]);
 
   // 计算分页数据
   const paginatedCases = useMemo(() => {
@@ -133,7 +162,7 @@ export default function Home() {
             <div className="sticky top-4 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4">
               <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white flex items-center gap-2">
                 <span className="w-1 h-6 bg-blue-500 rounded-full"></span>
-                创作者
+                {t('footer.creators.title')}
               </h2>
               <div className="space-y-1.5">
                 {authors.map((author) => (
@@ -178,7 +207,7 @@ export default function Home() {
             <div className="max-w-2xl mx-auto mb-8">
               <input
                 type="text"
-                placeholder="搜索案例..."
+                placeholder={t('common.search')}
                 value={searchTerm}
                 onChange={handleSearch}
                 className="w-full px-4 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -202,7 +231,7 @@ export default function Home() {
 
             {filteredCases.length === 0 && (
               <div className="text-center py-8 text-gray-500 dark:text-gray-400">
-                没有找到匹配的案例
+                {t('common.noResults')}
               </div>
             )}
 
@@ -224,10 +253,10 @@ export default function Home() {
               <div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                   <FaGithub className="w-5 h-5" />
-                  项目信息
+                  {t('footer.projectInfo.title')}
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  本项目旨在收集和展示优秀的 GPT-4 Vision 图像创作案例，为创作者提供灵感和参考。
+                  {t('footer.projectInfo.description')}
                 </p>
                 <a
                   href="https://github.com/wowmarcomei/awesome-gpt-images"
@@ -236,7 +265,7 @@ export default function Home() {
                   className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm font-medium text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                 >
                   <FaGithub className="w-4 h-4" />
-                  访问项目
+                  {t('footer.projectInfo.visitProject')}
                 </a>
               </div>
 
@@ -244,10 +273,10 @@ export default function Home() {
               <div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                   <span className="i-carbon-idea w-5 h-5" />
-                  灵感来源
+                  {t('footer.inspiration.title')}
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  感谢 jamez-bondos 的开源项目提供灵感，启发了本项目的开发。
+                  {t('footer.inspiration.description')}
                 </p>
                 <a
                   href="https://github.com/jamez-bondos/awesome-gpt4o-images"
@@ -256,7 +285,7 @@ export default function Home() {
                   className="inline-flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg text-sm font-medium text-gray-900 dark:text-white hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
                 >
                   <FaGithub className="w-4 h-4" />
-                  原项目
+                  {t('footer.inspiration.originalProject')}
                 </a>
               </div>
 
@@ -264,10 +293,10 @@ export default function Home() {
               <div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                   <FaXTwitter className="w-5 h-5 text-blue-400" />
-                  创作者
+                  {t('footer.creators.title')}
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  感谢以下创作者的精彩分享和贡献
+                  {t('footer.creators.description')}
                 </p>
                 <div className="flex flex-wrap gap-2">
                   {authors.map((author) => (
@@ -288,7 +317,7 @@ export default function Home() {
 
             {/* 底部版权信息 */}
             <div className="mt-12 pt-6 border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
-              <p>© {new Date().getFullYear()} Awesome GPT-4 Images</p>
+              <p>{t('footer.copyright')}</p>
             </div>
           </div>
         </footer>

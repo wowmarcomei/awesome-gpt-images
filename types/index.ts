@@ -1,14 +1,14 @@
 export interface Case {
-  id: number;
+  id: string;
   title: string;
   author: {
     name: string;
     twitter: string;
   };
   originalLink: string;
-  imageUrl: string;
+  image: string;
   prompt: string;
-  requiresReferenceImage: boolean;
+  requiresReferenceImage?: boolean;
   additionalNotes?: string;
   tags: string[];
 }

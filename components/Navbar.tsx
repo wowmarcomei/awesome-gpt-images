@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '../lib/utils';
+import { LanguageSwitch } from './LanguageSwitch';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -63,6 +64,7 @@ export function Navbar() {
 
             {/* 桌面端导航 */}
             <nav className="hidden md:flex items-center gap-3">
+              <LanguageSwitch />
               <ThemeToggle />
               <a
                 href="https://x.com/wowmarcomei"
@@ -151,6 +153,7 @@ export function Navbar() {
                 </div>
                 <div className="p-4">
                   <div className="flex items-center gap-3">
+                    <LanguageSwitch />
                     <ThemeToggle />
                     <a
                       href="https://x.com/wowmarcomei"
