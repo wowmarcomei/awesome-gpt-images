@@ -21,7 +21,10 @@ export function LanguageSwitch() {
       )}
       aria-label={language === 'zh' ? '切换为英文' : 'Switch to Chinese'}
     >
-      <MdLanguage className="w-5 h-5" />
+      <span className="hidden md:inline font-semibold text-sm">
+        {language === 'zh' ? 'EN' : 'ZH'}
+      </span>
+      <MdLanguage className="md:hidden w-5 h-5" />
       <span className="md:hidden text-sm font-medium">
         {language === 'zh' ? '切换为英文' : 'Switch to Chinese'}
       </span>
