@@ -3,6 +3,7 @@
 import { useTheme } from 'next-themes';
 import { FiSun, FiMoon } from 'react-icons/fi';
 import { useEffect, useState } from 'react';
+import { cn } from '../lib/utils';
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -20,13 +21,18 @@ export function ThemeToggle() {
   return (
     <button
       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-      className="p-2.5 rounded-full bg-white/90 dark:bg-gray-800/90 hover:bg-gray-100 dark:hover:bg-gray-700/90 shadow-sm border border-gray-200 dark:border-gray-700 transition-all duration-200 ease-in-out backdrop-blur-sm"
+      className={cn(
+        "p-2.5 rounded-full transition-all duration-200",
+        "bg-gray-900 text-white dark:bg-white dark:text-gray-900",
+        "hover:bg-gray-800 dark:hover:bg-gray-100",
+        "focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700"
+      )}
       aria-label="切换主题"
     >
       {theme === 'dark' ? (
-        <FiSun className="w-5 h-5 text-yellow-500 hover:text-yellow-600 transition-colors" />
+        <FiSun className="w-5 h-5" />
       ) : (
-        <FiMoon className="w-5 h-5 text-gray-700 hover:text-gray-800 transition-colors" />
+        <FiMoon className="w-5 h-5" />
       )}
     </button>
   );
