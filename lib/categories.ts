@@ -1,64 +1,149 @@
 export interface Category {
   id: string;
-  name: string;
-  subcategories: SubCategory[];
-}
-
-export interface SubCategory {
-  id: string;
-  name: string;
+  name: {
+    zh: string;
+    en: string;
+  };
+  subcategories: {
+    id: string;
+    name: {
+      zh: string;
+      en: string;
+    };
+  }[];
 }
 
 export const categories: Category[] = [
   {
     id: 'style',
-    name: '风格',
+    name: {
+      zh: '风格',
+      en: 'Style'
+    },
     subcategories: [
-      { id: 'q-version', name: 'Q版' },
-      { id: '3d', name: '3D' },
-      { id: 'realistic', name: '写实' },
-      { id: 'vintage', name: '复古' },
-      { id: 'minimalist', name: '极简' },
-      { id: 'cartoon', name: '卡通' },
-      { id: 'anime', name: '动漫' },
-      { id: 'chinese', name: '中式' }
-    ]
-  },
-  {
-    id: 'scene',
-    name: '场景',
-    subcategories: [
-      { id: 'wedding', name: '婚礼' },
-      { id: 'proposal', name: '求婚' },
-      { id: 'interior', name: '室内设计' },
-      { id: 'portrait', name: '人像' },
-      { id: 'landscape', name: '风景' },
-      { id: 'food', name: '美食' }
-    ]
-  },
-  {
-    id: 'type',
-    name: '类型',
-    subcategories: [
-      { id: 'poster', name: '海报' },
-      { id: 'illustration', name: '插画' },
-      { id: 'sticker', name: '贴纸' },
-      { id: 'logo', name: '标志' },
-      { id: 'packaging', name: '包装' },
-      { id: 'infographic', name: '信息图' },
-      { id: 'comic', name: '漫画' }
+      {
+        id: '3d',
+        name: {
+          zh: '3D',
+          en: '3D'
+        }
+      },
+      {
+        id: 'q-version',
+        name: {
+          zh: 'Q版',
+          en: 'Chibi'
+        }
+      },
+      {
+        id: 'anime',
+        name: {
+          zh: '动漫',
+          en: 'Anime'
+        }
+      },
+      {
+        id: 'cartoon',
+        name: {
+          zh: '卡通',
+          en: 'Cartoon'
+        }
+      },
+      {
+        id: 'minimalist',
+        name: {
+          zh: '极简主义',
+          en: 'Minimalist'
+        }
+      }
     ]
   },
   {
     id: 'theme',
-    name: '主题',
+    name: {
+      zh: '主题',
+      en: 'Theme'
+    },
     subcategories: [
-      { id: 'game', name: '游戏' },
-      { id: 'movie', name: '电影' },
-      { id: 'creative', name: '创意' },
-      { id: 'social-media', name: '社交媒体' },
-      { id: 'education', name: '教育' },
-      { id: 'business', name: '商业' }
+      {
+        id: 'wedding',
+        name: {
+          zh: '婚礼',
+          en: 'Wedding'
+        }
+      },
+      {
+        id: 'family',
+        name: {
+          zh: '家庭',
+          en: 'Family'
+        }
+      },
+      {
+        id: 'fantasy',
+        name: {
+          zh: '奇幻',
+          en: 'Fantasy'
+        }
+      },
+      {
+        id: 'advertisement',
+        name: {
+          zh: '广告',
+          en: 'Advertisement'
+        }
+      },
+      {
+        id: 'education',
+        name: {
+          zh: '教育',
+          en: 'Education'
+        }
+      }
+    ]
+  },
+  {
+    id: 'format',
+    name: {
+      zh: '格式',
+      en: 'Format'
+    },
+    subcategories: [
+      {
+        id: 'sticker',
+        name: {
+          zh: '贴纸',
+          en: 'Sticker'
+        }
+      },
+      {
+        id: 'poster',
+        name: {
+          zh: '海报',
+          en: 'Poster'
+        }
+      },
+      {
+        id: 'cover',
+        name: {
+          zh: '封面',
+          en: 'Cover'
+        }
+      },
+      {
+        id: 'infographic',
+        name: {
+          zh: '信息图',
+          en: 'Infographic'
+        }
+      },
+      {
+        id: 'manga',
+        name: {
+          zh: '漫画',
+          en: 'Manga'
+        }
+      }
     ]
   }
 ]; 

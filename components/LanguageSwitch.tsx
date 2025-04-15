@@ -5,11 +5,11 @@ import { cn } from '../lib/utils';
 import { MdLanguage } from 'react-icons/md';
 
 export function LanguageSwitch() {
-  const { language, setLanguage } = useI18n();
+  const { locale, setLanguage } = useI18n();
 
   return (
     <button
-      onClick={() => setLanguage(language === 'zh' ? 'en' : 'zh')}
+      onClick={() => setLanguage(locale === 'zh' ? 'en' : 'zh')}
       className={cn(
         "transition-all",
         "md:p-2.5 md:rounded-full",
@@ -19,14 +19,14 @@ export function LanguageSwitch() {
         "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700",
         "text-gray-900 dark:text-white"
       )}
-      aria-label={language === 'zh' ? '切换为英文' : 'Switch to Chinese'}
+      aria-label={locale === 'zh' ? '切换为英文' : 'Switch to Chinese'}
     >
       <span className="hidden md:inline font-semibold text-sm">
-        {language === 'zh' ? 'EN' : 'ZH'}
+        {locale === 'zh' ? 'EN' : 'ZH'}
       </span>
       <MdLanguage className="md:hidden w-5 h-5" />
       <span className="md:hidden text-sm font-medium">
-        {language === 'zh' ? '切换为英文' : 'Switch to Chinese'}
+        {locale === 'zh' ? '切换为英文' : 'Switch to Chinese'}
       </span>
     </button>
   );

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import CaseCard from '../components/CaseCard';
 import { cases, authors } from '../lib/data';
 import { CategoryFilter } from '../components/CategoryFilter';
@@ -17,13 +17,24 @@ export default function Home() {
   const [showShareTooltip, setShowShareTooltip] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 9; // 每页显示9个卡片
-  const { t } = useI18n();
+  const { t, locale } = useI18n();
+
+  // 当语言变化时重置搜索和筛选状态
+  useEffect(() => {
+    setSearchTerm('');
+    setSelectedCategories(new Set());
+    setSelectedAuthor(null);
+    setCurrentPage(1);
+  }, [locale]);
 
   // 提取所有唯一的标签
   const allTags = useMemo(() => {
     const tagSet = new Set<string>();
     cases.forEach(caseData => {
-      caseData.tags.forEach(tag => tagSet.add(tag));
+      // 添加中文标签
+      caseData.tags.zh.forEach(tag => tagSet.add(tag));
+      // 添加英文标签
+      caseData.tags.en.forEach(tag => tagSet.add(tag));
     });
     return Array.from(tagSet);
   }, [cases]);
@@ -60,7 +71,7 @@ export default function Home() {
       for (const category of categories) {
         for (const subCategory of category.subcategories) {
           // 使用 name 进行匹配，而不是 id
-          if (subCategory.name.toLowerCase() === tagLower) {
+          if (subCategory.name.zh.toLowerCase() === tagLower || subCategory.name.en.toLowerCase() === tagLower) {
             const key = `${category.id}::${subCategory.id}`;
             newSelected.clear(); // 清除之前的选择
             newSelected.add(key);
@@ -91,24 +102,34 @@ export default function Home() {
   const filteredCases = useMemo(() => {
     return cases.filter(caseData => {
       const matchesSearch = searchTerm === '' || 
-        caseData.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        caseData.prompt.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        caseData.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
-      
-      const matchesCategories = selectedCategories.size === 0 || 
-        caseData.tags.some(tag => 
+        caseData.title.zh.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        caseData.title.en.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        caseData.prompt.zh.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        caseData.prompt.en.toLowerCase().includes(searchTerm.toLowerCase());
+
+      const matchesCategory = selectedCategories.size === 0 || 
+        caseData.tags.zh.some(tag => 
           Array.from(selectedCategories).some(selectedCategory => {
             const [categoryId, subCategoryId] = selectedCategory.split('::');
             const category = categories.find(c => c.id === categoryId);
             const subCategory = category?.subcategories.find(sc => sc.id === subCategoryId);
-            // 使用 name 进行匹配，而不是 id
-            return tag.toLowerCase() === subCategory?.name.toLowerCase();
+            return tag.toLowerCase() === subCategory?.name.zh.toLowerCase() || 
+                   tag.toLowerCase() === subCategory?.name.en.toLowerCase();
+          })
+        ) ||
+        caseData.tags.en.some(tag => 
+          Array.from(selectedCategories).some(selectedCategory => {
+            const [categoryId, subCategoryId] = selectedCategory.split('::');
+            const category = categories.find(c => c.id === categoryId);
+            const subCategory = category?.subcategories.find(sc => sc.id === subCategoryId);
+            return tag.toLowerCase() === subCategory?.name.zh.toLowerCase() || 
+                   tag.toLowerCase() === subCategory?.name.en.toLowerCase();
           })
         );
       
       const matchesAuthor = !selectedAuthor || caseData.author.name === selectedAuthor;
       
-      return matchesSearch && matchesCategories && matchesAuthor;
+      return matchesSearch && matchesCategory && matchesAuthor;
     });
   }, [searchTerm, selectedCategories, selectedAuthor, cases, categories]);
 
@@ -229,6 +250,7 @@ export default function Home() {
             </div>
 
             <CategoryFilter
+              categories={categories}
               selectedCategories={selectedCategories}
               onCategoryChange={handleCategoryChange}
             />

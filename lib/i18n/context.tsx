@@ -8,7 +8,8 @@ type Language = 'en' | 'zh';
 type Translations = typeof en;
 
 interface I18nContextType {
-  language: Language;
+  locale: Language;
+  currentLang: Language;
   setLanguage: (lang: Language) => void;
   t: (key: string) => string;
 }
@@ -52,7 +53,7 @@ export function I18nProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <I18nContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
+    <I18nContext.Provider value={{ locale: language, currentLang: language, setLanguage: handleSetLanguage, t }}>
       {children}
     </I18nContext.Provider>
   );

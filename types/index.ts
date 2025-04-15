@@ -1,16 +1,26 @@
+export interface I18nText {
+  zh: string;
+  en: string;
+}
+
+export interface I18nArray {
+  zh: string[];
+  en: string[];
+}
+
 export interface Case {
   id: string;
-  title: string;
+  title: I18nText;
   author: {
     name: string;
     twitter: string;
   };
   originalLink: string;
   image: string;
-  prompt: string;
+  prompt: I18nText;
   requiresReferenceImage?: boolean;
-  additionalNotes?: string;
-  tags: string[];
+  additionalNotes?: I18nText;
+  tags: I18nArray;
 }
 
 export interface FilterOptions {

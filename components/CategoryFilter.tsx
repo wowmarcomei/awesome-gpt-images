@@ -1,19 +1,20 @@
 'use client';
 
 import { useState } from 'react';
-import { Category, SubCategory, categories } from '../lib/categories';
+import { Category } from '../lib/categories';
 import { cn } from '../lib/utils';
 import { FiChevronDown, FiChevronUp, FiX } from 'react-icons/fi';
 import { useI18n } from '../lib/i18n/context';
 
 interface CategoryFilterProps {
-  onCategoryChange: (categoryId: string, subCategoryId: string) => void;
+  categories: Category[];
   selectedCategories: Set<string>;
+  onCategoryChange: (categoryId: string, subCategoryId: string) => void;
 }
 
-export function CategoryFilter({ onCategoryChange, selectedCategories }: CategoryFilterProps) {
+export function CategoryFilter({ categories, onCategoryChange, selectedCategories }: CategoryFilterProps) {
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(new Set());
-  const { t } = useI18n();
+  const { t, currentLang } = useI18n();
 
   const toggleCategory = (categoryId: string) => {
     const newExpanded = new Set(expandedCategories);
@@ -56,7 +57,7 @@ export function CategoryFilter({ onCategoryChange, selectedCategories }: Categor
               "flex items-center gap-1.5"
             )}
           >
-            {t(`categories.${category.id}`)}
+            {category.name[currentLang]}
             {expandedCategories.has(category.id) ? (
               <FiChevronUp className="w-4 h-4 opacity-80" />
             ) : (
@@ -82,7 +83,7 @@ export function CategoryFilter({ onCategoryChange, selectedCategories }: Categor
                 onClick={() => handleSubCategoryClick(categoryId, subCategoryId)}
                 className="inline-flex items-center gap-1.5 h-7 px-3 text-xs font-medium rounded-full bg-blue-50 text-blue-600 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400 dark:hover:bg-blue-900/50 transition-colors"
               >
-                {subCategory.name}
+                {subCategory.name[currentLang]}
                 <FiX className="w-3.5 h-3.5" />
               </button>
             );
@@ -115,7 +116,7 @@ export function CategoryFilter({ onCategoryChange, selectedCategories }: Categor
                           : "bg-gray-50 text-gray-600 hover:bg-gray-100 dark:bg-gray-800/50 dark:text-gray-300 dark:hover:bg-gray-800"
                       )}
                     >
-                      {subCategory.name}
+                      {subCategory.name[currentLang]}
                     </button>
                   );
                 })}
