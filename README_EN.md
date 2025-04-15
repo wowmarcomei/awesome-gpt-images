@@ -2,7 +2,7 @@
 
 A curated collection of GPT-4 Vision image creation showcases, designed to inspire creators and provide valuable references. This is a web version of [jamez-bondos/awesome-gpt4o-images](https://github.com/jamez-bondos/awesome-gpt4o-images) project, offering enhanced browsing and interaction experience.
 
-![demo](https://raw.githubusercontent.com/wowmarcomei/awesome-gpt-images/main/media/screen.gif)
+![demo](https://raw.githubusercontent.com/wowmarcomei/awesome-gpt-images/main/media/home-demo.png)
 
 [![简体中文](https://img.shields.io/badge/简体中文-查看-blue)](README.md)
 

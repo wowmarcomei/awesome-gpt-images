@@ -2,7 +2,7 @@
 
 一个精心收集的 GPT-4 Vision 图像创作案例展示网站，旨在为创作者提供灵感和参考。这是 [jamez-bondos/awesome-gpt4o-images](https://github.com/jamez-bondos/awesome-gpt4o-images) 项目的 Web 版本，提供了更好的浏览和交互体验。
 
-![demo](https://raw.githubusercontent.com/wowmarcomei/awesome-gpt-images/main/media/screen.gif)
+![demo](https://raw.githubusercontent.com/wowmarcomei/awesome-gpt-images/main/media/home-demo.png)
 
 [![English](https://img.shields.io/badge/English-View-blue)](README_EN.md)
 [![Online Preview](https://img.shields.io/badge/预览-awesome--gpt--images-green)](https://awesome-gpt-images.com)
