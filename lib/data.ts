@@ -100,7 +100,7 @@ export const cases: Case[] = [
       twitter: "https://animeai.online" // Correct URL format (Website link)
     },
     originalLink: "https://animeai.online/#demo-gallery", // Correct URL format
-    image: "https://animeai.online/demo/ghibli-style-mona-lisa.png", // Absolute URL
+    image: "/examples/example_ghibli-style-mona-lisa.png", // Absolute URL
     prompt: {
       zh: "以吉卜力风格重绘这张照片",
       en: "Redraw this photo in Ghibli style"
@@ -386,7 +386,7 @@ export const cases: Case[] = [
       twitter: "https://animeai.online" // Correct URL format (Website link)
     },
     originalLink: "https://animeai.online/#demo-gallery", // Correct URL format
-    image: "https://animeai.online/demo/pixar-style-godfather-scene.png", // Absolute URL
+    image: "/examples/example_pixar-style-godfather-scene.png", // Absolute URL
     prompt: {
       zh: "以皮克斯 3D 风格重绘这张照片",
       en: "Redraw this photo in Pixar 3D style"
