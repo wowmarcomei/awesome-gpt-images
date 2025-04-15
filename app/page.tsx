@@ -3,14 +3,15 @@
 import { useState, useMemo } from 'react';
 import CaseCard from '../components/CaseCard';
 import { cases, authors } from '../lib/data';
-import TabFilter from '../components/TabFilter';
+import { CategoryFilter } from '../components/CategoryFilter';
+import { categories } from '../lib/categories';
 import { FaGithub, FaShareAlt } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import Pagination from '../components/Pagination';
 
 export default function Home() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+  const [selectedCategories, setSelectedCategories] = useState<Set<string>>(new Set());
   const [selectedAuthor, setSelectedAuthor] = useState<string | null>(null);
   const [showShareTooltip, setShowShareTooltip] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,7 +41,27 @@ export default function Home() {
     return Array.from(authorMap.values());
   }, []);
 
-  // 根据搜索词、标签和作者筛选案例
+  // 处理分类变化
+  const handleCategoryChange = (categoryId: string, subCategoryId: string) => {
+    const newSelected = new Set(selectedCategories);
+    const key = `${categoryId}::${subCategoryId}`;
+    
+    if (categoryId === '' && subCategoryId === '') {
+      // 清除所有选择
+      newSelected.clear();
+    } else if (newSelected.has(key)) {
+      // 取消选择
+      newSelected.delete(key);
+    } else {
+      // 添加选择
+      newSelected.add(key);
+    }
+    
+    setSelectedCategories(newSelected);
+    setCurrentPage(1); // 重置页码
+  };
+
+  // 根据搜索词和分类筛选案例
   const filteredCases = useMemo(() => {
     return cases.filter(caseData => {
       const matchesSearch = searchTerm === '' || 
@@ -48,12 +69,19 @@ export default function Home() {
         caseData.prompt.toLowerCase().includes(searchTerm.toLowerCase()) ||
         caseData.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
       
-      const matchesTag = !selectedTag || caseData.tags.includes(selectedTag);
-      const matchesAuthor = !selectedAuthor || caseData.author.name === selectedAuthor;
+      const matchesCategories = selectedCategories.size === 0 || 
+        caseData.tags.some(tag => 
+          Array.from(selectedCategories).some(selectedCategory => {
+            const [categoryId, subCategoryId] = selectedCategory.split('::');
+            const category = categories.find(c => c.id === categoryId);
+            const subCategory = category?.subcategories.find(sc => sc.id === subCategoryId);
+            return tag === subCategory?.name;
+          })
+        );
       
-      return matchesSearch && matchesTag && matchesAuthor;
+      return matchesSearch && matchesCategories;
     });
-  }, [searchTerm, selectedTag, selectedAuthor]);
+  }, [searchTerm, selectedCategories]);
 
   // 计算分页数据
   const paginatedCases = useMemo(() => {
@@ -66,15 +94,6 @@ export default function Home() {
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
-    setCurrentPage(1);
-  };
-
-  const handleTagClick = (tag: string) => {
-    if (tag === '全部') {
-      setSelectedTag(null);
-    } else {
-      setSelectedTag(selectedTag === tag ? null : tag);
-    }
     setCurrentPage(1);
   };
 
@@ -166,10 +185,9 @@ export default function Home() {
               />
             </div>
 
-            <TabFilter
-              tags={allTags}
-              activeTag={selectedTag || '全部'}
-              onTagChange={handleTagClick}
+            <CategoryFilter
+              selectedCategories={selectedCategories}
+              onCategoryChange={handleCategoryChange}
             />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6 mt-6">
@@ -177,7 +195,7 @@ export default function Home() {
                 <CaseCard
                   key={caseItem.id}
                   case={caseItem}
-                  onTagClick={handleTagClick}
+                  onTagClick={(tag) => handleCategoryChange('', tag)}
                 />
               ))}
             </div>
