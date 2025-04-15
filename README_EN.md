@@ -6,6 +6,12 @@ A curated collection of GPT-4 Vision image creation showcases, designed to inspi
 
 [![简体中文](https://img.shields.io/badge/简体中文-查看-blue)](README.md)
 
+[![Online Preview](https://img.shields.io/badge/预览-awesome--gpt--images-green)](https://awesome-gpt-images.com)
+
+## One-click deployment
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwowmarcomei%2Fawesome-gpt-images)
+
 ## 🌟 Features
 
 - 📸 Curated Showcases

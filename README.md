@@ -6,6 +6,9 @@
 
 [![English](https://img.shields.io/badge/English-View-blue)](README_EN.md)
 [![Online Preview](https://img.shields.io/badge/预览-awesome--gpt--images-green)](https://awesome-gpt-images.com)
+
+## 一键部署
+
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fwowmarcomei%2Fawesome-gpt-images)
 
 ## 🌟 特色功能
