@@ -4,7 +4,8 @@ import { useState, useMemo } from 'react';
 import CaseCard from '../components/CaseCard';
 import { cases, authors } from '../lib/data';
 import TabFilter from '../components/TabFilter';
-import { FaTwitter, FaGithub, FaShareAlt } from 'react-icons/fa';
+import { FaGithub, FaShareAlt } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 import Pagination from '../components/Pagination';
 
 export default function Home() {
@@ -132,7 +133,7 @@ export default function Home() {
                           ? 'bg-blue-400'
                           : 'bg-blue-50 dark:bg-gray-700'
                       }`}>
-                        <FaTwitter className={`${
+                        <FaXTwitter className={`${
                           selectedAuthor === author.name
                             ? 'text-white'
                             : 'text-blue-500 dark:text-blue-400'
@@ -244,7 +245,7 @@ export default function Home() {
               {/* 创作者 */}
               <div>
                 <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                  <FaTwitter className="w-5 h-5 text-blue-400" />
+                  <FaXTwitter className="w-5 h-5 text-blue-400" />
                   创作者
                 </h3>
                 <p className="text-gray-600 dark:text-gray-300 mb-4">
@@ -259,7 +260,7 @@ export default function Home() {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-sm hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
                     >
-                      <FaTwitter className="w-3.5 h-3.5" />
+                      <FaXTwitter className="w-3.5 h-3.5" />
                       {author.name}
                     </a>
                   ))}

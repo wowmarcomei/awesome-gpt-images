@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaTwitter } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 
 const images = [
   {
@@ -39,7 +39,7 @@ export default function ImageList() {
                 rel="noopener noreferrer"
                 className="flex items-center gap-1 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-500"
               >
-                <FaTwitter className="w-4 h-4" />
+                <FaXTwitter className="w-4 h-4" />
                 {image.author}
               </a>
             </div>

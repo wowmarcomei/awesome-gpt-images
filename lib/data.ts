@@ -58,7 +58,7 @@ export const cases: Case[] = [
     title: "吉卜力风格",
     author: {
       name: "AnimeAI",
-      twitter: "https://animeai.online"
+      twitter: "https://x.com/AnimeAI"
     },
     originalLink: "https://animeai.online/#demo-gallery",
     imageUrl: "https://animeai.online/demo/ghibli-style-mona-lisa.png",
@@ -227,7 +227,7 @@ export const cases: Case[] = [
     title: "皮克斯3D风格",
     author: {
       name: "AnimeAI",
-      twitter: "https://animeai.online"
+      twitter: "https://x.com/AnimeAI"
     },
     originalLink: "https://animeai.online/#demo-gallery",
     imageUrl: "https://animeai.online/demo/pixar-style-godfather-scene.png",
@@ -563,13 +563,13 @@ export const cases: Case[] = [
 ];
 
 export const authors = [
-  { name: 'balconychy', count: 7, twitter: 'https://twitter.com/balconychy' },
-  { name: 'dotey', count: 15, twitter: 'https://twitter.com/dotey' },
-  { name: 'AnimeAI', count: 2, twitter: 'https://twitter.com/AnimeAI' },
-  { name: 'ZHO_ZHO_ZHO', count: 9, twitter: 'https://twitter.com/ZHO_ZHO_ZHO' },
-  { name: '0xdlk', count: 1, twitter: 'https://twitter.com/0xdlk' },
-  { name: 'richardchang', count: 1, twitter: 'https://twitter.com/richardchang' },
-  { name: 'gizakdag', count: 1, twitter: 'https://twitter.com/gizakdag' },
-  { name: 'op7418', count: 1, twitter: 'https://twitter.com/op7418' },
-  { name: 'hellokaton', count: 1, twitter: 'https://twitter.com/hellokaton' }
+  { name: 'balconychy', count: 7, twitter: 'https://x.com/balconychy' },
+  { name: 'dotey', count: 15, twitter: 'https://x.com/dotey' },
+  { name: 'AnimeAI', count: 2, twitter: 'https://x.com/AnimeAI' },
+  { name: 'ZHO_ZHO_ZHO', count: 9, twitter: 'https://x.com/ZHO_ZHO_ZHO' },
+  { name: '0xdlk', count: 1, twitter: 'https://x.com/0xdlk' },
+  { name: 'richardchang', count: 1, twitter: 'https://x.com/richardchang' },
+  { name: 'gizakdag', count: 1, twitter: 'https://x.com/gizakdag' },
+  { name: 'op7418', count: 1, twitter: 'https://x.com/op7418' },
+  { name: 'hellokaton', count: 1, twitter: 'https://x.com/hellokaton' }
 ]; 

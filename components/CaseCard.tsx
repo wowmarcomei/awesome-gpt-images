@@ -1,6 +1,7 @@
 import { Case } from '../types';
 import { motion } from 'framer-motion';
-import { FaTwitter, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaExternalLinkAlt } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 import Image from 'next/image';
 import { useState } from 'react';
 import Toast from './Toast';
@@ -51,10 +52,10 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
             href={caseData.author.twitter}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center text-blue-500 hover:text-blue-600"
+            className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
           >
-            <FaTwitter className="mr-1" />
-            <span className="text-sm">{caseData.author.name}</span>
+            <FaXTwitter className="h-4 w-4" />
+            {caseData.author.name}
           </a>
           <a
             href={caseData.originalLink}
