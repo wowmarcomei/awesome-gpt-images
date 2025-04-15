@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { Case } from '../types';
 import { motion } from 'framer-motion';
-import { FaXTwitter } from 'react-icons/fa6';
+import { FaXTwitter, FaCode, FaChevronUp, FaChevronDown } from 'react-icons/fa6';
 import Image from 'next/image';
 import Toast from './Toast';
 import { useI18n } from '../lib/i18n/context';
@@ -17,6 +17,7 @@ interface CaseCardProps {
 export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) {
   const { t, currentLang } = useI18n();
   const [showPrompt, setShowPrompt] = useState(false);
+  const [showCopied, setShowCopied] = useState(false);
 
   // 确保 tags 存在且有当前语言的数据
   const currentTags = caseData.tags?.[currentLang] || [];
@@ -36,24 +37,24 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
           {caseData.title[currentLang]}
         </h3>
         
-        <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4">
+        <div className="flex items-center justify-between">
           <a
             href={caseData.author.twitter}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1 hover:text-blue-500 dark:hover:text-blue-400"
+            className="flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-500 dark:hover:text-blue-400 transition-colors"
           >
             <FaXTwitter className="w-4 h-4" />
-            {caseData.author.name}
+            <span>{caseData.author.name}</span>
           </a>
           <a
             href={caseData.originalLink}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-1 hover:text-blue-500 dark:hover:text-blue-400"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 rounded-full text-sm hover:bg-blue-100 dark:hover:bg-blue-900/50 transition-colors"
           >
-            <FaExternalLinkAlt className="w-4 h-4" />
-            {t('common.original')}
+            <FaExternalLinkAlt className="w-3.5 h-3.5" />
+            <span>{t('common.original')}</span>
           </a>
         </div>
 
@@ -70,7 +71,11 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
         </div>
 
         <button
-          onClick={() => setShowPrompt(true)}
+          onClick={() => {
+            setShowPrompt(true);
+            navigator.clipboard.writeText(caseData.prompt[currentLang]);
+            setShowCopied(true);
+          }}
           className="w-full py-2 px-4 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
         >
           {t('common.getPrompt')}
@@ -92,17 +97,17 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
             className="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-2xl w-full max-h-[80vh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
-            <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-              {caseData.title[currentLang]}
-            </h3>
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                {caseData.title[currentLang]}
+              </h3>
+              {showCopied && (
+                <span className="text-sm text-green-500">✓ {t('common.copied')}</span>
+              )}
+            </div>
             <p className="text-gray-600 dark:text-gray-300 whitespace-pre-wrap">
               {caseData.prompt[currentLang]}
             </p>
-            {caseData.requiresReferenceImage && (
-              <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-                {t('common.requiresReferenceImage')}
-              </p>
-            )}
           </motion.div>
         </motion.div>
       )}
