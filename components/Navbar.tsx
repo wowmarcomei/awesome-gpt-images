@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { FaGithub } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 import { FiMenu, FiX } from 'react-icons/fi';
 import { ThemeToggle } from './theme-toggle';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -63,6 +64,20 @@ export function Navbar() {
             {/* 桌面端导航 */}
             <nav className="hidden md:flex items-center gap-3">
               <ThemeToggle />
+              <a
+                href="https://x.com/wowmarcomei"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={cn(
+                  "p-2.5 rounded-full transition-all duration-200",
+                  "bg-gray-900 text-white dark:bg-white dark:text-gray-900",
+                  "hover:bg-gray-800 dark:hover:bg-gray-100",
+                  "focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700"
+                )}
+                aria-label="Social"
+              >
+                <FaXTwitter className="w-5 h-5" />
+              </a>
               <a
                 href="https://github.com/wowmarcomei/awesome-gpt-images"
                 target="_blank"
@@ -137,6 +152,20 @@ export function Navbar() {
                 <div className="p-4">
                   <div className="flex items-center gap-3">
                     <ThemeToggle />
+                    <a
+                      href="https://x.com/wowmarcomei"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={cn(
+                        "p-2.5 rounded-full transition-all duration-200",
+                        "bg-gray-900 text-white dark:bg-white dark:text-gray-900",
+                        "hover:bg-gray-800 dark:hover:bg-gray-100",
+                        "focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700"
+                      )}
+                      aria-label="Social"
+                    >
+                      <FaXTwitter className="w-5 h-5" />
+                    </a>
                     <a
                       href="https://github.com/wowmarcomei/awesome-gpt-images"
                       target="_blank"
