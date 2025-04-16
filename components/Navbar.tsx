@@ -12,6 +12,7 @@ import Image from 'next/image';
 import { cn } from '../lib/utils';
 import { LanguageSwitch } from './LanguageSwitch';
 import { useTheme } from 'next-themes';
+import { AuthButton } from './AuthButton';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -97,6 +98,8 @@ export function Navbar() {
               >
                 <FaGithub className="w-5 h-5" />
               </a>
+              <div className="w-px h-6 bg-gray-200 dark:bg-gray-700" />
+              <AuthButton />
             </nav>
 
             {/* 移动端菜单按钮 */}
@@ -211,6 +214,10 @@ export function Navbar() {
                       <FaGithub className="w-5 h-5" />
                       <span className="text-sm font-medium">GitHub</span>
                     </a>
+                    <div className="h-px bg-gray-200 dark:bg-gray-700" />
+                    <div className="w-full">
+                      <AuthButton />
+                    </div>
                   </div>
                 </div>
               </div>

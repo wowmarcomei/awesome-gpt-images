@@ -10,7 +10,11 @@
     "postbuild": "next-sitemap"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.2.0",
+    "@supabase/auth-helpers-nextjs": "^0.10.0",
+    "@supabase/supabase-js": "^2.49.4",
     "@vercel/analytics": "^1.5.0",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^11.0.3",
     "next": "14.1.0",

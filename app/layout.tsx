@@ -8,6 +8,7 @@ import { Navbar } from '../components/Navbar';
 import { ScrollButton } from '../components/ScrollButton';
 import { I18nProvider } from '../lib/i18n/context';
 import { LanguageAwareLayout } from '../components/LanguageAwareLayout';
+import { AuthProvider } from '../lib/auth/context';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -175,16 +176,18 @@ export default function RootLayout({
           enableSystem={true}
           disableTransitionOnChange
         >
-          <I18nProvider>
-            <LanguageAwareLayout>
-              <Navbar />
-              <div className="pt-12">
-                {children}
-              </div>
-              <ScrollButton />
-              <Analytics debug={process.env.NODE_ENV === 'development'} />
-            </LanguageAwareLayout>
-          </I18nProvider>
+          <AuthProvider>
+            <I18nProvider>
+              <LanguageAwareLayout>
+                <Navbar />
+                <div className="pt-12">
+                  {children}
+                </div>
+                <ScrollButton />
+                <Analytics debug={process.env.NODE_ENV === 'development'} />
+              </LanguageAwareLayout>
+            </I18nProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
