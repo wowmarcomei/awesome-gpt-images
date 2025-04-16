@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import { FaGithub } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
 import { FiMenu, FiX } from 'react-icons/fi';
-import { MdLightMode, MdDarkMode } from 'react-icons/md';
 import { ThemeToggle } from './theme-toggle';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
@@ -13,11 +12,15 @@ import { cn } from '../lib/utils';
 import { LanguageSwitch } from './LanguageSwitch';
 import { useTheme } from 'next-themes';
 import { AuthButton } from './AuthButton';
+import { useI18n } from '../lib/i18n/context';
+import { useAuth } from '../lib/auth/context';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { theme } = useTheme();
+  const { t } = useI18n();
+  const { user, isLoading } = useAuth();
 
   // 处理滚动效果
   useEffect(() => {
@@ -27,6 +30,13 @@ export function Navbar() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // 当认证状态变化时关闭移动端菜单
+  useEffect(() => {
+    if (user) {
+      setIsOpen(false);
+    }
+  }, [user]);
 
   return (
     <>
@@ -94,32 +104,20 @@ export function Navbar() {
                   "hover:bg-gray-800 dark:hover:bg-gray-100",
                   "focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700"
                 )}
-                aria-label="GitHub 仓库"
+                aria-label="GitHub"
               >
                 <FaGithub className="w-5 h-5" />
               </a>
-              <div className="w-px h-6 bg-gray-200 dark:bg-gray-700" />
               <AuthButton />
             </nav>
 
             {/* 移动端菜单按钮 */}
             <button
+              className="md:hidden p-2 rounded-md text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline-none"
               onClick={() => setIsOpen(!isOpen)}
-              className={cn(
-                "md:hidden p-2 rounded-lg transition-colors",
-                "bg-gray-100 dark:bg-gray-800",
-                "text-gray-700 dark:text-gray-200",
-                "hover:bg-gray-200 dark:hover:bg-gray-700",
-                "border border-gray-200 dark:border-gray-700",
-                "focus:outline-none focus:ring-2 focus:ring-gray-200 dark:focus:ring-gray-700"
-              )}
-              aria-label="菜单"
+              aria-label="Toggle menu"
             >
-              {isOpen ? (
-                <FiX className="w-6 h-6" />
-              ) : (
-                <FiMenu className="w-6 h-6" />
-              )}
+              {isOpen ? <FiX className="w-6 h-6" /> : <FiMenu className="w-6 h-6" />}
             </button>
           </div>
         </div>
@@ -128,101 +126,51 @@ export function Navbar() {
       {/* 移动端菜单 */}
       <AnimatePresence>
         {isOpen && (
-          <>
-            {/* 背景遮罩 */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 md:hidden"
-            />
-
-            {/* 菜单内容 */}
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 20 }}
-              className="fixed top-0 right-0 h-full w-72 bg-white dark:bg-gray-900 z-50 md:hidden shadow-xl"
-            >
-              <div className="flex flex-col h-full">
-                <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
-                  <div className="flex items-center gap-2">
-                    <Image
-                      src="/favicon/ms-icon-310x310.png"
-                      alt="Logo"
-                      width={24}
-                      height={24}
-                      className="object-contain"
-                    />
-                    <span className="text-base font-semibold text-gray-900 dark:text-white">菜单</span>
-                  </div>
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-                    aria-label="关闭菜单"
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            className="fixed top-16 left-0 right-0 z-40 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 md:hidden"
+          >
+            <div className="max-w-7xl mx-auto px-4 py-4">
+              <div className="flex flex-col gap-4">
+                <LanguageSwitch />
+                <ThemeToggle />
+                <div className="flex gap-2">
+                  <a
+                    href="https://x.com/wowmarcomei"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(
+                      "p-2.5 rounded-full transition-all duration-200",
+                      "bg-gray-900 text-white dark:bg-white dark:text-gray-900",
+                      "hover:bg-gray-800 dark:hover:bg-gray-100",
+                      "focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700"
+                    )}
+                    aria-label="Social"
                   >
-                    <FiX className="w-5 h-5 text-gray-500 dark:text-gray-400" />
-                  </button>
+                    <FaXTwitter className="w-5 h-5" />
+                  </a>
+                  <a
+                    href="https://github.com/wowmarcomei/awesome-gpt-images"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={cn(
+                      "p-2.5 rounded-full transition-all duration-200",
+                      "bg-gray-900 text-white dark:bg-white dark:text-gray-900",
+                      "hover:bg-gray-800 dark:hover:bg-gray-100",
+                      "focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700"
+                    )}
+                    aria-label="GitHub"
+                  >
+                    <FaGithub className="w-5 h-5" />
+                  </a>
                 </div>
-                <div className="p-4 space-y-3">
-                  <div className="flex flex-col gap-3">
-                    <div className="flex items-center">
-                      <LanguageSwitch />
-                    </div>
-                    <button
-                      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                      className={cn(
-                        "w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl transition-all",
-                        "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700",
-                        "text-gray-900 dark:text-white"
-                      )}
-                    >
-                      {theme === 'dark' ? (
-                        <MdLightMode className="w-5 h-5" />
-                      ) : (
-                        <MdDarkMode className="w-5 h-5" />
-                      )}
-                      <span className="text-sm font-medium">
-                        {theme === 'dark' ? '浅色模式' : '深色模式'}
-                      </span>
-                    </button>
-                    <a
-                      href="https://x.com/wowmarcomei"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={cn(
-                        "w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl transition-all",
-                        "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700",
-                        "text-gray-900 dark:text-white"
-                      )}
-                    >
-                      <FaXTwitter className="w-5 h-5" />
-                      <span className="text-sm font-medium">Twitter</span>
-                    </a>
-                    <a
-                      href="https://github.com/wowmarcomei/awesome-gpt-images"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={cn(
-                        "w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl transition-all",
-                        "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700",
-                        "text-gray-900 dark:text-white"
-                      )}
-                    >
-                      <FaGithub className="w-5 h-5" />
-                      <span className="text-sm font-medium">GitHub</span>
-                    </a>
-                    <div className="h-px bg-gray-200 dark:bg-gray-700" />
-                    <div className="w-full">
-                      <AuthButton />
-                    </div>
-                  </div>
-                </div>
+                <AuthButton />
               </div>
-            </motion.div>
-          </>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </>

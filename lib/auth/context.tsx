@@ -1,86 +1,112 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState } from 'react';
-import { User } from '@supabase/supabase-js';
-import { supabase } from '../supabase';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
+import { useRouter } from 'next/navigation';
+import type { User } from '@supabase/auth-helpers-nextjs';
 
-interface AuthContextType {
+type AuthContextType = {
   user: User | null;
-  loading: boolean;
-  signIn: (provider: 'google' | 'github' | 'twitter' | 'apple' | 'facebook') => Promise<void>;
+  isLoading: boolean;
+  signIn: (provider: string) => Promise<void>;
+  signInWithEmail: (email: string, password: string) => Promise<void>;
   signOut: () => Promise<void>;
-}
+};
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
+  const supabase = createClientComponentClient();
 
   useEffect(() => {
-    // 检查当前会话
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
+    // 检查初始会话
+    const checkUser = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession();
+        setUser(session?.user ?? null);
+      } catch (error) {
+        console.error('Error checking auth session:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkUser();
 
     // 监听认证状态变化
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-      setLoading(false);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  const signIn = async (provider: 'google' | 'github' | 'twitter' | 'apple' | 'facebook') => {
-    try {
-      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      const { data, error } = await supabase.auth.signInWithOAuth({
-        provider,
-        options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
-          queryParams: {
-            access_type: 'offline',
-            prompt: 'select_account',
-            ...(isMobile && {
-              display: 'touch',
-            })
-          },
-          skipBrowserRedirect: false
-        }
-      });
-
-      if (error) {
-        throw error;
-      }
-
-      // 如果是移动端且有返回 URL，使用 window.open
-      if (isMobile && data?.url) {
-        const width = 500;
-        const height = 700;
-        const left = (window.innerWidth - width) / 2;
-        const top = (window.innerHeight - height) / 2;
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      async (event, session) => {
+        setUser(session?.user ?? null);
+        setIsLoading(false);
         
-        window.open(
-          data.url,
-          '_blank',
-          `toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=${width},height=${height},top=${top},left=${left}`
-        );
+        if (event === 'SIGNED_IN') {
+          router.refresh();
+        }
+        if (event === 'SIGNED_OUT') {
+          router.refresh();
+          router.push('/');
+        }
+      }
+    );
+
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, [supabase, router]);
+
+  const signIn = async (provider: string) => {
+    try {
+      if (provider === 'google' || provider === 'github') {
+        const { error } = await supabase.auth.signInWithOAuth({
+          provider: provider,
+          options: {
+            redirectTo: `${location.origin}/auth/callback`,
+          },
+        });
+        if (error) throw error;
       }
     } catch (error) {
-      console.error('登录错误:', error);
+      console.error('Error signing in:', error);
+      throw error;
+    }
+  };
+
+  const signInWithEmail = async (email: string, password: string) => {
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error signing in with email:', error);
       throw error;
     }
   };
 
   const signOut = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) throw error;
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error signing out:', error);
+      throw error;
+    }
+  };
+
+  const value = {
+    user,
+    isLoading,
+    signIn,
+    signInWithEmail,
+    signOut,
   };
 
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signOut }}>
+    <AuthContext.Provider value={value}>
       {children}
     </AuthContext.Provider>
   );

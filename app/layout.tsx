@@ -9,6 +9,7 @@ import { ScrollButton } from '../components/ScrollButton';
 import { I18nProvider } from '../lib/i18n/context';
 import { LanguageAwareLayout } from '../components/LanguageAwareLayout';
 import { AuthProvider } from '../lib/auth/context';
+import { Toaster } from 'sonner';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -188,6 +189,7 @@ export default function RootLayout({
               </LanguageAwareLayout>
             </I18nProvider>
           </AuthProvider>
+          <Toaster richColors position="top-center" />
         </ThemeProvider>
       </body>
     </html>

@@ -1,50 +1,57 @@
 'use client';
 
 import { useAuth } from '../lib/auth/context';
-import { FaUser } from 'react-icons/fa';
 import { Button } from './ui/button';
-import { cn } from '../lib/utils';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from './ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import Link from 'next/link';
 
 export function AuthButton() {
-  const { user, loading, signOut } = useAuth();
+  const { user, signOut, isLoading } = useAuth();
 
-  if (loading) {
-    return <div className="h-9 w-9 animate-pulse rounded-full bg-gray-200" />;
+  if (isLoading) {
+    return (
+      <Button variant="ghost" size="sm" disabled>
+        加载中...
+      </Button>
+    );
   }
 
-  if (user) {
+  if (!user) {
     return (
-      <div className="flex items-center gap-2">
-        <span className="text-sm text-gray-600 dark:text-gray-300 truncate max-w-[150px]">
-          {user.email}
-        </span>
-        <Button
-          onClick={() => signOut()}
-          variant="outline"
-          size="sm"
-        >
-          退出登录
+      <Link href="/auth">
+        <Button variant="outline" size="sm">
+          登录
         </Button>
-      </div>
+      </Link>
     );
   }
 
   return (
-    <Button
-      asChild
-      variant="outline"
-      size="sm"
-      className={cn(
-        "flex items-center justify-center gap-2",
-        "text-gray-700 dark:text-gray-300",
-        "hover:text-gray-900 dark:hover:text-white"
-      )}
-    >
-      <Link href="/auth/login">
-        <FaUser className="h-4 w-4" />
-        <span>登录</span>
-      </Link>
-    </Button>
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="ghost" size="sm" className="relative h-8 w-8 rounded-full">
+          <Avatar className="h-8 w-8">
+            <AvatarImage src={user.user_metadata?.avatar_url} alt={user.email || ''} />
+            <AvatarFallback>{user.email?.[0].toUpperCase()}</AvatarFallback>
+          </Avatar>
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem className="font-medium">
+          {user.email}
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem onClick={() => signOut()}>
+          退出登录
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 } 
