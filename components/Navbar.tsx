@@ -143,28 +143,15 @@ export function Navbar() {
                 <button
                   onClick={() => signOut()}
                   className={cn(
-                    "p-2.5 rounded-full transition-all duration-200",
-                    "bg-gray-900 text-white dark:bg-white dark:text-gray-900",
-                    "hover:bg-gray-800 dark:hover:bg-gray-100",
-                    "focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700"
+                    "w-10 h-10 rounded-full transition-all duration-200",
+                    "bg-orange-500 text-white",
+                    "hover:bg-orange-600",
+                    "focus:outline-none focus:ring-2 focus:ring-orange-300 dark:focus:ring-orange-700",
+                    "flex items-center justify-center text-sm font-medium"
                   )}
                   aria-label="User profile"
                 >
-                  <div className="w-5 h-5 rounded-full overflow-hidden">
-                    {user.user_metadata?.avatar_url ? (
-                      <Image
-                        src={user.user_metadata.avatar_url}
-                        alt={user.email || ''}
-                        width={20}
-                        height={20}
-                        className="object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary text-xs">
-                        {user.email?.[0].toUpperCase()}
-                      </div>
-                    )}
-                  </div>
+                  {user.email?.[0].toUpperCase()}
                 </button>
               )}
             </nav>
@@ -304,7 +291,11 @@ export function Navbar() {
                           }}
                           className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700"
                         >
-                          <FiUser className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                          <div className="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center">
+                            <span className="text-sm font-medium text-white">
+                              {user.email?.[0].toUpperCase()}
+                            </span>
+                          </div>
                         </button>
                       </div>
                     ) : (

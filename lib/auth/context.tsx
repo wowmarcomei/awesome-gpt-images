@@ -5,11 +5,12 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useRouter } from 'next/navigation';
 import type { User } from '@supabase/auth-helpers-nextjs';
 
-type AuthContextType = {
+export type AuthContextType = {
   user: User | null;
   isLoading: boolean;
-  signIn: (provider: string) => Promise<void>;
   signInWithEmail: (email: string, password: string) => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
+  signInWithGitHub: () => Promise<void>;
   signOut: () => Promise<void>;
 };
 
@@ -57,23 +58,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
   }, [supabase, router]);
 
-  const signIn = async (provider: string) => {
-    try {
-      if (provider === 'google' || provider === 'github') {
-        const { error } = await supabase.auth.signInWithOAuth({
-          provider: provider,
-          options: {
-            redirectTo: `${location.origin}/auth/callback`,
-          },
-        });
-        if (error) throw error;
-      }
-    } catch (error) {
-      console.error('Error signing in:', error);
-      throw error;
-    }
-  };
-
   const signInWithEmail = async (email: string, password: string) => {
     try {
       const { error } = await supabase.auth.signInWithPassword({
@@ -97,12 +81,41 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const signInWithGoogle = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`
+        }
+      });
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error signing in with Google:', error);
+    }
+  };
+
+  const signInWithGitHub = async () => {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'github',
+        options: {
+          redirectTo: `${window.location.origin}/auth/callback`
+        }
+      });
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error signing in with GitHub:', error);
+    }
+  };
+
   const value = {
     user,
     isLoading,
-    signIn,
     signInWithEmail,
-    signOut,
+    signInWithGoogle,
+    signInWithGitHub,
+    signOut
   };
 
   return (

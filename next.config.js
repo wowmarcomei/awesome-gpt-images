@@ -19,6 +19,10 @@ const nextConfig = {
     loader: 'default',
     disableStaticImages: false,
     unoptimized: false,
+    domains: [
+      'lh3.googleusercontent.com',    // Google 头像
+      'avatars.githubusercontent.com'  // GitHub 头像
+    ]
   },
   // 添加实验性功能支持
   experimental: {
