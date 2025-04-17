@@ -72,4 +72,15 @@ export const zh = {
     copied: '已复制到剪贴板',
     original: '原文',
   },
+  dashboard: {
+    favorites: '我的收藏',
+    likes: '我的点赞',
+    logout: '退出登录',
+    title: '用户中心',
+    noData: '暂无数据',
+    loading: '加载中...',
+    welcome_back: '欢迎回来',
+    recent_activity: '最近活动',
+    no_activity: '暂无活动记录'
+  },
 }; 

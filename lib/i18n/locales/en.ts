@@ -72,4 +72,15 @@ export const en = {
     copied: 'Copied to clipboard',
     original: 'Original',
   },
+  dashboard: {
+    favorites: 'My Favorites',
+    likes: 'My Likes',
+    logout: 'Logout',
+    title: 'Dashboard',
+    noData: 'No data available',
+    loading: 'Loading...',
+    welcome_back: 'Welcome Back',
+    recent_activity: 'Recent Activity',
+    no_activity: 'No recent activity'
+  },
 }; 
