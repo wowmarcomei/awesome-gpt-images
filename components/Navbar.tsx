@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { FaGithub } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
-import { FiMenu, FiX } from 'react-icons/fi';
+import { FiMenu, FiX, FiLogIn } from 'react-icons/fi';
+import { MdLightMode, MdDarkMode } from 'react-icons/md';
 import { ThemeToggle } from './theme-toggle';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
@@ -18,9 +19,9 @@ import { useAuth } from '../lib/auth/context';
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const { theme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const { t } = useI18n();
-  const { user, isLoading } = useAuth();
+  const { user, isLoading, signOut } = useAuth();
 
   // 处理滚动效果
   useEffect(() => {
@@ -37,6 +38,11 @@ export function Navbar() {
       setIsOpen(false);
     }
   }, [user]);
+
+  // 统一的菜单项点击处理函数
+  const handleItemClick = () => {
+    setIsOpen(false);
+  };
 
   return (
     <>
@@ -108,7 +114,57 @@ export function Navbar() {
               >
                 <FaGithub className="w-5 h-5" />
               </a>
-              <AuthButton />
+              {!isLoading && !user && (
+                <Link
+                  href="/auth"
+                  className={cn(
+                    // 移动端样式
+                    "flex items-center justify-center gap-2 w-full h-10 px-4 rounded-xl",
+                    "bg-blue-500 hover:bg-blue-600 active:bg-blue-700",
+                    "dark:bg-blue-600 dark:hover:bg-blue-700 dark:active:bg-blue-800",
+                    "text-white border-0",
+                    // 桌面端样式
+                    "md:w-auto md:h-auto md:p-2.5 md:rounded-full",
+                    "md:bg-gray-900 md:dark:bg-white",
+                    "md:text-white md:dark:text-gray-900",
+                    "md:hover:bg-gray-800 md:dark:hover:bg-gray-100",
+                    "transition-all duration-200"
+                  )}
+                  aria-label="Login"
+                  onClick={handleItemClick}
+                >
+                  <FiLogIn className="w-5 h-5" />
+                  <span className="md:hidden">登录</span>
+                </Link>
+              )}
+              {!isLoading && user && (
+                <button
+                  onClick={() => signOut()}
+                  className={cn(
+                    "p-2.5 rounded-full transition-all duration-200",
+                    "bg-gray-900 text-white dark:bg-white dark:text-gray-900",
+                    "hover:bg-gray-800 dark:hover:bg-gray-100",
+                    "focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700"
+                  )}
+                  aria-label="User profile"
+                >
+                  <div className="w-5 h-5 rounded-full overflow-hidden">
+                    {user.user_metadata?.avatar_url ? (
+                      <Image
+                        src={user.user_metadata.avatar_url}
+                        alt={user.email || ''}
+                        width={20}
+                        height={20}
+                        className="object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full flex items-center justify-center bg-primary/10 text-primary text-xs">
+                        {user.email?.[0].toUpperCase()}
+                      </div>
+                    )}
+                  </div>
+                </button>
+              )}
             </nav>
 
             {/* 移动端菜单按钮 */}
@@ -126,51 +182,147 @@ export function Navbar() {
       {/* 移动端菜单 */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="fixed top-16 left-0 right-0 z-40 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 md:hidden"
-          >
-            <div className="max-w-7xl mx-auto px-4 py-4">
-              <div className="flex flex-col gap-4">
-                <LanguageSwitch />
-                <ThemeToggle />
-                <div className="flex gap-2">
-                  <a
-                    href="https://x.com/wowmarcomei"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(
-                      "p-2.5 rounded-full transition-all duration-200",
-                      "bg-gray-900 text-white dark:bg-white dark:text-gray-900",
-                      "hover:bg-gray-800 dark:hover:bg-gray-100",
-                      "focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700"
-                    )}
-                    aria-label="Social"
+          <>
+            {/* 背景遮罩 */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/20 backdrop-blur-sm z-40 md:hidden"
+              onClick={() => setIsOpen(false)}
+            />
+            
+            {/* 菜单面板 */}
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 20 }}
+              className="fixed top-0 right-0 h-full w-72 bg-white dark:bg-gray-900 z-50 md:hidden shadow-xl"
+            >
+              <div className="flex flex-col h-full">
+                {/* 菜单头部 */}
+                <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-800">
+                  <div className="flex items-center gap-2">
+                    <Image
+                      src="/favicon/ms-icon-310x310.png"
+                      alt="Logo"
+                      width={24}
+                      height={24}
+                      className="object-contain"
+                    />
+                    <span className="text-base font-semibold text-gray-900 dark:text-white">
+                      菜单
+                    </span>
+                  </div>
+                  <button
+                    onClick={() => setIsOpen(false)}
+                    className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+                    aria-label="关闭菜单"
                   >
-                    <FaXTwitter className="w-5 h-5" />
-                  </a>
-                  <a
-                    href="https://github.com/wowmarcomei/awesome-gpt-images"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={cn(
-                      "p-2.5 rounded-full transition-all duration-200",
-                      "bg-gray-900 text-white dark:bg-white dark:text-gray-900",
-                      "hover:bg-gray-800 dark:hover:bg-gray-100",
-                      "focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-700"
-                    )}
-                    aria-label="GitHub"
-                  >
-                    <FaGithub className="w-5 h-5" />
-                  </a>
+                    <FiX className="w-5 h-5 text-gray-500 dark:text-gray-400" />
+                  </button>
                 </div>
-                <AuthButton />
+
+                {/* 菜单内容 */}
+                <div className="p-4 space-y-3">
+                  <div className="flex flex-col gap-3">
+                    {/* 语言切换 */}
+                    <div 
+                      className="flex items-center justify-center"
+                      onClick={handleItemClick}
+                    >
+                      <LanguageSwitch />
+                    </div>
+
+                    {/* 主题切换 */}
+                    <button
+                      onClick={() => {
+                        setTheme(theme === 'dark' ? 'light' : 'dark');
+                        handleItemClick();
+                      }}
+                      className={cn(
+                        "w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl transition-all",
+                        "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700",
+                        "text-gray-900 dark:text-white"
+                      )}
+                    >
+                      {theme === 'dark' ? (
+                        <MdLightMode className="w-5 h-5" />
+                      ) : (
+                        <MdDarkMode className="w-5 h-5" />
+                      )}
+                      <span className="text-sm font-medium">
+                        {theme === 'dark' ? '浅色模式' : '深色模式'}
+                      </span>
+                    </button>
+
+                    {/* Twitter */}
+                    <a
+                      href="https://x.com/wowmarcomei"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={handleItemClick}
+                      className={cn(
+                        "w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl transition-all",
+                        "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700",
+                        "text-gray-900 dark:text-white"
+                      )}
+                    >
+                      <FaXTwitter className="w-5 h-5" />
+                      <span className="text-sm font-medium">Twitter</span>
+                    </a>
+
+                    {/* GitHub */}
+                    <a
+                      href="https://github.com/wowmarcomei/awesome-gpt-images"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={handleItemClick}
+                      className={cn(
+                        "w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl transition-all",
+                        "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700",
+                        "text-gray-900 dark:text-white"
+                      )}
+                    >
+                      <FaGithub className="w-5 h-5" />
+                      <span className="text-sm font-medium">GitHub</span>
+                    </a>
+
+                    {/* 用户认证状态 */}
+                    {user ? (
+                      <div className="flex items-center justify-between p-3 rounded-xl bg-gray-100 dark:bg-gray-800">
+                        <span className="text-sm font-medium text-gray-900 dark:text-white">
+                          {user.email}
+                        </span>
+                        <AuthButton onClick={handleItemClick} />
+                      </div>
+                    ) : (
+                      <>
+                        <div className="text-sm text-gray-500 dark:text-gray-400">
+                          登录后可以：
+                        </div>
+                        <ul className="text-sm text-gray-500 dark:text-gray-400 list-disc pl-4 space-y-1">
+                          <li>收藏喜欢的提示词</li>
+                          <li>分享你的作品</li>
+                          <li>参与社区讨论</li>
+                        </ul>
+                        <AuthButton 
+                          className={cn(
+                            "md:hidden", // 只在移动端显示蓝色风格
+                            "w-full h-10",
+                            "rounded-xl",
+                            "transition-all duration-200"
+                          )}
+                          onClick={handleItemClick}
+                        />
+                      </>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </>
