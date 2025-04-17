@@ -170,6 +170,7 @@ export default function AuthPage() {
                       "bg-white dark:bg-gray-800",
                       "border-gray-200 dark:border-gray-700",
                       "focus:border-blue-500 dark:focus:border-blue-400",
+                      "text-gray-900 dark:text-gray-100",
                       "placeholder:text-gray-400 dark:placeholder:text-gray-500"
                     )}
                   />
@@ -187,6 +188,7 @@ export default function AuthPage() {
                       "bg-white dark:bg-gray-800",
                       "border-gray-200 dark:border-gray-700",
                       "focus:border-blue-500 dark:focus:border-blue-400",
+                      "text-gray-900 dark:text-gray-100",
                       "placeholder:text-gray-400 dark:placeholder:text-gray-500"
                     )}
                   />
@@ -221,6 +223,7 @@ export default function AuthPage() {
                       "bg-white dark:bg-gray-800",
                       "border-gray-200 dark:border-gray-700",
                       "focus:border-blue-500 dark:focus:border-blue-400",
+                      "text-gray-900 dark:text-gray-100",
                       "placeholder:text-gray-400 dark:placeholder:text-gray-500"
                     )}
                   />
@@ -238,6 +241,7 @@ export default function AuthPage() {
                       "bg-white dark:bg-gray-800",
                       "border-gray-200 dark:border-gray-700",
                       "focus:border-blue-500 dark:focus:border-blue-400",
+                      "text-gray-900 dark:text-gray-100",
                       "placeholder:text-gray-400 dark:placeholder:text-gray-500"
                     )}
                   />
@@ -255,6 +259,7 @@ export default function AuthPage() {
                       "bg-white dark:bg-gray-800",
                       "border-gray-200 dark:border-gray-700",
                       "focus:border-blue-500 dark:focus:border-blue-400",
+                      "text-gray-900 dark:text-gray-100",
                       "placeholder:text-gray-400 dark:placeholder:text-gray-500"
                     )}
                   />
