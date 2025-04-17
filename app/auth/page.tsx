@@ -12,6 +12,8 @@ import Image from 'next/image';
 import { FaGoogle, FaGithub } from 'react-icons/fa6';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { toast } from 'sonner';
+import { cn } from '../../lib/utils';
+import { useI18n } from '../../lib/i18n/context';
 
 export default function AuthPage() {
   // 登录状态
@@ -30,6 +32,7 @@ export default function AuthPage() {
   const { signInWithEmail, signInWithGitHub, signInWithGoogle } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
+  const { t } = useI18n();
 
   // 处理URL参数中的状态
   useEffect(() => {
@@ -37,31 +40,31 @@ export default function AuthPage() {
     const verified = searchParams.get('verified');
 
     if (error === 'missing_token') {
-      toast.error('验证链接无效');
+      toast.error(t('auth.error.invalid_token'));
     } else if (error === 'verification_failed') {
-      toast.error('邮箱验证失败，请重试');
+      toast.error(t('auth.error.verification_failed'));
     }
 
     if (verified === 'true') {
-      toast.success('邮箱验证成功，请登录');
+      toast.success(t('auth.success.email_verified'));
     }
-  }, [searchParams]);
+  }, [searchParams, t]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!loginEmail || !loginPassword) {
-      toast.error('请填写邮箱和密码');
+      toast.error(t('auth.error.required_fields'));
       return;
     }
 
     try {
       setIsLoading(true);
       await signInWithEmail(loginEmail, loginPassword);
-      toast.success('登录成功');
+      toast.success(t('auth.success.login'));
       router.push('/');
     } catch (error) {
       console.error('登录失败:', error);
-      toast.error('登录失败，请检查邮箱和密码');
+      toast.error(t('auth.error.login_failed'));
     } finally {
       setIsLoading(false);
     }
@@ -70,19 +73,18 @@ export default function AuthPage() {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // 表单验证
     if (!registerEmail || !registerPassword || !confirmPassword) {
-      toast.error('请填写所有必填项');
+      toast.error(t('auth.error.required_fields'));
       return;
     }
 
     if (registerPassword.length < 6) {
-      toast.error('密码长度至少为6位');
+      toast.error(t('auth.error.password_length'));
       return;
     }
 
     if (registerPassword !== confirmPassword) {
-      toast.error('两次输入的密码不一致');
+      toast.error(t('auth.error.password_mismatch'));
       return;
     }
 
@@ -102,15 +104,14 @@ export default function AuthPage() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || '注册失败，请稍后重试');
+        throw new Error(data.error || t('auth.error.register_failed'));
       }
 
-      // 注册成功，显示验证邮件提示
       setIsEmailSent(true);
-      toast.success('注册成功，请查收验证邮件');
+      toast.success(t('auth.success.register'));
     } catch (error) {
       console.error('注册失败:', error);
-      toast.error(error instanceof Error ? error.message : '注册失败，请稍后重试');
+      toast.error(error instanceof Error ? error.message : t('auth.error.register_failed'));
     } finally {
       setIsLoading(false);
     }
@@ -119,27 +120,37 @@ export default function AuthPage() {
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4 bg-gray-50/50 dark:bg-gray-900/50">
       <div className="w-full max-w-md">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8">
           {/* 标题 */}
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">欢迎回来</h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">选择登录方式继续</p>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{t('auth.welcome_back')}</h1>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">{t('auth.choose_method')}</p>
           </div>
 
           {/* 登录/注册标签页 */}
           <Tabs defaultValue="login" className="space-y-6">
-            <TabsList className="w-full grid grid-cols-2 gap-4 bg-gray-100 dark:bg-gray-700/50 p-1 rounded-xl h-12">
+            <TabsList className="w-full grid grid-cols-2 gap-4 bg-gray-100 dark:bg-gray-800 p-1 rounded-xl h-12">
               <TabsTrigger 
                 value="login"
-                className="rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:shadow-sm transition-all"
+                className={cn(
+                  "rounded-lg transition-all",
+                  "data-[state=active]:bg-white data-[state=active]:shadow-sm",
+                  "dark:data-[state=active]:bg-blue-600 dark:data-[state=active]:text-white",
+                  "dark:text-gray-300 dark:hover:text-white"
+                )}
               >
-                登录
+                {t('auth.login')}
               </TabsTrigger>
               <TabsTrigger 
                 value="register"
-                className="rounded-lg data-[state=active]:bg-white dark:data-[state=active]:bg-gray-800 data-[state=active]:shadow-sm transition-all"
+                className={cn(
+                  "rounded-lg transition-all",
+                  "data-[state=active]:bg-white data-[state=active]:shadow-sm",
+                  "dark:data-[state=active]:bg-blue-600 dark:data-[state=active]:text-white",
+                  "dark:text-gray-300 dark:hover:text-white"
+                )}
               >
-                注册
+                {t('auth.register')}
               </TabsTrigger>
             </TabsList>
 
@@ -147,32 +158,49 @@ export default function AuthPage() {
             <TabsContent value="login" className="space-y-6">
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="email">邮箱</Label>
+                  <Label htmlFor="email" className="text-gray-700 dark:text-gray-200">{t('auth.email')}</Label>
                   <Input
                     id="email"
                     type="email"
-                    placeholder="name@example.com"
+                    placeholder={t('auth.email_placeholder')}
                     value={loginEmail}
                     onChange={(e) => setLoginEmail(e.target.value)}
-                    className="h-11"
+                    className={cn(
+                      "h-11",
+                      "bg-white dark:bg-gray-800",
+                      "border-gray-200 dark:border-gray-700",
+                      "focus:border-blue-500 dark:focus:border-blue-400",
+                      "placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                    )}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="password">密码</Label>
+                  <Label htmlFor="password" className="text-gray-700 dark:text-gray-200">{t('auth.password')}</Label>
                   <Input
                     id="password"
                     type="password"
-                    placeholder="••••••••"
+                    placeholder={t('auth.password_placeholder')}
                     value={loginPassword}
                     onChange={(e) => setLoginPassword(e.target.value)}
-                    className="h-11"
+                    className={cn(
+                      "h-11",
+                      "bg-white dark:bg-gray-800",
+                      "border-gray-200 dark:border-gray-700",
+                      "focus:border-blue-500 dark:focus:border-blue-400",
+                      "placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                    )}
                   />
                 </div>
                 <Button 
-                  className="w-full h-11 text-base"
+                  className={cn(
+                    "w-full h-11 text-base",
+                    "bg-blue-500 hover:bg-blue-600 text-white",
+                    "dark:bg-blue-600 dark:hover:bg-blue-700",
+                    "transition-colors"
+                  )}
                   onClick={handleLogin}
                 >
-                  {isLoading ? '登录中...' : '登录'}
+                  {isLoading ? t('auth.logging_in') : t('auth.login')}
                 </Button>
               </div>
             </TabsContent>
@@ -181,43 +209,66 @@ export default function AuthPage() {
             <TabsContent value="register" className="space-y-6">
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="register-email">邮箱</Label>
+                  <Label htmlFor="register-email" className="text-gray-700 dark:text-gray-200">{t('auth.email')}</Label>
                   <Input
                     id="register-email"
                     type="email"
-                    placeholder="name@example.com"
+                    placeholder={t('auth.email_placeholder')}
                     value={registerEmail}
                     onChange={(e) => setRegisterEmail(e.target.value)}
-                    className="h-11"
+                    className={cn(
+                      "h-11",
+                      "bg-white dark:bg-gray-800",
+                      "border-gray-200 dark:border-gray-700",
+                      "focus:border-blue-500 dark:focus:border-blue-400",
+                      "placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                    )}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="register-password">密码</Label>
+                  <Label htmlFor="register-password" className="text-gray-700 dark:text-gray-200">{t('auth.password')}</Label>
                   <Input
                     id="register-password"
                     type="password"
-                    placeholder="••••••••"
+                    placeholder={t('auth.password_placeholder')}
                     value={registerPassword}
                     onChange={(e) => setRegisterPassword(e.target.value)}
-                    className="h-11"
+                    className={cn(
+                      "h-11",
+                      "bg-white dark:bg-gray-800",
+                      "border-gray-200 dark:border-gray-700",
+                      "focus:border-blue-500 dark:focus:border-blue-400",
+                      "placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                    )}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="confirm-password">确认密码</Label>
+                  <Label htmlFor="confirm-password" className="text-gray-700 dark:text-gray-200">{t('auth.confirm_password')}</Label>
                   <Input
                     id="confirm-password"
                     type="password"
-                    placeholder="••••••••"
+                    placeholder={t('auth.confirm_password_placeholder')}
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="h-11"
+                    className={cn(
+                      "h-11",
+                      "bg-white dark:bg-gray-800",
+                      "border-gray-200 dark:border-gray-700",
+                      "focus:border-blue-500 dark:focus:border-blue-400",
+                      "placeholder:text-gray-400 dark:placeholder:text-gray-500"
+                    )}
                   />
                 </div>
                 <Button 
-                  className="w-full h-11 text-base"
+                  className={cn(
+                    "w-full h-11 text-base",
+                    "bg-blue-500 hover:bg-blue-600 text-white",
+                    "dark:bg-blue-600 dark:hover:bg-blue-700",
+                    "transition-colors"
+                  )}
                   onClick={handleRegister}
                 >
-                  {isLoading ? '注册中...' : '注册'}
+                  {isLoading ? t('auth.registering') : t('auth.register')}
                 </Button>
               </div>
             </TabsContent>
@@ -229,8 +280,8 @@ export default function AuthPage() {
               <div className="w-full border-t border-gray-200 dark:border-gray-700" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">
-                或使用以下方式登录
+              <span className="px-2 bg-white dark:bg-gray-900 text-gray-500 dark:text-gray-400">
+                {t('auth.or_continue_with')}
               </span>
             </div>
           </div>
@@ -239,7 +290,14 @@ export default function AuthPage() {
           <div className="grid grid-cols-2 gap-4">
             <Button 
               variant="outline" 
-              className="h-11"
+              className={cn(
+                "h-11",
+                "bg-white dark:bg-gray-800",
+                "hover:bg-gray-50 dark:hover:bg-gray-700",
+                "text-gray-900 dark:text-gray-100",
+                "border-gray-200 dark:border-gray-600",
+                "hover:border-gray-300 dark:hover:border-gray-500"
+              )}
               onClick={() => signInWithGoogle()}
             >
               <FaGoogle className="mr-2 h-4 w-4" />
@@ -247,7 +305,14 @@ export default function AuthPage() {
             </Button>
             <Button 
               variant="outline"
-              className="h-11"
+              className={cn(
+                "h-11",
+                "bg-white dark:bg-gray-800",
+                "hover:bg-gray-50 dark:hover:bg-gray-700",
+                "text-gray-900 dark:text-gray-100",
+                "border-gray-200 dark:border-gray-600",
+                "hover:border-gray-300 dark:hover:border-gray-500"
+              )}
               onClick={() => signInWithGitHub()}
             >
               <FaGithub className="mr-2 h-4 w-4" />
@@ -257,15 +322,15 @@ export default function AuthPage() {
 
           {/* 服务条款 */}
           <p className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
-            点击登录或注册即表示同意
+            {t('auth.terms_prefix')}
             <Link href="/terms" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
-              服务条款
+              {t('auth.terms_of_service')}
             </Link>
-            和
+            {t('auth.terms_and')}
             <Link href="/privacy" className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300">
-              隐私政策
+              {t('auth.privacy_policy')}
             </Link>
-            。
+            {t('auth.terms_suffix')}
           </p>
         </div>
       </div>

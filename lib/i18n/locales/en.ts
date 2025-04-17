@@ -16,6 +16,40 @@ export const en = {
     type: 'Type',
     theme: 'Theme',
   },
+  auth: {
+    welcome_back: 'Welcome Back',
+    choose_method: 'Choose how to continue',
+    login: 'Login',
+    register: 'Register',
+    email: 'Email',
+    password: 'Password',
+    confirm_password: 'Confirm Password',
+    email_placeholder: 'name@example.com',
+    password_placeholder: '••••••••',
+    confirm_password_placeholder: '••••••••',
+    logging_in: 'Logging in...',
+    registering: 'Registering...',
+    or_continue_with: 'Or continue with',
+    terms_prefix: 'By continuing, you agree to our',
+    terms_of_service: 'Terms of Service',
+    terms_and: 'and',
+    privacy_policy: 'Privacy Policy',
+    terms_suffix: '.',
+    error: {
+      invalid_token: 'Invalid verification link',
+      verification_failed: 'Email verification failed, please try again',
+      required_fields: 'Please fill in all required fields',
+      password_length: 'Password must be at least 6 characters',
+      password_mismatch: 'Passwords do not match',
+      login_failed: 'Login failed, please check your email and password',
+      register_failed: 'Registration failed, please try again later'
+    },
+    success: {
+      email_verified: 'Email verified successfully, please login',
+      login: 'Login successful',
+      register: 'Registration successful, please check your email'
+    }
+  },
   footer: {
     projectInfo: {
       title: 'Project Info',

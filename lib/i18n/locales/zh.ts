@@ -16,6 +16,40 @@ export const zh = {
     type: '类型',
     theme: '主题',
   },
+  auth: {
+    welcome_back: '欢迎回来',
+    choose_method: '选择登录方式继续',
+    login: '登录',
+    register: '注册',
+    email: '邮箱',
+    password: '密码',
+    confirm_password: '确认密码',
+    email_placeholder: 'name@example.com',
+    password_placeholder: '••••••••',
+    confirm_password_placeholder: '••••••••',
+    logging_in: '登录中...',
+    registering: '注册中...',
+    or_continue_with: '或使用以下方式登录',
+    terms_prefix: '点击登录或注册即表示同意',
+    terms_of_service: '服务条款',
+    terms_and: '和',
+    privacy_policy: '隐私政策',
+    terms_suffix: '。',
+    error: {
+      invalid_token: '验证链接无效',
+      verification_failed: '邮箱验证失败，请重试',
+      required_fields: '请填写所有必填项',
+      password_length: '密码长度至少为6位',
+      password_mismatch: '两次输入的密码不一致',
+      login_failed: '登录失败，请检查邮箱和密码',
+      register_failed: '注册失败，请稍后重试'
+    },
+    success: {
+      email_verified: '邮箱验证成功，请登录',
+      login: '登录成功',
+      register: '注册成功，请查收验证邮件'
+    }
+  },
   footer: {
     projectInfo: {
       title: '项目信息',
