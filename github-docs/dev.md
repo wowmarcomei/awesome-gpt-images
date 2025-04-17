@@ -16,141 +16,47 @@
 
 ## 2. 数据模型
 
-### Prisma 配置
-1. 安装依赖
-```bash
-npm install prisma @prisma/client
-npm install @supabase/supabase-js
-```
+### 数据库设计
 
-2. 初始化 Prisma
-```bash
-npx prisma init
-```
+#### 表结构
+1. `users_view`（视图）
+   - 字段：
+     - `id`: 用户唯一标识
+     - `email`: 邮箱地址
+     - `provider`: 认证提供商（google/github/email等）
+   - 来源：`auth.users` 表
 
-3. Prisma Schema 设计
-```prisma
-// prisma/schema.prisma
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
+2. `collections`（收藏和点赞表）
+   - 主键：`id` (UUID)
+   - 外键：`user_id` -> `users_view.id`
+   - 字段：
+     - `case_id`: 案例ID
+     - `type`: 类型（LIKE/FAVORITE）
+     - `created_at`: 创建时间
+   - 约束：
+     - 用户不能对同一案例重复点赞或收藏
+     - 级联删除（当用户被删除时）
 
-generator client {
-  provider = "prisma-client-js"
-}
+3. `user_settings`（用户设置表）
+   - 主键：`id` (UUID)
+   - 外键：`user_id` -> `users_view.id`
+   - 字段：
+     - `theme_preference`: 主题偏好
+     - `language_preference`: 语言偏好
+     - `notification_settings`: 通知设置（JSONB）
+   - 约束：
+     - 每个用户只能有一条设置记录
+     - 级联删除（当用户被删除时）
 
-// 用户表（映射到 auth.users）
-model User {
-  id            String       @id @default(uuid())
-  email         String       @unique
-  collections   Collection[]
-  settings      UserSettings?
-  createdAt     DateTime     @default(now()) @map("created_at")
-  updatedAt     DateTime     @updatedAt @map("updated_at")
+### 数据库初始化
+1. 登录 Supabase Dashboard
+2. 进入 SQL Editor
+3. 复制 `supabase/init.sql` 中的内容并执行
+   - 创建必要的视图、表和类型
+   - 设置约束和索引
+   - 配置行级安全策略（RLS）
 
-  @@map("users")
-  @@schema("auth")
-}
-
-// 收藏表
-model Collection {
-  id            String       @id @default(uuid())
-  userId        String       @map("user_id")
-  caseId        String       @map("case_id")
-  type          CollectionType
-  createdAt     DateTime     @default(now()) @map("created_at")
-  user          User         @relation(fields: [userId], references: [id])
-
-  @@map("collections")
-  @@schema("public")
-}
-
-// 用户设置表
-model UserSettings {
-  id                  String    @id @default(uuid())
-  userId              String    @unique @map("user_id")
-  themePreference    String?   @map("theme_preference")
-  languagePreference String?   @map("language_preference")
-  notificationSettings Json?    @map("notification_settings")
-  user                User      @relation(fields: [userId], references: [id])
-
-  @@map("user_settings")
-  @@schema("public")
-}
-
-enum CollectionType {
-  FAVORITE
-  BOOKMARK
-}
-```
-
-4. 环境变量配置
-```env
-# .env
-DATABASE_URL="postgresql://postgres:[YOUR-PASSWORD]@db.[YOUR-PROJECT-REF].supabase.co:5432/postgres"
-```
-
-5. 数据库迁移命令
-```bash
-# 生成迁移文件
-npx prisma migrate dev --name init
-
-# 应用迁移到数据库
-npx prisma migrate deploy
-```
-
-### 数据库访问层设计
-```typescript
-// lib/prisma.ts
-import { PrismaClient } from '@prisma/client'
-
-const globalForPrisma = global as unknown as { prisma: PrismaClient }
-
-export const prisma = globalForPrisma.prisma || new PrismaClient()
-
-if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
-```
-
-### API 实现示例
-```typescript
-// app/api/collections/route.ts
-import { prisma } from '@/lib/prisma'
-import { NextResponse } from 'next/server'
-
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url)
-  const userId = searchParams.get('userId')
-  
-  try {
-    const collections = await prisma.collection.findMany({
-      where: { userId },
-      include: { user: true }
-    })
-    return NextResponse.json(collections)
-  } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to fetch collections' },
-      { status: 500 }
-    )
-  }
-}
-
-export async function POST(req: Request) {
-  try {
-    const { userId, caseId, type } = await req.json()
-    const collection = await prisma.collection.create({
-      data: { userId, caseId, type }
-    })
-    return NextResponse.json(collection)
-  } catch (error) {
-    return NextResponse.json(
-      { error: 'Failed to create collection' },
-      { status: 500 }
-    )
-  }
-}
-```
+如需重置数据库，可以执行 `init.sql` 文件底部注释中的清理命令。
 
 ## 3. 功能模块
 
@@ -234,25 +140,25 @@ GET    /api/collections/stats      // 获取收藏统计
 
 ## 9. 实现步骤
 
-### 阶段一：基础架构
-1. [ ] 创建必要的页面和路由
-2. [ ] 设置数据库表和关系
-3. [ ] 实现基础 API 端点
+### 阶段一：数据库设计与迁移
+1. [x] 创建数据库模型
+2. [x] 创建必要的视图和表
+3. [ ] 验证数据库连接和查询
 
 ### 阶段二：UI 实现
-4. [ ] 创建用户界面组件
-5. [ ] 实现左侧栏
-6. [ ] 实现用户导航
+5. [ ] 创建用户界面组件
+6. [ ] 实现左侧栏
+7. [ ] 实现用户导航
 
 ### 阶段三：功能实现
-7. [ ] 实现数据获取和状态管理
-8. [ ] 添加收藏和点赞功能
-9. [ ] 实现实时更新
+8. [ ] 实现数据获取和状态管理
+9. [ ] 添加收藏和点赞功能
+10. [ ] 实现实时更新
 
 ### 阶段四：优化
-10. [ ] 性能优化
-11. [ ] 用户体验改进
-12. [ ] 测试和调试
+11. [ ] 性能优化
+12. [ ] 用户体验改进
+13. [ ] 测试和调试
 
 ## 10. 注意事项
 
@@ -271,10 +177,10 @@ GET    /api/collections/stats      // 获取收藏统计
 ## 11. 更新日志
 
 ### [2024-xx-xx] 数据库设计更新
-- 添加 Prisma 配置和实现方案
-- 设计数据库模型
-- 添加数据库访问层示例代码
-- 添加 API 实现示例
+- [x] 设计数据库模型
+- [x] 创建 Prisma schema
+- [x] 准备数据库迁移
+- [ ] 执行数据库迁移
 
 ---
 
