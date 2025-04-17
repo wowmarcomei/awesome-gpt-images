@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { FaGithub } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6';
-import { FiMenu, FiX, FiLogIn } from 'react-icons/fi';
+import { FiMenu, FiX, FiUser } from 'react-icons/fi';
 import { MdLightMode, MdDarkMode } from 'react-icons/md';
 import { ThemeToggle } from './theme-toggle';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -114,6 +114,8 @@ export function Navbar() {
               >
                 <FaGithub className="w-5 h-5" />
               </a>
+              {/* 分隔符 */}
+              <div className="hidden md:block w-px h-6 bg-gray-200 dark:bg-gray-700 mx-2" />
               {!isLoading && !user && (
                 <Link
                   href="/auth"
@@ -125,15 +127,15 @@ export function Navbar() {
                     "text-white border-0",
                     // 桌面端样式
                     "md:w-auto md:h-auto md:p-2.5 md:rounded-full",
-                    "md:bg-gray-900 md:dark:bg-white",
-                    "md:text-white md:dark:text-gray-900",
-                    "md:hover:bg-gray-800 md:dark:hover:bg-gray-100",
+                    "md:bg-blue-500 md:dark:bg-blue-600",
+                    "md:text-white",
+                    "md:hover:bg-blue-600 md:dark:hover:bg-blue-700",
                     "transition-all duration-200"
                   )}
                   aria-label="Login"
                   onClick={handleItemClick}
                 >
-                  <FiLogIn className="w-5 h-5" />
+                  <FiUser className="w-5 h-5" />
                   <span className="md:hidden">登录</span>
                 </Link>
               )}
@@ -295,7 +297,15 @@ export function Navbar() {
                         <span className="text-sm font-medium text-gray-900 dark:text-white">
                           {user.email}
                         </span>
-                        <AuthButton onClick={handleItemClick} />
+                        <button
+                          onClick={() => {
+                            signOut();
+                            handleItemClick();
+                          }}
+                          className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700"
+                        >
+                          <FiUser className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+                        </button>
                       </div>
                     ) : (
                       <>
@@ -307,15 +317,20 @@ export function Navbar() {
                           <li>分享你的作品</li>
                           <li>参与社区讨论</li>
                         </ul>
-                        <AuthButton 
+                        <Link
+                          href="/auth"
                           className={cn(
-                            "md:hidden", // 只在移动端显示蓝色风格
-                            "w-full h-10",
-                            "rounded-xl",
-                            "transition-all duration-200"
+                            "flex items-center justify-center gap-2",
+                            "w-full h-10 px-4 rounded-xl",
+                            "bg-blue-500 hover:bg-blue-600 active:bg-blue-700",
+                            "dark:bg-blue-600 dark:hover:bg-blue-700 dark:active:bg-blue-800",
+                            "text-white"
                           )}
                           onClick={handleItemClick}
-                        />
+                        >
+                          <FiUser className="w-5 h-5" />
+                          <span>登录</span>
+                        </Link>
                       </>
                     )}
                   </div>
