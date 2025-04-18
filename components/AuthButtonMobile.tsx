@@ -62,12 +62,20 @@ export function AuthButtonMobile({ onItemClick }: AuthButtonMobileProps) {
       <div className="flex items-center gap-2 p-3 rounded-xl bg-gray-100 dark:bg-gray-800">
         <Avatar className="h-8 w-8">
           <AvatarImage 
-            src={user.user_metadata?.avatar_url} 
+            src={user.user_metadata?.avatar_url || '/examples/avatar_sample.png'} 
             alt={user.email || ''} 
             className="object-cover"
+            onError={(e) => {
+              const img = e.target as HTMLImageElement;
+              img.src = '/examples/avatar_sample.png';
+            }}
           />
           <AvatarFallback className="bg-primary/10 text-primary dark:bg-primary/20">
-            {user.email?.[0].toUpperCase()}
+            <AvatarImage 
+              src="/examples/avatar_sample.png"
+              alt="Default avatar"
+              className="object-cover"
+            />
           </AvatarFallback>
         </Avatar>
         <div className="flex flex-col flex-1">

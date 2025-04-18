@@ -105,9 +105,13 @@ export function AuthButton({ className, onClick }: AuthButtonProps) {
       >
         <Avatar className="h-8 w-8">
           <AvatarImage 
-            src={user.user_metadata?.avatar_url} 
+            src={user.user_metadata?.avatar_url || '/examples/avatar_sample.png'} 
             alt={user.email || ''} 
             className="object-cover"
+            onError={(e) => {
+              const img = e.target as HTMLImageElement;
+              img.src = '/examples/avatar_sample.png';
+            }}
           />
           <AvatarFallback className="bg-primary/10 text-primary dark:bg-primary/20">
             {user.email?.[0].toUpperCase()}
@@ -202,9 +206,13 @@ export function AuthButton({ className, onClick }: AuthButtonProps) {
             >
               <Avatar className="h-5 w-5">
                 <AvatarImage 
-                  src={user.user_metadata?.avatar_url} 
+                  src={user.user_metadata?.avatar_url || '/examples/avatar_sample.png'} 
                   alt={user.email || ''} 
                   className="object-cover"
+                  onError={(e) => {
+                    const img = e.target as HTMLImageElement;
+                    img.src = '/examples/avatar_sample.png';
+                  }}
                 />
                 <AvatarFallback className="text-xs bg-primary/10 text-primary dark:bg-primary/20">
                   {user.email?.[0].toUpperCase()}
@@ -246,12 +254,20 @@ export function AuthButton({ className, onClick }: AuthButtonProps) {
         >
           <Avatar className="w-full h-full">
             <AvatarImage 
-              src={user.user_metadata?.avatar_url} 
+              src={user.user_metadata?.avatar_url || '/examples/avatar_sample.png'} 
               alt={user.email || ''} 
               className="object-cover"
+              onError={(e) => {
+                const img = e.target as HTMLImageElement;
+                img.src = '/examples/avatar_sample.png';
+              }}
             />
             <AvatarFallback className="text-base font-medium bg-primary text-primary-foreground">
-              {user.email?.[0].toUpperCase()}
+              <AvatarImage 
+                src="/examples/avatar_sample.png"
+                alt="Default avatar"
+                className="object-cover"
+              />
             </AvatarFallback>
           </Avatar>
           {unreadCount > 0 && (
