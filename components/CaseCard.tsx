@@ -257,13 +257,13 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
               </h3>
               <div className="flex items-center gap-4">
                 {showCopied && (
-                  <span className="text-sm text-green-500">✓ {t('common.copied')}</span>
+                  <span className="text-sm text-green-500 dark:text-green-400">✓ {t('common.copied')}</span>
                 )}
                 <Button
-                  variant="ghost"
+                  variant="outline"
                   size="sm"
                   onClick={handleShowPrompt}
-                  className="hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
                 >
                   <FaCode className="mr-2 h-4 w-4" />
                   {t('common.copy')}
