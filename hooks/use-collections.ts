@@ -1,9 +1,10 @@
 import useSWR from 'swr'
 import useSWRInfinite from 'swr/infinite'
 import { create } from 'zustand'
-import { useAuth } from './use-auth'
+import { useAuth } from '@/lib/auth/context'
 import { toast } from 'sonner'
 import { useI18n } from '@/lib/i18n/context'
+import { useEffect } from 'react'
 
 interface Collection {
   id: string
@@ -25,8 +26,17 @@ interface Collections {
 }
 
 interface CollectionsStore {
+  // 服务器状态
+  serverLikes: Set<string>
+  serverFavorites: Set<string>
+  // 乐观更新状态
   optimisticLikes: Set<string>
   optimisticFavorites: Set<string>
+  // 初始化状态
+  initialized: boolean
+  userId: string | null
+  // Actions
+  initializeFromServer: (userId: string, likes: string[], favorites: string[]) => void
   addOptimisticLike: (caseId: string) => void
   removeOptimisticLike: (caseId: string) => void
   addOptimisticFavorite: (caseId: string) => void
@@ -36,8 +46,24 @@ interface CollectionsStore {
 
 // 乐观更新状态管理
 export const useCollectionsStore = create<CollectionsStore>((set) => ({
+  // 初始状态
+  serverLikes: new Set(),
+  serverFavorites: new Set(),
   optimisticLikes: new Set(),
   optimisticFavorites: new Set(),
+  initialized: false,
+  userId: null,
+
+  // 从服务器初始化状态
+  initializeFromServer: (userId, likes, favorites) =>
+    set({
+      serverLikes: new Set(likes),
+      serverFavorites: new Set(favorites),
+      initialized: true,
+      userId
+    }),
+
+  // 乐观更新操作
   addOptimisticLike: (caseId) =>
     set((state) => ({
       optimisticLikes: new Set(state.optimisticLikes).add(caseId)
@@ -58,21 +84,78 @@ export const useCollectionsStore = create<CollectionsStore>((set) => ({
       newSet.delete(caseId)
       return { optimisticFavorites: newSet }
     }),
-  reset: () => set({ optimisticLikes: new Set(), optimisticFavorites: new Set() })
+  reset: () =>
+    set({
+      serverLikes: new Set(),
+      serverFavorites: new Set(),
+      optimisticLikes: new Set(),
+      optimisticFavorites: new Set(),
+      initialized: false,
+      userId: null
+    })
 }))
 
 const PAGE_SIZE = 12
 
 export function useCollections(type?: 'LIKE' | 'FAVORITE') {
-  const { user } = useAuth()
+  const { user, loading: authLoading } = useAuth()
   const { t } = useI18n()
   const store = useCollectionsStore()
 
-  console.log('useCollections - user:', user)
+  console.log('useCollections - user:', user?.id, 'authLoading:', authLoading, 'initialized:', store.initialized)
+
+  // 获取用户收藏状态
+  useEffect(() => {
+    const initializeCollections = async () => {
+      // 如果认证状态还在加载，或者已经初始化过且用户ID没变，则跳过
+      if (authLoading || (store.initialized && store.userId === user?.id)) {
+        return
+      }
+
+      // 如果没有用户，重置状态
+      if (!user?.id) {
+        if (store.initialized) {
+          console.log('No user, resetting collections state')
+          store.reset()
+        }
+        return
+      }
+
+      console.log('Initializing collections for user:', user.id)
+      try {
+        const res = await fetch('/api/collections', {
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+        
+        if (!res.ok) {
+          throw new Error('Failed to fetch collections')
+        }
+
+        const data: Collections = await res.json()
+        console.log('Received collections from server:', data)
+        
+        // 初始化状态，包括用户ID
+        store.initializeFromServer(user.id, data.likes || [], data.favorites || [])
+        console.log('Store initialized with server data:', {
+          userId: user.id,
+          likes: Array.from(store.serverLikes),
+          favorites: Array.from(store.serverFavorites)
+        })
+      } catch (error) {
+        console.error('Error fetching collections:', error)
+        toast.error(t('error.fetch_failed'))
+      }
+    }
+
+    initializeCollections()
+  }, [user?.id, authLoading, store.initialized, store.userId, t])
 
   // 获取收藏/点赞列表
   const getKey = (pageIndex: number, previousPageData: CollectionResponse | null) => {
-    if (!user) {
+    if (!user?.id) {
       console.log('getKey - no user')
       return null
     }
@@ -81,7 +164,7 @@ export function useCollections(type?: 'LIKE' | 'FAVORITE') {
     return `/api/collections?type=${type}&limit=${PAGE_SIZE}${cursor ? `&cursor=${cursor}` : ''}`
   }
 
-  const { data, size, setSize, isLoading, mutate } = useSWRInfinite<CollectionResponse>(
+  const { data, size, setSize, isLoading, mutate, error } = useSWRInfinite<CollectionResponse>(
     type ? getKey : null,
     async (url) => {
       const res = await fetch(url, {
@@ -110,51 +193,37 @@ export function useCollections(type?: 'LIKE' | 'FAVORITE') {
     }
   )
 
-  // 获取所有收藏/点赞
-  const { data: collections, error } = useSWR<Collections>(
-    user ? '/api/collections' : null,
-    async () => {
-      const response = await fetch('/api/collections', {
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      if (!response.ok) {
-        throw new Error('Failed to fetch collections')
-      }
-      return response.json()
-    }
-  )
-
   const showLoginToast = () => {
     toast.error(t('auth.error.login_required'))
   }
 
   const toggleCollection = async (caseId: string, type: 'LIKE' | 'FAVORITE') => {
-    console.log('toggleCollection - user:', user)
-    if (!user) {
+    if (!user?.id) {
       console.log('toggleCollection - no user, showing login toast')
       showLoginToast()
       return
     }
 
     const isLike = type === 'LIKE'
+    const serverSet = isLike ? store.serverLikes : store.serverFavorites
     const optimisticSet = isLike ? store.optimisticLikes : store.optimisticFavorites
     const addOptimistic = isLike ? store.addOptimisticLike : store.addOptimisticFavorite
     const removeOptimistic = isLike ? store.removeOptimisticLike : store.removeOptimisticFavorite
     
-    const isCollected = optimisticSet.has(caseId)
+    // 检查服务器状态和乐观更新状态
+    const isCollected = serverSet.has(caseId) || optimisticSet.has(caseId)
     const action = isCollected ? 'remove' : 'add'
 
     try {
-      // 乐观更新
+      // 先进行乐观更新
       if (action === 'add') {
         addOptimistic(caseId)
       } else {
         removeOptimistic(caseId)
       }
 
+      console.log(`Sending ${action} ${type} request for case:`, caseId)
+      
       // API 请求
       const response = await fetch('/api/collections', {
         method: 'POST',
@@ -166,23 +235,16 @@ export function useCollections(type?: 'LIKE' | 'FAVORITE') {
       })
 
       if (!response.ok) {
-        if (response.status === 409) {
-          // 已经存在，回滚乐观更新
-          if (action === 'add') {
-            removeOptimistic(caseId)
-          } else {
-            addOptimistic(caseId)
-          }
-          return
-        }
         throw new Error('Failed to update collection')
       }
 
-      // 更新缓存
-      await mutate()
+      // 更新服务器状态
+      const updatedData = await response.json()
+      store.initializeFromServer(user.id, updatedData.likes || [], updatedData.favorites || [])
+      
     } catch (error) {
       console.error('Error toggling collection:', error)
-      // 回滚乐观更新
+      // 发生错误时回滚乐观更新
       if (action === 'add') {
         removeOptimistic(caseId)
       } else {
@@ -197,15 +259,18 @@ export function useCollections(type?: 'LIKE' | 'FAVORITE') {
   const isLoadingMore = isLoading || (size > 0 && data && typeof data[size - 1] === 'undefined')
 
   return {
-    collections: collections ?? { likes: [], favorites: [] },
+    collections: {
+      likes: Array.from(store.serverLikes),
+      favorites: Array.from(store.serverFavorites)
+    },
     items,
     stats,
     hasMore,
-    loading: isLoadingMore,
+    loading: authLoading || isLoadingMore,
     error,
     loadMore: () => setSize(size + 1),
     toggleCollection,
-    optimisticLikes: store.optimisticLikes,
-    optimisticFavorites: store.optimisticFavorites
+    isLiked: (caseId: string) => store.serverLikes.has(caseId) || store.optimisticLikes.has(caseId),
+    isFavorited: (caseId: string) => store.serverFavorites.has(caseId) || store.optimisticFavorites.has(caseId)
   }
 } 

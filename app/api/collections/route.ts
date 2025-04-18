@@ -18,8 +18,28 @@ export async function GET(request: Request) {
       return new NextResponse('Unauthorized', { status: 401 })
     }
 
+    // 如果没有指定类型，返回所有收藏状态
+    if (!type) {
+      const { data: likesData } = await supabase
+        .from('collections')
+        .select('case_id')
+        .eq('user_id', user.id)
+        .eq('type', 'LIKE')
+
+      const { data: favoritesData } = await supabase
+        .from('collections')
+        .select('case_id')
+        .eq('user_id', user.id)
+        .eq('type', 'FAVORITE')
+
+      return NextResponse.json({
+        likes: likesData?.map(item => item.case_id) || [],
+        favorites: favoritesData?.map(item => item.case_id) || []
+      })
+    }
+
     // 验证类型
-    if (type && !['LIKE', 'FAVORITE'].includes(type)) {
+    if (!['LIKE', 'FAVORITE'].includes(type)) {
       return new NextResponse('Invalid collection type', { status: 400 })
     }
 
@@ -28,13 +48,9 @@ export async function GET(request: Request) {
       .from('collections')
       .select('*')
       .eq('user_id', user.id)
+      .eq('type', type)
       .order('created_at', { ascending: false })
       .limit(limit + 1) // 多获取一条用于判断是否还有更多
-
-    // 如果有类型，添加类型条件
-    if (type) {
-      query = query.eq('type', type)
-    }
 
     // 如果有游标，添加游标条件
     if (cursor) {
@@ -107,36 +123,54 @@ export async function POST(request: Request) {
       }
 
       // 添加新记录
-      const { error } = await supabase.from('collections').insert({
-        user_id: user.id,
-        case_id: caseId,
-        type
-      })
+      const { error: insertError } = await supabase
+        .from('collections')
+        .insert({
+          user_id: user.id,
+          case_id: caseId,
+          type
+        })
 
-      if (error) {
-        console.error('Error adding collection:', error)
+      if (insertError) {
+        console.error('Error adding collection:', insertError)
         return new NextResponse('Internal Server Error', { status: 500 })
       }
-
-      return new NextResponse('Created', { status: 201 })
     } else if (action === 'remove') {
       // 删除记录
-      const { error } = await supabase
+      const { error: deleteError } = await supabase
         .from('collections')
         .delete()
         .eq('user_id', user.id)
         .eq('case_id', caseId)
         .eq('type', type)
 
-      if (error) {
-        console.error('Error removing collection:', error)
+      if (deleteError) {
+        console.error('Error removing collection:', deleteError)
         return new NextResponse('Internal Server Error', { status: 500 })
       }
-
-      return new NextResponse('Deleted', { status: 200 })
     } else {
       return new NextResponse('Invalid action', { status: 400 })
     }
+
+    // 获取更新后的收藏状态
+    const { data: likesData } = await supabase
+      .from('collections')
+      .select('case_id')
+      .eq('user_id', user.id)
+      .eq('type', 'LIKE')
+
+    const { data: favoritesData } = await supabase
+      .from('collections')
+      .select('case_id')
+      .eq('user_id', user.id)
+      .eq('type', 'FAVORITE')
+
+    // 返回更新后的状态
+    return NextResponse.json({
+      likes: likesData?.map(item => item.case_id) || [],
+      favorites: favoritesData?.map(item => item.case_id) || []
+    })
+
   } catch (error) {
     console.error('Error in collections POST:', error)
     return new NextResponse('Internal Server Error', { status: 500 })

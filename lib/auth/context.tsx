@@ -7,7 +7,7 @@ import type { User } from '@supabase/auth-helpers-nextjs';
 
 export type AuthContextType = {
   user: User | null;
-  isLoading: boolean;
+  loading: boolean;
   signInWithEmail: (email: string, password: string) => Promise<void>;
   signInWithGoogle: () => Promise<void>;
   signInWithGitHub: () => Promise<void>;
@@ -111,7 +111,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const value = {
     user,
-    isLoading,
+    loading: isLoading,
     signInWithEmail,
     signInWithGoogle,
     signInWithGitHub,

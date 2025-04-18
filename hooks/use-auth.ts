@@ -15,28 +15,53 @@ export function useAuth() {
   useEffect(() => {
     // 获取当前会话
     const getSession = async () => {
-      const { data: { session } } = await supabase.auth.getSession()
-      setUser(session?.user ?? null)
-      setLoading(false)
+      try {
+        const { data: { session }, error } = await supabase.auth.getSession()
+        if (error) {
+          console.error('Error getting session:', error)
+          return
+        }
+        console.log('Session data:', session)
+        setUser(session?.user ?? null)
+      } catch (error) {
+        console.error('Error in getSession:', error)
+      } finally {
+        setLoading(false)
+      }
     }
 
+    // 立即获取会话
     getSession()
 
     // 监听认证状态变化
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
+    } = supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log('Auth state changed:', event, session?.user?.id)
       setUser(session?.user ?? null)
       setLoading(false)
+
+      if (event === 'SIGNED_IN') {
+        router.refresh()
+      } else if (event === 'SIGNED_OUT') {
+        router.refresh()
+        router.push('/')
+      }
     })
 
-    return () => subscription.unsubscribe()
-  }, [supabase.auth])
+    return () => {
+      subscription.unsubscribe()
+    }
+  }, [router, supabase])
 
   const signOut = useCallback(async () => {
-    await supabase.auth.signOut()
-    router.push('/auth/login')
-  }, [router, supabase.auth])
+    try {
+      await supabase.auth.signOut()
+      router.push('/auth/login')
+    } catch (error) {
+      console.error('Error signing out:', error)
+    }
+  }, [router, supabase])
 
   return {
     user,

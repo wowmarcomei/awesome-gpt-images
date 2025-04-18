@@ -28,7 +28,7 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
   const { t, currentLang } = useI18n();
   const [showPrompt, setShowPrompt] = useState(false);
   const [showCopied, setShowCopied] = useState(false);
-  const { loading, toggleCollection, optimisticLikes, optimisticFavorites } = useCollections();
+  const { loading, toggleCollection, isLiked, isFavorited } = useCollections();
   const router = useRouter();
   const user = useAuth();
   const [showLikeToast, setShowLikeToast] = useState(false);
@@ -36,24 +36,6 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
 
   // 确保 tags 存在且有当前语言的数据
   const currentTags = caseData.tags?.[currentLang] || [];
-
-  const isLiked = optimisticLikes.has(caseData.id);
-  const isFavorited = optimisticFavorites.has(caseData.id);
-
-  const handleAction = async (action: 'like' | 'favorite') => {
-    if (loading) return;
-
-    try {
-      await toggleCollection(
-        caseData.id,
-        action === 'like' ? 'LIKE' : 'FAVORITE'
-      );
-    } catch (error: any) {
-      if (error.message === 'UNAUTHORIZED') {
-        await showLoginToast(action);
-      }
-    }
-  };
 
   const handleLike = async () => {
     if (loading) return;
@@ -129,7 +111,7 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
                 "h-10 w-10 rounded-full transition-all duration-300",
                 "bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600",
                 "relative overflow-visible",
-                isLiked && "bg-red-50 text-red-500 dark:bg-red-900/20 dark:text-red-400"
+                isLiked(caseData.id) && "bg-red-50 text-red-500 dark:bg-red-900/20 dark:text-red-400"
               )}
               onClick={handleLike}
             >
@@ -141,7 +123,7 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
                 <HeartIcon
                   className={cn(
                     "h-4 w-4 transition-colors duration-200",
-                    isLiked ? "fill-red-500 text-red-500" : "text-red-500/70 dark:text-red-400/70"
+                    isLiked(caseData.id) ? "fill-red-500 text-red-500" : "text-red-500/70 dark:text-red-400/70"
                   )}
                 />
                 <AnimatePresence>
@@ -161,9 +143,9 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
                         "flex items-center gap-1.5"
                       )}
                     >
-                      <span className="text-base">{isLiked ? '❤️' : '🤍'}</span>
+                      <span className="text-base">{isLiked(caseData.id) ? '❤️' : '🤍'}</span>
                       <span className="text-gray-700 dark:text-gray-300">
-                        {isLiked ? '已点赞' : '已取消点赞'}
+                        {isLiked(caseData.id) ? '已点赞' : '已取消点赞'}
                       </span>
                     </motion.div>
                   )}
@@ -178,7 +160,7 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
                 "h-10 w-10 rounded-full transition-all duration-300",
                 "bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600",
                 "relative overflow-visible",
-                isFavorited && "bg-blue-50 text-blue-500 dark:bg-blue-900/20 dark:text-blue-400"
+                isFavorited(caseData.id) && "bg-blue-50 text-blue-500 dark:bg-blue-900/20 dark:text-blue-400"
               )}
               onClick={handleFavorite}
             >
@@ -190,7 +172,7 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
                 <BookmarkIcon
                   className={cn(
                     "h-4 w-4 transition-colors duration-200",
-                    isFavorited ? "fill-blue-500 text-blue-500" : "text-blue-500/70 dark:text-blue-400/70"
+                    isFavorited(caseData.id) ? "fill-blue-500 text-blue-500" : "text-blue-500/70 dark:text-blue-400/70"
                   )}
                 />
                 <AnimatePresence>
@@ -210,9 +192,9 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
                         "flex items-center gap-1.5"
                       )}
                     >
-                      <span className="text-base">{isFavorited ? '⭐️' : '☆'}</span>
+                      <span className="text-base">{isFavorited(caseData.id) ? '⭐️' : '☆'}</span>
                       <span className="text-gray-700 dark:text-gray-300">
-                        {isFavorited ? '已收藏' : '已取消收藏'}
+                        {isFavorited(caseData.id) ? '已收藏' : '已取消收藏'}
                       </span>
                     </motion.div>
                   )}
