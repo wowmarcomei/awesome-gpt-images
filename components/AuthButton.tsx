@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { useAuth } from '../lib/auth/context';
 import { Button } from './ui/button';
 import {
@@ -10,19 +11,56 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { Badge } from './ui/badge';
 import Link from 'next/link';
-import { FiUser, FiLogOut, FiLogIn } from 'react-icons/fi';
+import { 
+  FiUser, 
+  FiLogOut, 
+  FiLogIn, 
+  FiHeart, 
+  FiStar, 
+  FiSettings,
+  FiHome,
+  FiBell,
+  FiSun,
+  FiMoon
+} from 'react-icons/fi';
 import { cn } from '../lib/utils';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useI18n } from '../lib/i18n/context';
+import { useTheme } from 'next-themes';
+import { useMediaQuery } from '@/hooks/use-media-query';
+import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
 
 interface AuthButtonProps {
   className?: string;
   onClick?: () => void;
 }
 
-export function AuthButton({ className, onClick }: AuthButtonProps) {
-  const { user, signOut, isLoading } = useAuth();
+const menuItems = [
+  { icon: FiHome, label: '个人主页', href: '/dashboard' },
+  { icon: FiHeart, label: '我的点赞', href: '/dashboard/likes' },
+  { icon: FiStar, label: '我的收藏', href: '/dashboard/favorites' },
+  { icon: FiSettings, label: '设置', href: '/settings' },
+];
 
-  if (isLoading) {
+export function AuthButton({ className, onClick }: AuthButtonProps) {
+  const { user, signOut, loading } = useAuth();
+  const { t } = useI18n();
+  const { theme, setTheme } = useTheme();
+  const [unreadCount, setUnreadCount] = useState(0);
+  const isMobile = useMediaQuery('(max-width: 768px)');
+  const [isOpen, setIsOpen] = useState(false);
+
+  // 模拟未读消息
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setUnreadCount(prev => Math.min(prev + 1, 99));
+    }, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
+  if (loading) {
     return (
       <Button variant="ghost" size="sm" disabled className={className}>
         加载中...
@@ -57,8 +95,143 @@ export function AuthButton({ className, onClick }: AuthButtonProps) {
     );
   }
 
+  const UserMenu = () => (
+    <>
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.2 }}
+        className="flex items-center gap-2 p-2"
+      >
+        <Avatar className="h-8 w-8">
+          <AvatarImage 
+            src={user.user_metadata?.avatar_url} 
+            alt={user.email || ''} 
+            className="object-cover"
+          />
+          <AvatarFallback className="bg-primary/10 text-primary dark:bg-primary/20">
+            {user.email?.[0].toUpperCase()}
+          </AvatarFallback>
+        </Avatar>
+        <div className="flex flex-col">
+          <span className="text-sm font-medium text-gray-900 dark:text-white">
+            {user.user_metadata?.full_name || '用户'}
+          </span>
+          <span className="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[160px]">
+            {user.email}
+          </span>
+        </div>
+      </motion.div>
+      
+      <DropdownMenuSeparator className="bg-gradient-to-r from-transparent via-gray-200 to-transparent dark:via-gray-700" />
+      
+      <div className="py-1">
+        {menuItems.map((item, index) => (
+          <motion.div
+            key={item.href}
+            initial={{ opacity: 0, x: -10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.2, delay: index * 0.05 }}
+          >
+            <DropdownMenuItem 
+              className="flex items-center gap-2 cursor-pointer px-2 py-2 rounded-md text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors"
+              asChild
+            >
+              <Link href={item.href} onClick={() => setIsOpen(false)}>
+                <item.icon className="w-4 h-4 text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors" />
+                <span>{item.label}</span>
+              </Link>
+            </DropdownMenuItem>
+          </motion.div>
+        ))}
+      </div>
+
+      <DropdownMenuSeparator className="bg-gradient-to-r from-transparent via-gray-200 to-transparent dark:via-gray-700" />
+
+      <motion.div
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.2, delay: 0.2 }}
+      >
+        <DropdownMenuItem 
+          className="flex items-center gap-2 cursor-pointer px-2 py-2 rounded-md text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700/50 transition-colors"
+          onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+        >
+          {theme === 'dark' ? (
+            <FiSun className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+          ) : (
+            <FiMoon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
+          )}
+          <span>切换主题</span>
+        </DropdownMenuItem>
+
+        <DropdownMenuItem 
+          className="flex items-center gap-2 cursor-pointer px-2 py-2 rounded-md text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+          onClick={() => {
+            signOut();
+            onClick?.();
+            setIsOpen(false);
+          }}
+        >
+          <FiLogOut className="w-4 h-4" />
+          <span>退出登录</span>
+        </DropdownMenuItem>
+      </motion.div>
+    </>
+  );
+
+  if (isMobile) {
+    return (
+      <Sheet open={isOpen} onOpenChange={setIsOpen}>
+        <SheetTrigger asChild>
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            className={cn(
+              "p-2.5 rounded-full transition-all duration-200",
+              "bg-gray-900 text-white dark:bg-white dark:text-gray-900",
+              "hover:bg-gray-800 dark:hover:bg-gray-100",
+              "relative overflow-hidden group",
+              className
+            )}
+            aria-label="用户菜单"
+          >
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            >
+              <Avatar className="h-5 w-5">
+                <AvatarImage 
+                  src={user.user_metadata?.avatar_url} 
+                  alt={user.email || ''} 
+                  className="object-cover"
+                />
+                <AvatarFallback className="text-xs bg-primary/10 text-primary dark:bg-primary/20">
+                  {user.email?.[0].toUpperCase()}
+                </AvatarFallback>
+              </Avatar>
+              {unreadCount > 0 && (
+                <Badge 
+                  variant="destructive" 
+                  className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center"
+                >
+                  {unreadCount}
+                </Badge>
+              )}
+            </motion.div>
+          </Button>
+        </SheetTrigger>
+        <SheetContent side="bottom" className="h-[80vh] p-0">
+          <div className="p-4">
+            <UserMenu />
+          </div>
+        </SheetContent>
+      </Sheet>
+    );
+  }
+
   return (
-    <DropdownMenu>
+    <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
       <DropdownMenuTrigger asChild>
         <Button 
           variant="ghost" 
@@ -67,59 +240,45 @@ export function AuthButton({ className, onClick }: AuthButtonProps) {
             "p-2.5 rounded-full transition-all duration-200",
             "bg-gray-900 text-white dark:bg-white dark:text-gray-900",
             "hover:bg-gray-800 dark:hover:bg-gray-100",
+            "relative overflow-hidden group",
             className
           )}
+          aria-label="用户菜单"
         >
-          <Avatar className="h-5 w-5">
-            <AvatarImage 
-              src={user.user_metadata?.avatar_url} 
-              alt={user.email || ''} 
-              className="object-cover"
-            />
-            <AvatarFallback className="text-xs bg-primary/10 text-primary dark:bg-primary/20">
-              {user.email?.[0].toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
-          <span className="hidden md:inline text-sm truncate max-w-[100px]">
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+          >
+            <Avatar className="h-5 w-5">
+              <AvatarImage 
+                src={user.user_metadata?.avatar_url} 
+                alt={user.email || ''} 
+                className="object-cover"
+              />
+              <AvatarFallback className="text-xs bg-primary/10 text-primary dark:bg-primary/20">
+                {user.email?.[0].toUpperCase()}
+              </AvatarFallback>
+            </Avatar>
+            {unreadCount > 0 && (
+              <Badge 
+                variant="destructive" 
+                className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center"
+              >
+                {unreadCount}
+              </Badge>
+            )}
+          </motion.div>
+          <span className="hidden md:inline text-sm truncate max-w-[100px] ml-2">
             {user.user_metadata?.full_name || user.email?.split('@')[0] || '用户'}
           </span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent 
         align="end" 
-        className="w-56 p-2"
+        className="w-56 p-2 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md border border-gray-200/50 dark:border-gray-700/50 shadow-lg"
+        sideOffset={8}
       >
-        <div className="flex items-center gap-2 p-2">
-          <Avatar className="h-8 w-8">
-            <AvatarImage 
-              src={user.user_metadata?.avatar_url} 
-              alt={user.email || ''} 
-              className="object-cover"
-            />
-            <AvatarFallback className="bg-primary/10 text-primary dark:bg-primary/20">
-              {user.email?.[0].toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex flex-col">
-            <span className="text-sm font-medium">
-              {user.user_metadata?.full_name || '用户'}
-            </span>
-            <span className="text-xs text-muted-foreground truncate max-w-[160px]">
-              {user.email}
-            </span>
-          </div>
-        </div>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem 
-          className="flex items-center gap-2 cursor-pointer"
-          onClick={() => {
-            signOut();
-            onClick?.();
-          }}
-        >
-          <FiLogOut className="w-4 h-4" />
-          <span>退出登录</span>
-        </DropdownMenuItem>
+        <UserMenu />
       </DropdownMenuContent>
     </DropdownMenu>
   );

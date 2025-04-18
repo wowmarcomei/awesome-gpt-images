@@ -21,7 +21,7 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const { theme, setTheme } = useTheme();
   const { t } = useI18n();
-  const { user, isLoading, signOut } = useAuth();
+  const { user } = useAuth();
 
   // 处理滚动效果
   useEffect(() => {
@@ -116,7 +116,7 @@ export function Navbar() {
               </a>
               {/* 分隔符 */}
               <div className="hidden md:block w-px h-6 bg-gray-200 dark:bg-gray-700 mx-2" />
-              {!isLoading && !user && (
+              {!user && (
                 <Link
                   href="/auth"
                   className={cn(
@@ -139,21 +139,7 @@ export function Navbar() {
                   <span className="md:hidden">登录</span>
                 </Link>
               )}
-              {!isLoading && user && (
-                <button
-                  onClick={() => signOut()}
-                  className={cn(
-                    "w-10 h-10 rounded-full transition-all duration-200",
-                    "bg-orange-500 text-white",
-                    "hover:bg-orange-600",
-                    "focus:outline-none focus:ring-2 focus:ring-orange-300 dark:focus:ring-orange-700",
-                    "flex items-center justify-center text-sm font-medium"
-                  )}
-                  aria-label="User profile"
-                >
-                  {user.email?.[0].toUpperCase()}
-                </button>
-              )}
+              {user && <AuthButton onClick={handleItemClick} />}
             </nav>
 
             {/* 移动端菜单按钮 */}
@@ -286,7 +272,6 @@ export function Navbar() {
                         </span>
                         <button
                           onClick={() => {
-                            signOut();
                             handleItemClick();
                           }}
                           className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700"
