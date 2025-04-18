@@ -6,7 +6,7 @@ import { NextResponse } from 'next/server'
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
-    const type = searchParams.get('type') as 'LIKE' | 'FAVORITE'
+    const type = searchParams.get('type')
     const limit = parseInt(searchParams.get('limit') || '12')
     const cursor = searchParams.get('cursor')
 
@@ -18,14 +18,23 @@ export async function GET(request: Request) {
       return new NextResponse('Unauthorized', { status: 401 })
     }
 
+    // 验证类型
+    if (type && !['LIKE', 'FAVORITE'].includes(type)) {
+      return new NextResponse('Invalid collection type', { status: 400 })
+    }
+
     // 构建查询
     let query = supabase
       .from('collections')
       .select('*')
       .eq('user_id', user.id)
-      .eq('type', type)
       .order('created_at', { ascending: false })
       .limit(limit + 1) // 多获取一条用于判断是否还有更多
+
+    // 如果有类型，添加类型条件
+    if (type) {
+      query = query.eq('type', type)
+    }
 
     // 如果有游标，添加游标条件
     if (cursor) {
@@ -66,34 +75,64 @@ export async function POST(request: Request) {
       return new NextResponse('Unauthorized', { status: 401 })
     }
 
-    const { caseId, type } = await request.json()
+    const { caseId, type, action } = await request.json()
 
-    // 检查是否已经存在
-    const { data: existing } = await supabase
-      .from('collections')
-      .select('id')
-      .eq('user_id', user.id)
-      .eq('case_id', caseId)
-      .eq('type', type)
-      .single()
-
-    if (existing) {
-      return new NextResponse('Already exists', { status: 409 })
+    // 验证必要参数
+    if (!caseId || !type || !action) {
+      return new NextResponse('Missing required fields', { status: 400 })
     }
 
-    // 添加新记录
-    const { error } = await supabase.from('collections').insert({
-      user_id: user.id,
-      case_id: caseId,
-      type
-    })
-
-    if (error) {
-      console.error('Error adding collection:', error)
-      return new NextResponse('Internal Server Error', { status: 500 })
+    // 验证类型
+    if (!['LIKE', 'FAVORITE'].includes(type)) {
+      return new NextResponse('Invalid collection type', { status: 400 })
     }
 
-    return new NextResponse('Created', { status: 201 })
+    // 根据 action 执行不同操作
+    if (action === 'add') {
+      // 检查是否已经存在
+      const { data: existing } = await supabase
+        .from('collections')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('case_id', caseId)
+        .eq('type', type)
+        .single()
+
+      if (existing) {
+        return new NextResponse('Already exists', { status: 409 })
+      }
+
+      // 添加新记录
+      const { error } = await supabase.from('collections').insert({
+        user_id: user.id,
+        case_id: caseId,
+        type
+      })
+
+      if (error) {
+        console.error('Error adding collection:', error)
+        return new NextResponse('Internal Server Error', { status: 500 })
+      }
+
+      return new NextResponse('Created', { status: 201 })
+    } else if (action === 'remove') {
+      // 删除记录
+      const { error } = await supabase
+        .from('collections')
+        .delete()
+        .eq('user_id', user.id)
+        .eq('case_id', caseId)
+        .eq('type', type)
+
+      if (error) {
+        console.error('Error removing collection:', error)
+        return new NextResponse('Internal Server Error', { status: 500 })
+      }
+
+      return new NextResponse('Deleted', { status: 200 })
+    } else {
+      return new NextResponse('Invalid action', { status: 400 })
+    }
   } catch (error) {
     console.error('Error in collections POST:', error)
     return new NextResponse('Internal Server Error', { status: 500 })

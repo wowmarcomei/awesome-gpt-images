@@ -8,6 +8,12 @@ import Image from 'next/image';
 import Toast from './Toast';
 import { useI18n } from '../lib/i18n/context';
 import { FaExternalLinkAlt } from 'react-icons/fa';
+import Link from 'next/link';
+import { useCollections } from '@/lib/hooks/use-collections';
+import { showLoginToast } from './ui/login-toast';
+import { HeartIcon, BookmarkIcon } from 'lucide-react';
+import { Button } from './ui/button';
+import { cn } from '@/lib/utils';
 
 interface CaseCardProps {
   case: Case;
@@ -18,12 +24,31 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
   const { t, currentLang } = useI18n();
   const [showPrompt, setShowPrompt] = useState(false);
   const [showCopied, setShowCopied] = useState(false);
+  const { loading, toggleCollection, optimisticLikes, optimisticFavorites } = useCollections();
 
   // 确保 tags 存在且有当前语言的数据
   const currentTags = caseData.tags?.[currentLang] || [];
 
+  const isLiked = optimisticLikes.has(caseData.id);
+  const isFavorited = optimisticFavorites.has(caseData.id);
+
+  const handleAction = async (action: 'like' | 'favorite') => {
+    if (loading) return;
+
+    try {
+      await toggleCollection(
+        caseData.id,
+        action === 'like' ? 'LIKE' : 'FAVORITE'
+      );
+    } catch (error: any) {
+      if (error.message === 'UNAUTHORIZED') {
+        await showLoginToast(action);
+      }
+    }
+  };
+
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
+    <div className="relative bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
       <div className="relative aspect-[12/12]">
         <Image
           src={caseData.image}
@@ -61,7 +86,7 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
           </a>
         </div>
 
-        <div className="flex flex-wrap gap-2 mb-4">
+        <div className="flex flex-wrap gap-2 mt-3 mb-4">
           {currentTags.map((tag) => (
             <button
               key={tag}
@@ -83,6 +108,41 @@ export default function CaseCard({ case: caseData, onTagClick }: CaseCardProps) 
         >
           {t('common.getPrompt')}
         </button>
+
+        <div className="absolute bottom-4 right-4 flex items-center gap-2">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            onClick={(e) => {
+              e.preventDefault();
+              handleAction('like');
+            }}
+          >
+            <HeartIcon
+              className={cn(
+                'h-5 w-5 transition-colors',
+                isLiked ? 'fill-red-500 text-red-500' : 'text-muted-foreground'
+              )}
+            />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="h-8 w-8"
+            onClick={(e) => {
+              e.preventDefault();
+              handleAction('favorite');
+            }}
+          >
+            <BookmarkIcon
+              className={cn(
+                'h-5 w-5 transition-colors',
+                isFavorited ? 'fill-primary text-primary' : 'text-muted-foreground'
+              )}
+            />
+          </Button>
+        </div>
       </div>
 
       {showPrompt && (
