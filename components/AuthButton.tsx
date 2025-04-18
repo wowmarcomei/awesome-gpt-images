@@ -237,40 +237,31 @@ export function AuthButton({ className, onClick }: AuthButtonProps) {
           variant="ghost" 
           size="sm" 
           className={cn(
-            "p-2.5 rounded-full transition-all duration-200",
-            "bg-gray-900 text-white dark:bg-white dark:text-gray-900",
-            "hover:bg-gray-800 dark:hover:bg-gray-100",
-            "relative overflow-hidden group",
+            "w-10 h-10 p-0 rounded-full overflow-hidden",
+            "bg-gray-900 dark:bg-white",
+            "hover:opacity-90 transition-opacity",
             className
           )}
           aria-label="用户菜单"
         >
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-          >
-            <Avatar className="h-5 w-5">
-              <AvatarImage 
-                src={user.user_metadata?.avatar_url} 
-                alt={user.email || ''} 
-                className="object-cover"
-              />
-              <AvatarFallback className="text-xs bg-primary/10 text-primary dark:bg-primary/20">
-                {user.email?.[0].toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-            {unreadCount > 0 && (
-              <Badge 
-                variant="destructive" 
-                className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center"
-              >
-                {unreadCount}
-              </Badge>
-            )}
-          </motion.div>
-          <span className="hidden md:inline text-sm truncate max-w-[100px] ml-2">
-            {user.user_metadata?.full_name || user.email?.split('@')[0] || '用户'}
-          </span>
+          <Avatar className="w-full h-full">
+            <AvatarImage 
+              src={user.user_metadata?.avatar_url} 
+              alt={user.email || ''} 
+              className="object-cover"
+            />
+            <AvatarFallback className="text-base font-medium bg-primary text-primary-foreground">
+              {user.email?.[0].toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          {unreadCount > 0 && (
+            <Badge 
+              variant="destructive" 
+              className="absolute -top-1 -right-1 h-4 w-4 p-0 flex items-center justify-center text-xs"
+            >
+              {unreadCount}
+            </Badge>
+          )}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent 
