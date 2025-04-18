@@ -49,7 +49,14 @@ export const en = {
       email_verified: 'Email verified successfully, please login',
       login: 'Login successful',
       register: 'Registration successful, please check your email'
-    }
+    },
+    dialog: {
+      title: 'Login Required',
+      like_description: 'Login to like your favorite content',
+      favorite_description: 'Login to save content you\'re interested in',
+      cancel: 'Not Now',
+      login: 'Login Now'
+    },
   },
   footer: {
     projectInfo: {

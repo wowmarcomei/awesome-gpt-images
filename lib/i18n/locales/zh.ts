@@ -49,7 +49,14 @@ export const zh = {
       email_verified: '邮箱验证成功，请登录',
       login: '登录成功',
       register: '注册成功，请查收验证邮件'
-    }
+    },
+    dialog: {
+      title: '登录提示',
+      like_description: '登录后即可点赞喜欢的内容',
+      favorite_description: '登录后即可收藏感兴趣的内容',
+      cancel: '暂不登录',
+      login: '立即登录'
+    },
   },
   footer: {
     projectInfo: {

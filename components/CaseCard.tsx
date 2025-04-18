@@ -17,6 +17,7 @@ import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
 import { ActionToast } from '@/components/ui/action-toast';
 import { useAuth } from '@/hooks/use-auth';
+import { AuthDialog } from '@/components/ui/auth-dialog';
 
 interface CaseCardProps {
   case: Case;
@@ -33,12 +34,19 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
   const { user } = useAuth();
   const [showLikeToast, setShowLikeToast] = useState(false);
   const [showFavoriteToast, setShowFavoriteToast] = useState(false);
+  const [showAuthDialog, setShowAuthDialog] = useState(false);
+  const [authAction, setAuthAction] = useState<'LIKE' | 'FAVORITE' | null>(null);
 
   // 确保 tags 存在且有当前语言的数据
   const currentTags = caseData.tags?.[currentLang] || [];
 
   const handleLike = async () => {
     if (loading) return;
+    if (!user) {
+      setAuthAction('LIKE');
+      setShowAuthDialog(true);
+      return;
+    }
     setShowLikeToast(true);
     await toggleCollection(caseData.id, 'LIKE');
     setTimeout(() => setShowLikeToast(false), 2000);
@@ -46,6 +54,11 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
 
   const handleFavorite = async () => {
     if (loading) return;
+    if (!user) {
+      setAuthAction('FAVORITE');
+      setShowAuthDialog(true);
+      return;
+    }
     setShowFavoriteToast(true);
     await toggleCollection(caseData.id, 'FAVORITE');
     setTimeout(() => setShowFavoriteToast(false), 2000);
@@ -263,6 +276,15 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
           </motion.div>
         </motion.div>
       )}
+
+      <AuthDialog 
+        isOpen={showAuthDialog}
+        onClose={() => {
+          setShowAuthDialog(false);
+          setAuthAction(null);
+        }}
+        actionType={authAction}
+      />
     </div>
   );
 } 
