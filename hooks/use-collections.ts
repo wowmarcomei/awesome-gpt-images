@@ -1,18 +1,27 @@
 import useSWR from 'swr'
 import useSWRInfinite from 'swr/infinite'
 import { create } from 'zustand'
+import { useAuth } from './use-auth'
+import { toast } from 'sonner'
+import { useI18n } from '@/lib/i18n/context'
 
 interface Collection {
   id: string
   caseId: string
   type: 'LIKE' | 'FAVORITE'
   createdAt: string
+  updatedAt: string
 }
 
 interface CollectionResponse {
   items: Collection[]
   nextCursor?: string
   hasMore: boolean
+}
+
+interface Collections {
+  likes: string[]
+  favorites: string[]
 }
 
 interface CollectionsStore {
@@ -54,20 +63,33 @@ export const useCollectionsStore = create<CollectionsStore>((set) => ({
 
 const PAGE_SIZE = 12
 
-export function useCollections(type: 'LIKE' | 'FAVORITE') {
+export function useCollections(type?: 'LIKE' | 'FAVORITE') {
+  const { user } = useAuth()
+  const { t } = useI18n()
   const store = useCollectionsStore()
+
+  console.log('useCollections - user:', user)
 
   // 获取收藏/点赞列表
   const getKey = (pageIndex: number, previousPageData: CollectionResponse | null) => {
+    if (!user) {
+      console.log('getKey - no user')
+      return null
+    }
     if (previousPageData && !previousPageData.hasMore) return null
     const cursor = previousPageData?.nextCursor
     return `/api/collections?type=${type}&limit=${PAGE_SIZE}${cursor ? `&cursor=${cursor}` : ''}`
   }
 
   const { data, size, setSize, isLoading, mutate } = useSWRInfinite<CollectionResponse>(
-    getKey,
+    type ? getKey : null,
     async (url) => {
-      const res = await fetch(url)
+      const res = await fetch(url, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
       if (!res.ok) throw new Error('Failed to fetch collections')
       return res.json()
     }
@@ -75,69 +97,98 @@ export function useCollections(type: 'LIKE' | 'FAVORITE') {
 
   // 获取统计数据
   const { data: stats } = useSWR<{ likes: number; favorites: number }>(
-    '/api/collections/stats',
+    user ? '/api/collections/stats' : null,
     async (url) => {
-      const res = await fetch(url)
+      const res = await fetch(url, {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
       if (!res.ok) throw new Error('Failed to fetch stats')
       return res.json()
     }
   )
 
-  // 添加收藏/点赞
-  const add = async (caseId: string) => {
-    if (type === 'LIKE') {
-      store.addOptimisticLike(caseId)
-    } else {
-      store.addOptimisticFavorite(caseId)
-    }
-
-    try {
-      const res = await fetch('/api/collections', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ caseId, type })
+  // 获取所有收藏/点赞
+  const { data: collections, error } = useSWR<Collections>(
+    user ? '/api/collections' : null,
+    async () => {
+      const response = await fetch('/api/collections', {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        }
       })
-
-      if (!res.ok) throw new Error('Failed to add collection')
-      
-      // 更新缓存数据
-      await mutate()
-    } catch (error) {
-      // 发生错误时回滚乐观更新
-      if (type === 'LIKE') {
-        store.removeOptimisticLike(caseId)
-      } else {
-        store.removeOptimisticFavorite(caseId)
+      if (!response.ok) {
+        throw new Error('Failed to fetch collections')
       }
-      throw error
+      return response.json()
     }
+  )
+
+  const showLoginToast = () => {
+    toast.error(t('auth.error.login_required'))
   }
 
-  // 删除收藏/点赞
-  const remove = async (caseId: string) => {
-    if (type === 'LIKE') {
-      store.removeOptimisticLike(caseId)
-    } else {
-      store.removeOptimisticFavorite(caseId)
+  const toggleCollection = async (caseId: string, type: 'LIKE' | 'FAVORITE') => {
+    console.log('toggleCollection - user:', user)
+    if (!user) {
+      console.log('toggleCollection - no user, showing login toast')
+      showLoginToast()
+      return
     }
 
+    const isLike = type === 'LIKE'
+    const optimisticSet = isLike ? store.optimisticLikes : store.optimisticFavorites
+    const addOptimistic = isLike ? store.addOptimisticLike : store.addOptimisticFavorite
+    const removeOptimistic = isLike ? store.removeOptimisticLike : store.removeOptimisticFavorite
+    
+    const isCollected = optimisticSet.has(caseId)
+    const action = isCollected ? 'remove' : 'add'
+
     try {
-      const res = await fetch(`/api/collections/${caseId}?type=${type}`, {
-        method: 'DELETE'
+      // 乐观更新
+      if (action === 'add') {
+        addOptimistic(caseId)
+      } else {
+        removeOptimistic(caseId)
+      }
+
+      // API 请求
+      const response = await fetch('/api/collections', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ caseId, type, action })
       })
 
-      if (!res.ok) throw new Error('Failed to remove collection')
-      
-      // 更新缓存数据
+      if (!response.ok) {
+        if (response.status === 409) {
+          // 已经存在，回滚乐观更新
+          if (action === 'add') {
+            removeOptimistic(caseId)
+          } else {
+            addOptimistic(caseId)
+          }
+          return
+        }
+        throw new Error('Failed to update collection')
+      }
+
+      // 更新缓存
       await mutate()
     } catch (error) {
-      // 发生错误时回滚乐观更新
-      if (type === 'LIKE') {
-        store.addOptimisticLike(caseId)
+      console.error('Error toggling collection:', error)
+      // 回滚乐观更新
+      if (action === 'add') {
+        removeOptimistic(caseId)
       } else {
-        store.addOptimisticFavorite(caseId)
+        addOptimistic(caseId)
       }
-      throw error
+      toast.error(t('error.update_failed'))
     }
   }
 
@@ -146,13 +197,14 @@ export function useCollections(type: 'LIKE' | 'FAVORITE') {
   const isLoadingMore = isLoading || (size > 0 && data && typeof data[size - 1] === 'undefined')
 
   return {
+    collections: collections ?? { likes: [], favorites: [] },
     items,
     stats,
     hasMore,
-    isLoading: isLoadingMore,
+    loading: isLoadingMore,
+    error,
     loadMore: () => setSize(size + 1),
-    add,
-    remove,
+    toggleCollection,
     optimisticLikes: store.optimisticLikes,
     optimisticFavorites: store.optimisticFavorites
   }

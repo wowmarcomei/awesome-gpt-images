@@ -71,11 +71,15 @@ export async function POST(request: Request) {
 
     // 验证用户身份
     const { data: { user }, error: authError } = await supabase.auth.getUser()
+    console.log('POST /api/collections - auth check:', { user, authError })
+    
     if (authError || !user) {
+      console.log('POST /api/collections - unauthorized')
       return new NextResponse('Unauthorized', { status: 401 })
     }
 
     const { caseId, type, action } = await request.json()
+    console.log('POST /api/collections - request body:', { caseId, type, action })
 
     // 验证必要参数
     if (!caseId || !type || !action) {
