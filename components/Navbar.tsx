@@ -15,6 +15,7 @@ import { useTheme } from 'next-themes';
 import { AuthButton } from './AuthButton';
 import { useI18n } from '../lib/i18n/context';
 import { useAuth } from '../lib/auth/context';
+import { AuthButtonMobile } from './AuthButtonMobile';
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -265,50 +266,7 @@ export function Navbar() {
                     </a>
 
                     {/* 用户认证状态 */}
-                    {user ? (
-                      <div className="flex items-center justify-between p-3 rounded-xl bg-gray-100 dark:bg-gray-800">
-                        <span className="text-sm font-medium text-gray-900 dark:text-white">
-                          {user.email}
-                        </span>
-                        <button
-                          onClick={() => {
-                            handleItemClick();
-                          }}
-                          className="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700"
-                        >
-                          <div className="w-6 h-6 rounded-full bg-orange-500 flex items-center justify-center">
-                            <span className="text-sm font-medium text-white">
-                              {user.email?.[0].toUpperCase()}
-                            </span>
-                          </div>
-                        </button>
-                      </div>
-                    ) : (
-                      <>
-                        <div className="text-sm text-gray-500 dark:text-gray-400">
-                          登录后可以：
-                        </div>
-                        <ul className="text-sm text-gray-500 dark:text-gray-400 list-disc pl-4 space-y-1">
-                          <li>收藏喜欢的提示词</li>
-                          <li>分享你的作品</li>
-                          <li>参与社区讨论</li>
-                        </ul>
-                        <Link
-                          href="/auth"
-                          className={cn(
-                            "flex items-center justify-center gap-2",
-                            "w-full h-10 px-4 rounded-xl",
-                            "bg-blue-500 hover:bg-blue-600 active:bg-blue-700",
-                            "dark:bg-blue-600 dark:hover:bg-blue-700 dark:active:bg-blue-800",
-                            "text-white"
-                          )}
-                          onClick={handleItemClick}
-                        >
-                          <FiUser className="w-5 h-5" />
-                          <span>登录</span>
-                        </Link>
-                      </>
-                    )}
+                    <AuthButtonMobile onItemClick={handleItemClick} />
                   </div>
                 </div>
               </div>
