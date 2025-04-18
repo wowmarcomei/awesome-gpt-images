@@ -30,7 +30,7 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
   const [showCopied, setShowCopied] = useState(false);
   const { loading, toggleCollection, isLiked, isFavorited } = useCollections();
   const router = useRouter();
-  const user = useAuth();
+  const { user } = useAuth();
   const [showLikeToast, setShowLikeToast] = useState(false);
   const [showFavoriteToast, setShowFavoriteToast] = useState(false);
 
@@ -51,9 +51,19 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
     setTimeout(() => setShowFavoriteToast(false), 2000);
   };
 
+  const handleShowPrompt = async () => {
+    setShowPrompt(true);
+    try {
+      await navigator.clipboard.writeText(caseData.prompt[currentLang]);
+      setShowCopied(true);
+    } catch (err) {
+      console.error('Failed to copy prompt:', err);
+    }
+  };
+
   return (
     <div className={cn("group relative", className)}>
-      <div className="relative overflow-hidden rounded-xl bg-white p-6 shadow-sm transition-all duration-300 hover:shadow-md dark:bg-gray-800">
+      <div className="relative overflow-hidden rounded-xl bg-white shadow-sm transition-all duration-300 hover:shadow-md dark:bg-gray-800">
         <div className="relative aspect-[12/12]">
           <Image
             src={caseData.image}
@@ -204,7 +214,7 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
 
             <Button
               className="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/20 transition-all duration-300 hover:from-blue-600 hover:to-blue-700 hover:shadow-xl hover:shadow-blue-500/30 dark:from-blue-600 dark:to-blue-700 dark:hover:from-blue-700 dark:hover:to-blue-800"
-              onClick={() => router.push(`/prompt/${caseData.id}`)}
+              onClick={handleShowPrompt}
             >
               <EyeIcon className="mr-2 h-4 w-4" />
               {t('common.getPrompt')}
@@ -232,9 +242,20 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
               <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
                 {caseData.title[currentLang]}
               </h3>
-              {showCopied && (
-                <span className="text-sm text-green-500">✓ {t('common.copied')}</span>
-              )}
+              <div className="flex items-center gap-4">
+                {showCopied && (
+                  <span className="text-sm text-green-500">✓ {t('common.copied')}</span>
+                )}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleShowPrompt}
+                  className="hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  <FaCode className="mr-2 h-4 w-4" />
+                  {t('common.copy')}
+                </Button>
+              </div>
             </div>
             <p className="text-gray-600 dark:text-gray-300 whitespace-pre-wrap">
               {caseData.prompt[currentLang]}

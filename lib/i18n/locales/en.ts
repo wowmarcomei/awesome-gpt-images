@@ -9,6 +9,7 @@ export const en = {
     original: 'Original Link',
     getPrompt: 'Original Prompt',
     copied: 'Copied',
+    copy: 'Copy',
   },
   categories: {
     style: 'Style',

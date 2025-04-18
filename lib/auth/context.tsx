@@ -26,10 +26,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // 检查初始会话
     const checkUser = async () => {
       try {
-        const { data: { session } } = await supabase.auth.getSession();
+        console.log('[AuthProvider] Checking initial session...');
+        const { data: { session }, error } = await supabase.auth.getSession();
+        if (error) {
+          console.error('[AuthProvider] Error checking session:', error);
+          return;
+        }
+        console.log('[AuthProvider] Initial session:', {
+          timestamp: new Date().toISOString(),
+          userId: session?.user?.id,
+          isAuthenticated: !!session?.user
+        });
         setUser(session?.user ?? null);
       } catch (error) {
-        console.error('Error checking auth session:', error);
+        console.error('[AuthProvider] Error in checkUser:', error);
       } finally {
         setIsLoading(false);
       }
@@ -40,6 +50,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // 监听认证状态变化
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
+        console.log('[AuthProvider] Auth state changed:', {
+          timestamp: new Date().toISOString(),
+          event,
+          userId: session?.user?.id,
+          isAuthenticated: !!session?.user
+        });
         setUser(session?.user ?? null);
         setIsLoading(false);
         

@@ -102,26 +102,43 @@ export function useCollections(type?: 'LIKE' | 'FAVORITE') {
   const { t } = useI18n()
   const store = useCollectionsStore()
 
-  console.log('useCollections - user:', user?.id, 'authLoading:', authLoading, 'initialized:', store.initialized)
+  // 添加更详细的日志
+  useEffect(() => {
+    console.log('[useCollections]', {
+      timestamp: new Date().toISOString(),
+      userId: user?.id,
+      authLoading,
+      initialized: store.initialized,
+      storeUserId: store.userId,
+      serverLikesCount: store.serverLikes.size,
+      serverFavoritesCount: store.serverFavorites.size
+    })
+  }, [user?.id, authLoading, store.initialized, store.userId, store.serverLikes, store.serverFavorites])
 
   // 获取用户收藏状态
   useEffect(() => {
     const initializeCollections = async () => {
       // 如果认证状态还在加载，或者已经初始化过且用户ID没变，则跳过
-      if (authLoading || (store.initialized && store.userId === user?.id)) {
+      if (authLoading) {
+        console.log('[useCollections] Auth still loading, waiting...')
+        return
+      }
+
+      if (store.initialized && store.userId === user?.id) {
+        console.log('[useCollections] Already initialized for user:', user?.id)
         return
       }
 
       // 如果没有用户，重置状态
       if (!user?.id) {
         if (store.initialized) {
-          console.log('No user, resetting collections state')
+          console.log('[useCollections] No user, resetting collections state')
           store.reset()
         }
         return
       }
 
-      console.log('Initializing collections for user:', user.id)
+      console.log('[useCollections] Initializing collections for user:', user.id)
       try {
         const res = await fetch('/api/collections', {
           credentials: 'include',
@@ -135,17 +152,23 @@ export function useCollections(type?: 'LIKE' | 'FAVORITE') {
         }
 
         const data: Collections = await res.json()
-        console.log('Received collections from server:', data)
+        console.log('[useCollections] Received collections from server:', {
+          timestamp: new Date().toISOString(),
+          userId: user.id,
+          likesCount: data.likes?.length || 0,
+          favoritesCount: data.favorites?.length || 0
+        })
         
         // 初始化状态，包括用户ID
         store.initializeFromServer(user.id, data.likes || [], data.favorites || [])
-        console.log('Store initialized with server data:', {
+        console.log('[useCollections] Store initialized with server data:', {
+          timestamp: new Date().toISOString(),
           userId: user.id,
-          likes: Array.from(store.serverLikes),
-          favorites: Array.from(store.serverFavorites)
+          serverLikesCount: store.serverLikes.size,
+          serverFavoritesCount: store.serverFavorites.size
         })
       } catch (error) {
-        console.error('Error fetching collections:', error)
+        console.error('[useCollections] Error fetching collections:', error)
         toast.error(t('error.fetch_failed'))
       }
     }
