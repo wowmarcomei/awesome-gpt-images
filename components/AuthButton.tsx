@@ -69,7 +69,7 @@ export function AuthButton({ className, onClick }: AuthButtonProps) {
 
   if (!user) {
     return (
-      <Link href="/auth/login" className={cn("w-full", className)} onClick={onClick}>
+      <Link href="/auth" className={cn("w-full", className)} onClick={onClick}>
         <Button 
           variant="outline" 
           size="sm"

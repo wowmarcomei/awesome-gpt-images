@@ -37,7 +37,7 @@ export default function DashboardPage() {
         <Button 
           size="lg" 
           className="w-full sm:w-auto px-8 py-6 text-lg font-medium animate-pulse" 
-          onClick={() => router.push('/auth/login')}
+          onClick={() => router.push('/auth')}
         >
           {t('auth.dialog.login')}
         </Button>

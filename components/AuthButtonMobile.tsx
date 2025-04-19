@@ -40,7 +40,7 @@ export function AuthButtonMobile({ onItemClick }: AuthButtonMobileProps) {
           <li>{t('auth.benefit_community')}</li>
         </ul>
         <Link
-          href="/auth/login"
+          href="/auth"
           className={cn(
             "flex items-center gap-2",
             "w-full h-10 px-4 rounded-xl",
