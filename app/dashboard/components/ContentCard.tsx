@@ -52,6 +52,8 @@ export interface ContentItem {
   isLiked: boolean
   isFavorited: boolean
   tags?: string[]
+  author?: string
+  authorUrl?: string
 }
 
 interface ContentCardProps {
@@ -104,8 +106,18 @@ export function ContentCard({ item, onToggleLike, onToggleFavorite }: ContentCar
           <p className="text-sm text-gray-500 dark:text-gray-200 mt-1 line-clamp-2">{item.description}</p>
           <div className="flex items-center justify-between mt-2">
             <div className="flex items-center space-x-1 text-xs text-gray-400 dark:text-gray-300">
-              <Calendar className="w-3 h-3" />
-              <span key={timeKey}>{formatDate(item.createdAt)}</span>
+              {item.author && (
+                <>
+                  <span>{t('common.by')}</span>
+                  {item.authorUrl ? (
+                    <Link href={item.authorUrl} className="hover:underline text-primary dark:text-blue-300">
+                      {item.author}
+                    </Link>
+                  ) : (
+                    <span>{item.author}</span>
+                  )}
+                </>
+              )}
             </div>
             <div className="text-xs text-primary dark:text-blue-300 hover:underline hover:text-blue-600 dark:hover:text-blue-200 flex items-center gap-1 font-medium">
               <span>{t('dashboard.view_details')}</span>

@@ -52,7 +52,9 @@ export default function DashboardPage() {
           imageUrl: caseData.image,
           createdAt: new Date().toISOString(),
           isLiked: isLiked(caseData.id),
-          isFavorited: true
+          isFavorited: true,
+          author: caseData.author.name,
+          authorUrl: caseData.author.twitter
         }
       })
       .filter(Boolean) as ContentItem[]
@@ -71,7 +73,9 @@ export default function DashboardPage() {
           imageUrl: caseData.image,
           createdAt: new Date().toISOString(),
           isLiked: true,
-          isFavorited: isFavorited(caseData.id)
+          isFavorited: isFavorited(caseData.id),
+          author: caseData.author.name,
+          authorUrl: caseData.author.twitter
         }
       })
       .filter(Boolean) as ContentItem[]

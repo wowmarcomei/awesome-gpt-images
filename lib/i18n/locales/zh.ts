@@ -1,9 +1,11 @@
 export const zh = {
   common: {
+    search: '搜索',
+    searchPlaceholder: '搜索案例、标签或作者',
     all: '全部',
+    by: '作者：',
     selected: '已选择：',
     clearAll: '清除全部',
-    search: '搜索案例...',
     noResults: '未找到结果',
     allAuthors: '全部作者',
     original: '原文链接',

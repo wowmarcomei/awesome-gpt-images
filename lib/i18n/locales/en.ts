@@ -1,9 +1,11 @@
 export const en = {
   common: {
+    search: 'Search',
+    searchPlaceholder: 'Search cases, tags, or authors',
     all: 'All',
+    by: 'By:',
     selected: 'Selected:',
     clearAll: 'Clear All',
-    search: 'Search cases...',
     noResults: 'No results found',
     allAuthors: 'All Authors',
     original: 'Original Link',
