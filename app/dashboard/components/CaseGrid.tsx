@@ -261,12 +261,10 @@ export function CaseGrid({
             
             {/* 我也试试按钮 */}
             <Button
-              variant="outline"
-              size="sm"
-              className="w-full flex items-center justify-center gap-2 text-sm"
+              className="w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white shadow-lg shadow-blue-500/20 transition-all duration-300 hover:from-blue-600 hover:to-blue-700 hover:shadow-xl hover:shadow-blue-500/30 dark:from-blue-600 dark:to-blue-700 dark:hover:from-blue-700 dark:hover:to-blue-800 flex items-center justify-center gap-2 mt-2"
               onClick={() => setShowDevelopmentModal(true)}
             >
-              <Sparkles className="h-4 w-4" />
+              <Sparkles className="h-4 w-4 text-yellow-300" />
               {t('common.try_it')}
             </Button>
           </div>
@@ -351,8 +349,8 @@ export function CaseGrid({
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex flex-col items-center gap-4">
-                <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">
-                  <Sparkles className="h-8 w-8 text-primary" />
+                <div className="h-16 w-16 rounded-full bg-yellow-100 dark:bg-yellow-900/30 flex items-center justify-center">
+                  <Sparkles className="h-8 w-8 text-yellow-500 dark:text-yellow-300" />
                 </div>
                 <h3 className="text-xl font-semibold text-foreground">
                   {t('common.under_development')}
