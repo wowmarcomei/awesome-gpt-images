@@ -1,0 +1,35 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Your rule content
+
+- You can @ files here
+- You can use markdown but dont have to
+
+# 编码规范指南
+
+## TypeScript 使用规范
+- 始终使用 TypeScript 严格模式
+- 优先使用 `type` 而不是 `interface`
+- 为所有组件和函数添加适当的类型注解
+- 避免使用 `any` 类型，优先使用 `unknown`
+
+## React 最佳实践
+- 使用函数组件和 Hooks
+- 组件文件使用 `.tsx` 扩展名
+- 遵循 React 18 的并发特性最佳实践
+- 使用 `use client` 和 `use server` 指令进行客户端/服务器代码分离
+
+## 样式指南
+- 使用 Tailwind CSS 进行样式设计
+- 遵循 Shadcn UI 组件库的设计规范
+- 确保所有组件都是响应式的
+- 使用 CSS 变量进行主题定制
+
+## 性能优化
+- 实现组件懒加载
+- 使用适当的缓存策略
+- 优化图片加载
+- 实现适当的预加载策略

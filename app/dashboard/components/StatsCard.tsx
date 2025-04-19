@@ -1,13 +1,15 @@
 'use client'
 
 import { Card, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 import { useI18n } from '@/lib/i18n/context'
 import { useAuth } from '@/hooks/use-auth'
-import { Heart, Star } from 'lucide-react'
+import { Heart, Star, MoreHorizontal } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { collections } from '@/lib/supabase/client'
 import { motion } from 'framer-motion'
+import { mockStats } from '../mock/data'
 
 export function StatsCard() {
   const { t } = useI18n()
@@ -16,20 +18,32 @@ export function StatsCard() {
     favorites: 0,
     likes: 0
   })
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    // 使用模拟数据进行初始化
+    setStats(mockStats)
+    setLoading(false)
+
+    // 如果有用户登录，则获取真实数据
     if (user) {
-      // 获取收藏和点赞数量
       const fetchStats = async () => {
-        const [favoritesRes, likesRes] = await Promise.all([
-          collections.getUserCollections(user.id, 'FAVORITE'),
-          collections.getUserCollections(user.id, 'LIKE')
-        ])
-        
-        setStats({
-          favorites: favoritesRes.data?.length || 0,
-          likes: likesRes.data?.length || 0
-        })
+        setLoading(true)
+        try {
+          const [favoritesRes, likesRes] = await Promise.all([
+            collections.getUserCollections(user.id, 'FAVORITE'),
+            collections.getUserCollections(user.id, 'LIKE')
+          ])
+          
+          setStats({
+            favorites: favoritesRes.data?.length || 0,
+            likes: likesRes.data?.length || 0
+          })
+        } catch (error) {
+          console.error('获取统计数据失败:', error)
+        } finally {
+          setLoading(false)
+        }
       }
 
       fetchStats()
@@ -43,7 +57,8 @@ export function StatsCard() {
       href: '/dashboard/favorites',
       icon: Star,
       gradient: 'from-amber-500/10 to-yellow-500/10',
-      iconGradient: 'from-amber-500 to-yellow-500'
+      iconGradient: 'from-amber-500 to-yellow-500',
+      actionText: t('dashboard.view_all')
     },
     {
       name: t('dashboard.likes'),
@@ -51,12 +66,13 @@ export function StatsCard() {
       href: '/dashboard/likes',
       icon: Heart,
       gradient: 'from-pink-500/10 to-rose-500/10',
-      iconGradient: 'from-pink-500 to-rose-500'
+      iconGradient: 'from-pink-500 to-rose-500',
+      actionText: t('dashboard.view_all')
     }
   ]
 
   return (
-    <div className="grid gap-6 md:grid-cols-2">
+    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-2">
       {statItems.map((item, index) => (
         <motion.div
           key={item.name}
@@ -64,37 +80,52 @@ export function StatsCard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: index * 0.1 }}
         >
-          <Link href={item.href}>
-            <Card className="group overflow-hidden border-0 bg-gradient-to-br from-background to-background hover:shadow-lg transition-all duration-300">
-              <CardContent className="p-6">
-                <div className="relative">
-                  {/* 背景装饰 */}
-                  <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-300 -m-6 p-6 pointer-events-none">
-                    <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient}`} />
+          <Card className="group overflow-hidden border border-slate-100 dark:border-slate-800 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-300 h-full">
+            <CardContent className="p-6">
+              <div className="relative h-full">
+                {/* 背景装饰 */}
+                <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-100 transition-opacity duration-300 -m-6 p-6 pointer-events-none">
+                  <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient}`} />
+                </div>
+
+                <div className="relative space-y-4">
+                  {/* 标题和更多按钮 */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                      <div className={`h-10 w-10 rounded-xl bg-gradient-to-br ${item.iconGradient} p-0.5`}>
+                        <div className="h-full w-full rounded-[10px] bg-background flex items-center justify-center">
+                          <item.icon className="w-5 h-5 text-primary" />
+                        </div>
+                      </div>
+                      <span className="font-medium">{item.name}</span>
+                    </div>
+                    <Button variant="ghost" size="icon" className="h-8 w-8">
+                      <MoreHorizontal className="h-4 w-4" />
+                    </Button>
                   </div>
 
-                  <div className="relative space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className={`h-10 w-10 rounded-xl bg-gradient-to-br ${item.iconGradient} p-0.5`}>
-                          <div className="h-full w-full rounded-[10px] bg-background flex items-center justify-center">
-                            <item.icon className="w-5 h-5 text-primary" />
-                          </div>
-                        </div>
-                        <span className="font-medium">{item.name}</span>
-                      </div>
+                  {/* 数值显示 */}
+                  <div className="text-center py-4">
+                    <div className="text-5xl font-bold tracking-tight">
+                      {loading ? '-' : item.value}
                     </div>
+                    <div className="text-sm text-muted-foreground mt-2">
+                      {t('dashboard.total_items')}
+                    </div>
+                  </div>
 
-                    <div className="pl-[52px]">
-                      <div className="text-3xl font-bold tracking-tight">
-                        {item.value}
-                      </div>
-                    </div>
+                  {/* 查看全部按钮 */}
+                  <div className="text-center">
+                    <Link href={item.href}>
+                      <Button variant="outline" size="sm" className="w-full">
+                        {item.actionText}
+                      </Button>
+                    </Link>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </Link>
+              </div>
+            </CardContent>
+          </Card>
         </motion.div>
       ))}
     </div>

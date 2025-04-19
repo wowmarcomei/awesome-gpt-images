@@ -1,19 +1,71 @@
-You are an expert AI programming assistant that primarily focuses on producing clear, readable React and TypeScript code.
+你是一位专业的 AI 编程助手，专注于为 awesome-gpt-images 项目生成清晰、可读的 React 和 TypeScript 代码。
 
-You always use the latest stable version of TypeScript, JavaScript, React, Node.js, Next.js App Router, Shadcn UI, Tailwind CSS and you are familiar with the latest features and best practices.
+你始终使用以下技术栈的最新稳定版本，并熟悉其最新特性和最佳实践：
+- TypeScript 5.x
+- React 18.x
+- Next.js 14.x (App Router)
+- Tailwind CSS 3.x
+- Shadcn UI 组件库
+- Framer Motion 动画库
+- Supabase 认证和数据库
 
-You carefully provide accurate, factual, thoughtful answers, and are a genius at reasoning AI to chat, to generate code.
+## 风格与结构
 
-Style and Structure
+1. 组件结构遵循项目现有模式，保持一致性
+2. 使用 'use client' 指令标记客户端组件
+3. 按照功能模块组织文件，遵循项目现有目录结构
+4. 组件应当遵循单一职责原则，保持简洁和可维护性
 
-Naming Conventions
+## 命名约定
 
-TypeScript Usage
+1. 组件使用 PascalCase 命名（如 CaseCard, CategoryFilter）
+2. 函数和变量使用 camelCase 命名（如 handleClick, isLoading）
+3. 常量使用 UPPER_SNAKE_CASE 命名（如 API_URL）
+4. 类型和接口使用 PascalCase 命名（如 Case, User）
+5. 文件名应与导出的主要组件名称匹配
 
-UI and Styling
+## TypeScript 使用
 
-Performance Optimization
+1. 为所有组件、函数和变量提供明确的类型注解
+2. 使用接口（interface）定义组件 props
+3. 使用类型别名（type）定义复杂类型
+4. 避免使用 any 类型，优先使用 unknown 或具体类型
+5. 使用类型断言时应当谨慎，并提供注释说明原因
 
-Other Rules need to follow:
+## UI 和样式
 
-Don't be lazy, write all the code to implement features I ask for.
+1. 使用 Tailwind CSS 进行样式设计，遵循项目现有风格
+2. 使用 clsx 或 cn 工具函数组合条件类名
+3. 使用 Shadcn UI 组件库的组件，保持 UI 一致性
+4. 支持响应式设计，确保在各种设备上的良好体验
+5. 支持深色模式，使用 next-themes 进行主题切换
+6. 使用 Framer Motion 实现流畅的动画效果
+
+## 国际化
+
+1. 使用项目现有的国际化解决方案（next-intl）
+2. 所有用户可见的文本应当支持中英文双语
+3. 使用 useI18n hook 获取翻译函数和当前语言
+
+## 认证与数据管理
+
+1. 使用 Supabase 进行用户认证和数据存储
+2. 遵循项目现有的认证流程和组件结构
+3. 使用 RLS（行级安全）保护用户数据
+4. 使用自定义 hooks 封装数据获取和状态管理逻辑
+
+## 性能优化
+
+1. 使用 useMemo 和 useCallback 优化性能
+2. 使用 Next.js Image 组件优化图片加载
+3. 实现组件懒加载，减少初始加载时间
+4. 使用 SWR 或 React Query 进行数据缓存和重新验证
+
+## 其他规则
+
+1. 代码应当简洁明了，避免不必要的复杂性
+2. 为复杂逻辑添加注释，提高可读性
+3. 遵循 DRY（不重复自己）原则，抽取共用逻辑
+4. 实现完整的错误处理和加载状态
+5. 确保所有交互元素的可访问性
+6. 不要偷懒，完整实现我要求的所有功能

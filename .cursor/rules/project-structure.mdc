@@ -1,0 +1,63 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# 项目结构与技术实现 Windsurf 规则
+
+本项目为现代化多语言、响应式的案例展示与用户互动平台，基于 Next.js 14 App Router，TypeScript，Tailwind CSS，Shadcn UI，Framer Motion，Supabase（认证+数据库），next-intl（国际化）等技术栈实现。下述规则为后续所有页面（如用户中心）开发的技术和结构标准。
+
+## 目录结构规范
+- **app/**：Next.js 路由、页面、布局（如 layout.tsx、page.tsx、dashboard、auth 等）
+- **components/**：全局可复用的 UI 组件（如 CaseCard、Navbar、Pagination、业务弹窗、ui 基础组件等）
+- **lib/**：工具函数、认证上下文、i18n、supabase 客户端等通用逻辑
+- **hooks/**：自定义 React Hooks（如 use-auth、use-collections、use-media-query 等）
+- **types/**：TypeScript 类型定义与接口
+- **public/**：静态资源（图片、图标、字体等）
+- **supabase/**：数据库初始化与策略 SQL 脚本
+
+## 技术实现方案
+
+### 1. 路由与页面（app/）
+- 使用 Next.js App Router，页面与 API 路由分离（如 app/api/collections 为收藏相关接口）。
+- 页面文件（如 page.tsx）为根路由内容，layout.tsx 统一全局布局（Provider、主题、导航等）。
+- 用户中心、仪表盘等页面放于 app/dashboard/，支持嵌套路由和权限控制。
+
+### 2. 组件开发（components/）
+- 所有 UI 组件均为函数组件，使用 TypeScript 明确 props 类型。
+- 复用 Shadcn UI 与 Tailwind CSS 设计风格，支持响应式和深色模式。
+- 组件拆分单一职责，命名与文件保持一致。
+- 复杂交互用 Framer Motion 实现动画。
+- 业务组件（如 CaseCard、AuthButton）和基础组件（如 Button、Input）分层管理。
+
+### 3. 状态与数据管理
+- 认证与用户信息由 lib/auth/context.tsx 提供全局 AuthProvider，useAuth() 获取。
+- 收藏/点赞等业务状态由 hooks/use-collections.ts 结合 Zustand/SWR 管理，乐观更新。
+- Supabase 作为后端，API 路由（app/api/collections 等）负责与数据库交互，前端通过 fetch/SWR 调用。
+- 行级安全（RLS）策略保障多用户数据隔离。
+
+### 4. 国际化与多语言
+- 使用 next-intl，所有用户可见文本均通过 useI18n() 获取，支持中英文切换。
+- 组件和页面均需适配多语言，国际化 key 命名统一。
+
+### 5. 样式与主题
+- Tailwind CSS 统一样式，类名组合用 cn/clsx 工具。
+- 支持响应式设计（移动端优先），深色模式用 next-themes。
+- 全局样式放于 app/globals.css。
+
+### 6. 认证与权限
+- Supabase 支持邮箱、OAuth（Google、GitHub 等）多种登录方式。
+- 认证相关页面与逻辑放于 app/auth/ 与 lib/auth/。
+- 受保护页面（如 dashboard）需校验用户登录状态，未登录自动跳转登录页。
+
+### 7. 代码规范与最佳实践
+- 所有组件、函数、变量、类型命名遵循统一规范（PascalCase、camelCase、UPPER_SNAKE_CASE）。
+- 充分利用 TypeScript 类型系统，避免 any，接口与类型分明。
+- 代码注释清晰，复杂逻辑需解释。
+- 组件和 hooks 单元测试覆盖核心逻辑。
+- 复用 hooks 和 context，避免重复造轮子。
+- 交互元素保证可访问性（a11y）。
+
+---
+
+**后续开发（如用户中心页面）必须严格遵循以上结构与技术实现方案，确保风格、逻辑、交互一致。**
