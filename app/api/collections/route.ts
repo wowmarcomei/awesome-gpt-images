@@ -22,19 +22,33 @@ export async function GET(request: Request) {
     if (!type) {
       const { data: likesData } = await supabase
         .from('collections')
-        .select('case_id')
+        .select('case_id, created_at')
         .eq('user_id', user.id)
         .eq('type', 'LIKE')
+        .order('created_at', { ascending: false })
 
       const { data: favoritesData } = await supabase
         .from('collections')
-        .select('case_id')
+        .select('case_id, created_at')
         .eq('user_id', user.id)
         .eq('type', 'FAVORITE')
+        .order('created_at', { ascending: false })
+
+      // 将时间戳格式化为 ISO 格式
+      const formattedLikes = likesData?.map(item => ({
+        caseId: item.case_id,
+        createdAt: item.created_at
+      })) || [];
+
+      const formattedFavorites = favoritesData?.map(item => ({
+        caseId: item.case_id,
+        createdAt: item.created_at
+      })) || [];
 
       return NextResponse.json({
-        likes: likesData?.map(item => item.case_id) || [],
-        favorites: favoritesData?.map(item => item.case_id) || []
+        likes: formattedLikes,
+        favorites: formattedFavorites,
+        timestamp: new Date().toISOString() // 添加当前时间戳供前端参考
       })
     }
 

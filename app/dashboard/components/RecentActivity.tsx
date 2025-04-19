@@ -7,7 +7,7 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { Heart, Star, Clock, History, MoreHorizontal, MessageSquare, User, FileText, Plus, RefreshCw } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
-import { formatDistanceToNow } from 'date-fns'
+import { formatDistanceToNow, format, parseISO } from 'date-fns'
 import { zhCN, enUS } from 'date-fns/locale'
 import { useActivities, Activity } from '@/hooks/use-activities'
 import { useState, useEffect } from 'react'
@@ -22,6 +22,19 @@ export function RecentActivity() {
   
   // 每分钟更新一次时间显示
   useEffect(() => {
+    // 测试不同时间的格式化结果
+    const testTimes = [
+      new Date().toISOString(),                     // 当前时间
+      new Date(Date.now() - 5 * 60000).toISOString(), // 5分钟前
+      new Date(Date.now() - 60 * 60000).toISOString(), // 1小时前
+      new Date(Date.now() - 24 * 60 * 60000).toISOString(), // 1天前
+    ];
+    
+    console.log('测试时间格式化:');
+    testTimes.forEach(time => {
+      console.log(`原始时间: ${time}, 格式化结果: ${formatTime(time)}`);
+    });
+    
     const timer = setInterval(() => {
       setTimeKey(Date.now())
     }, 60000) // 每分钟更新一次
@@ -54,13 +67,34 @@ export function RecentActivity() {
   // 格式化时间
   const formatTime = (timestamp: string) => {
     try {
-      const date = new Date(timestamp)
-      return formatDistanceToNow(date, { 
-        addSuffix: true,
+      console.log('原始时间戳:', timestamp);
+      const date = new Date(timestamp);
+      console.log('解析后的日期对象:', date.toISOString());
+      
+      // 检查时间戳是否有效
+      if (isNaN(date.getTime())) {
+        console.error('无效的时间戳:', timestamp);
+        return '未知时间';
+      }
+      
+      // 使用精确时间格式而不是相对时间
+      const formatPattern = currentLang === 'zh' ? 'yyyy-MM-dd HH:mm' : 'MMM d, yyyy HH:mm';
+      const formatted = format(date, formatPattern, {
         locale: currentLang === 'zh' ? zhCN : enUS
-      })
+      });
+      console.log('格式化后的精确时间:', formatted);
+      return formatted;
+      
+      // 相对时间格式化会在每次刷新时重新计算，导致显示不准确
+      // const relativeFormatted = formatDistanceToNow(date, { 
+      //   addSuffix: true,
+      //   locale: currentLang === 'zh' ? zhCN : enUS
+      // });
+      // console.log('格式化后的相对时间:', relativeFormatted);
+      // return relativeFormatted;
     } catch (e) {
-      return timestamp
+      console.error('格式化时间错误:', e);
+      return timestamp;
     }
   }
 

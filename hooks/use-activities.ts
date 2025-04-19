@@ -43,13 +43,14 @@ const processApiData = (data: any): Activity[] => {
     const favoriteActivities = data.favorites
       .map((item: any) => {
         const caseId = typeof item === 'string' ? item : item.caseId;
-        const createdAt = typeof item === 'string' ? new Date().toISOString() : item.createdAt;
+        // 使用数据库中的时间戳
+        const createdAt = item.createdAt || new Date().toISOString();
         
         const caseData = cases.find(c => c.id === caseId);
         if (!caseData) return null;
         
         return {
-          id: `favorite-${caseId}-${Date.now()}`,
+          id: `favorite-${caseId}`,
           type: 'FAVORITE',
           action: 'add',
           caseId,
@@ -69,13 +70,14 @@ const processApiData = (data: any): Activity[] => {
     const likeActivities = data.likes
       .map((item: any) => {
         const caseId = typeof item === 'string' ? item : item.caseId;
-        const createdAt = typeof item === 'string' ? new Date().toISOString() : item.createdAt;
+        // 使用数据库中的时间戳
+        const createdAt = item.createdAt || new Date().toISOString();
         
         const caseData = cases.find(c => c.id === caseId);
         if (!caseData) return null;
         
         return {
-          id: `like-${caseId}-${Date.now()}`,
+          id: `like-${caseId}`,
           type: 'LIKE',
           action: 'add',
           caseId,
@@ -124,7 +126,9 @@ export function useActivities(limit: number = 10) {
   // 处理 API 数据并更新本地状态
   useEffect(() => {
     if (data && !isLoading) {
+      console.log('API 返回的原始数据:', data);
       const activities = processApiData(data);
+      console.log('处理后的活动数据:', activities);
       setLocalActivities(activities.slice(0, limit));
     }
   }, [data, isLoading, limit]);
@@ -139,11 +143,12 @@ export function useActivities(limit: number = 10) {
     
     // 创建活动记录，包含完整的案例信息
     const activity: Activity = {
-      id: `activity-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+      id: `activity-${caseId}-${type}`,
       type,
       action,
       caseId,
-      createdAt: new Date().toISOString(),
+      // 使用服务器返回的时间戳，确保与数据库一致
+      createdAt: data?.timestamp || new Date().toISOString(),
       caseTitleZh: caseData.title.zh || '未知案例',
       caseTitleEn: caseData.title.en || 'Unknown Case',
       imageUrl: caseData.image || ''
