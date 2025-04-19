@@ -28,11 +28,17 @@ export default function DashboardPage() {
   // 如果用户未登录，显示登录提示
   if (!user) {
     return (
-      <div className="flex flex-col items-center justify-center space-y-4 py-12">
-        <h1 className="text-2xl font-bold">{t('auth.login_required')}</h1>
-        <p className="text-muted-foreground">{t('auth.dialog.like_description')}</p>
-        <Button onClick={() => router.push('/auth')}>
-          {t('auth.login')}
+      <div className="flex flex-col items-center justify-center space-y-6 py-16 max-w-md mx-auto text-center">
+        <div className="space-y-2">
+          <h1 className="text-3xl font-bold tracking-tight">{t('auth.login_required')}</h1>
+          <p className="text-muted-foreground text-lg">{t('auth.dialog.like_description')}</p>
+        </div>
+        <Button 
+          size="lg" 
+          className="w-full sm:w-auto px-8 py-6 text-lg font-medium animate-pulse" 
+          onClick={() => router.push('/auth/login')}
+        >
+          {t('auth.dialog.login')}
         </Button>
       </div>
     )

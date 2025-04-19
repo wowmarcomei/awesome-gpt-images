@@ -26,9 +26,10 @@ export const en = {
   },
   auth: {
     welcome_back: 'Welcome Back',
-    choose_method: 'Choose how to continue',
+    choose_method: 'Choose a method to continue',
     login: 'Login',
     register: 'Register',
+    login_required: 'Login Required',
     email: 'Email',
     password: 'Password',
     confirm_password: 'Confirm Password',

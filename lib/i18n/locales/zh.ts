@@ -37,6 +37,7 @@ export const zh = {
     choose_method: '选择登录方式继续',
     login: '登录',
     register: '注册',
+    login_required: '需要登录',
     email: '邮箱',
     password: '密码',
     confirm_password: '确认密码',
