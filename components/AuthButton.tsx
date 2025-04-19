@@ -38,10 +38,9 @@ interface AuthButtonProps {
 }
 
 const menuItems = [
-  { icon: FiHome, label: '个人主页', href: '/dashboard' },
-  { icon: FiHeart, label: '我的点赞', href: '/dashboard/likes' },
-  { icon: FiStar, label: '我的收藏', href: '/dashboard/bookmark' },
-  { icon: FiSettings, label: '设置', href: '/settings' },
+  { icon: FiHome, label: 'dashboard.profile', href: '/dashboard' },
+  { icon: FiHeart, label: 'dashboard.likes', href: '/dashboard/likes' },
+  { icon: FiStar, label: 'dashboard.bookmark', href: '/dashboard/bookmark' },
 ];
 
 export function AuthButton({ className, onClick }: AuthButtonProps) {
@@ -70,7 +69,7 @@ export function AuthButton({ className, onClick }: AuthButtonProps) {
 
   if (!user) {
     return (
-      <Link href="/auth" className={cn("w-full", className)} onClick={onClick}>
+      <Link href="/auth/login" className={cn("w-full", className)} onClick={onClick}>
         <Button 
           variant="outline" 
           size="sm"
@@ -89,7 +88,7 @@ export function AuthButton({ className, onClick }: AuthButtonProps) {
           )}
         >
           <FiLogIn className="w-5 h-5" />
-          <span className="md:hidden">登录</span>
+          <span className="md:hidden">{t('auth.login')} / {t('auth.register')}</span>
         </Button>
       </Link>
     );
@@ -143,7 +142,7 @@ export function AuthButton({ className, onClick }: AuthButtonProps) {
             >
               <Link href={item.href} onClick={() => setIsOpen(false)}>
                 <item.icon className="w-4 h-4 text-gray-500 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white transition-colors" />
-                <span>{item.label}</span>
+                <span>{t(item.label)}</span>
               </Link>
             </DropdownMenuItem>
           </motion.div>
@@ -166,7 +165,7 @@ export function AuthButton({ className, onClick }: AuthButtonProps) {
           ) : (
             <FiMoon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
           )}
-          <span>切换主题</span>
+          <span>{t('dashboard.theme')}</span>
         </DropdownMenuItem>
 
         <DropdownMenuItem 
@@ -178,7 +177,7 @@ export function AuthButton({ className, onClick }: AuthButtonProps) {
           }}
         >
           <FiLogOut className="w-4 h-4" />
-          <span>退出登录</span>
+          <span>{t('dashboard.logout')}</span>
         </DropdownMenuItem>
       </motion.div>
     </>

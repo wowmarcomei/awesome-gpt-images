@@ -47,6 +47,10 @@ export const zh = {
     email_placeholder: 'name@example.com',
     password_placeholder: '••••••••',
     confirm_password_placeholder: '••••••••',
+    login_benefits: '登录后可以',
+    benefit_bookmark: '收藏喜欢的提示词',
+    benefit_share: '分享你的作品',
+    benefit_community: '参与社区讨论',
     logging_in: '登录中...',
     registering: '注册中...',
     or_continue_with: '或使用以下方式登录',
@@ -126,6 +130,7 @@ export const zh = {
     toChinese: '切换到中文',
     darkMode: '切换主题',
     lightMode: '切换主题',
+    theme: '切换主题',
     total_items: '总项目数',
     no_bookmark: '还没有添加书签的内容',
     no_likes: '还没有点赞的内容'

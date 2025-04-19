@@ -15,7 +15,7 @@ export function LanguageSwitch() {
         "md:p-2.5 md:rounded-full",
         "md:bg-gray-900 md:text-white md:dark:bg-white md:dark:text-gray-900",
         "md:hover:bg-gray-800 md:dark:hover:bg-gray-100",
-        "w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl md:w-auto",
+        "w-full flex items-center px-4 py-2.5 rounded-xl md:w-auto md:justify-center md:gap-2",
         "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700",
         "text-gray-900 dark:text-white"
       )}
@@ -24,10 +24,12 @@ export function LanguageSwitch() {
       <span className="hidden md:inline font-semibold text-sm">
         {locale === 'zh' ? 'EN' : 'ZH'}
       </span>
-      <MdLanguage className="md:hidden w-5 h-5" />
+      <div className="w-7 flex items-center md:hidden">
+        <MdLanguage className="w-5 h-5" />
+      </div>
       <span className="md:hidden text-sm font-medium">
         {locale === 'zh' ? '切换为英文' : 'Switch to Chinese'}
       </span>
     </button>
   );
-} 
+}

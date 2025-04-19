@@ -205,7 +205,7 @@ export function Navbar() {
                   <div className="flex flex-col gap-3">
                     {/* 语言切换 */}
                     <div 
-                      className="flex items-center justify-center"
+                      className="flex items-center"
                       onClick={handleItemClick}
                     >
                       <LanguageSwitch />
@@ -218,16 +218,18 @@ export function Navbar() {
                         handleItemClick();
                       }}
                       className={cn(
-                        "w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl transition-all",
+                        "w-full flex items-center px-4 py-2.5 rounded-xl transition-all",
                         "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700",
                         "text-gray-900 dark:text-white"
                       )}
                     >
-                      {theme === 'dark' ? (
-                        <MdLightMode className="w-5 h-5" />
-                      ) : (
-                        <MdDarkMode className="w-5 h-5" />
-                      )}
+                      <div className="w-7 flex items-center">
+                        {theme === 'dark' ? (
+                          <MdLightMode className="w-5 h-5" />
+                        ) : (
+                          <MdDarkMode className="w-5 h-5" />
+                        )}
+                      </div>
                       <span className="text-sm font-medium">
                         {theme === 'dark' ? '浅色模式' : '深色模式'}
                       </span>
@@ -240,12 +242,14 @@ export function Navbar() {
                       rel="noopener noreferrer"
                       onClick={handleItemClick}
                       className={cn(
-                        "w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl transition-all",
+                        "w-full flex items-center px-4 py-2.5 rounded-xl transition-all",
                         "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700",
                         "text-gray-900 dark:text-white"
                       )}
                     >
-                      <FaXTwitter className="w-5 h-5" />
+                      <div className="w-7 flex items-center">
+                        <FaXTwitter className="w-5 h-5" />
+                      </div>
                       <span className="text-sm font-medium">Twitter</span>
                     </a>
 
@@ -256,12 +260,14 @@ export function Navbar() {
                       rel="noopener noreferrer"
                       onClick={handleItemClick}
                       className={cn(
-                        "w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl transition-all",
+                        "w-full flex items-center px-4 py-2.5 rounded-xl transition-all",
                         "bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700",
                         "text-gray-900 dark:text-white"
                       )}
                     >
-                      <FaGithub className="w-5 h-5" />
+                      <div className="w-7 flex items-center">
+                        <FaGithub className="w-5 h-5" />
+                      </div>
                       <span className="text-sm font-medium">GitHub</span>
                     </a>
 
