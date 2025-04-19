@@ -85,7 +85,7 @@ export const zh = {
   footer: {
     projectInfo: {
       title: '项目信息',
-      description: '本项目旨在收集和展示优秀的 GPT-4 Vision 图像创作案例，为创作者提供灵感和参考。',
+      description: '本项目旨在收集和展示优秀的 GPT 图像提示词，为创作者提供灵感和参考。',
       visitProject: '访问项目',
     },
     inspiration: {
@@ -97,7 +97,7 @@ export const zh = {
       title: '创作者',
       description: '感谢以下创作者的精彩分享和贡献',
     },
-    copyright: '© {year} Awesome GPT-4 Images',
+    copyright: '© {year} Awesome GPT Images Prompt',
   },
   card: {
     getPrompt: '获取 Prompt',
@@ -119,7 +119,7 @@ export const zh = {
     recent_activity: '最近活动',
     no_activity_title: '暂无活动',
     no_activity: '你还没有任何活动记录，浏览并与案例互动来创建活动',
-    navigation: 'Awesome GPT-4 Images ✨',
+    navigation: 'Awesome GPT Images Prompt ✨',
     profile: '我的主页',
     explore: '探索更多',
     view: '查看案例',

@@ -17,11 +17,11 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   metadataBase: new URL('https://awesome-gpt-images.vercel.app'),
   title: {
-    default: 'Awesome GPT-4 Images',
-    template: '%s | Awesome GPT-4 Images'
+    default: 'Awesome GPT Images Prompt',
+    template: '%s | Awesome GPT Images Prompt'
   },
-  description: '精选 GPT-4 Vision 图像创作案例展示 | Curated GPT-4 Vision Image Creation Showcase',
-  keywords: ['GPT-4', 'Vision', 'AI', 'Image', 'Showcase', 'Prompt', '人工智能', '图像生成', '提示词'],
+  description: '精选 GPT 图像提示词目录 | Curated GPT Images Prompt Directory',
+  keywords: ['GPT', 'AI', 'Image', 'Prompt', 'Directory', 'Showcase', '人工智能', '图像生成', '提示词', '提示词目录', 'GPT图像'],
   authors: [{ 
     name: 'wowmarcomei',
     url: 'https://github.com/wowmarcomei'
@@ -42,10 +42,10 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Awesome GPT-4 Images',
-    description: '精选 GPT-4 Vision 图像创作案例展示 | Curated GPT-4 Vision Image Creation Showcase',
+    title: 'Awesome GPT Images Prompt',
+    description: '精选 GPT 图像提示词目录 | Curated GPT Images Prompt Directory',
     url: 'https://awesome-gpt-images.vercel.app',
-    siteName: 'Awesome GPT-4 Images',
+    siteName: 'Awesome GPT Images Prompt',
     locale: 'zh_CN',
     type: 'website',
     images: [
@@ -53,15 +53,15 @@ export const metadata: Metadata = {
         url: 'https://awesome-gpt-images.com/og-image/og-image.png?v=1',
         width: 1088,
         height: 992,
-        alt: 'Awesome GPT-4 Images - 探索 AI 图像理解的未来',
+        alt: 'Awesome GPT Images Prompt - 探索 AI 图像理解的未来',
         type: 'image/png',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Awesome GPT-4 Images',
-    description: '精选 GPT-4 Vision 图像创作案例展示 | Curated GPT-4 Vision Image Creation Showcase',
+    title: 'Awesome GPT Images Prompt',
+    description: '精选 GPT 图像提示词目录 | Curated GPT Images Prompt Directory',
     site: '@your-twitter-handle',
     creator: '@your-twitter-handle',
     images: [
@@ -69,7 +69,7 @@ export const metadata: Metadata = {
         url: 'https://awesome-gpt-images.com/og-image/og-image.png?v=1',
         width: 1088,
         height: 992,
-        alt: 'Awesome GPT-4 Images - 探索 AI 图像理解的未来',
+        alt: 'Awesome GPT Images Prompt - 探索 AI 图像理解的未来',
       }
     ],
   },

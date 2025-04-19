@@ -156,8 +156,8 @@ export default function Home() {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'Awesome GPT-4 Images',
-          text: '精选 GPT-4 Vision 图像创作案例展示',
+          title: 'Awesome GPT Images Prompt',
+          text: 'Curated GPT Image Prompt Catalog | 精选 GPT 图像提示词目录  ',
           url: window.location.href,
         });
       } catch (error) {
@@ -174,7 +174,7 @@ export default function Home() {
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold text-center mb-8 text-gray-900 dark:text-white">
-          Awesome GPT-4 Images ✨
+          Awesome GPT Images Prompt 
         </h1>
 
         <div className="flex flex-col lg:flex-row gap-8">

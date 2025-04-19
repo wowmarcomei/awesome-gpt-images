@@ -78,7 +78,7 @@ export function Navbar() {
                 className="flex items-center gap-1 text-xl font-bold text-gray-900 dark:text-white hover:opacity-90 transition-opacity"
               >
                 <span className="hidden sm:inline">Awesome</span>
-                <span>GPT-4 Images</span>
+                <span>GPT Images Prompt</span>
                 <span className="text-blue-500 ml-0.5">✨</span>
               </Link>
             </div>

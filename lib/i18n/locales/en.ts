@@ -77,7 +77,7 @@ export const en = {
   footer: {
     projectInfo: {
       title: 'Project Info',
-      description: 'This project aims to collect and showcase excellent GPT-4 Vision image creation cases, providing inspiration and reference for creators.',
+      description: 'This project aims to collect and showcase excellent GPT Images Prompts, providing inspiration and reference for creators.',
       visitProject: 'Visit Project',
     },
     inspiration: {
@@ -89,7 +89,7 @@ export const en = {
       title: 'Creators',
       description: 'Thanks to the following creators for their wonderful sharing and contributions',
     },
-    copyright: '© {year} Awesome GPT-4 Images',
+    copyright: '© {year} Awesome GPT Images Prompt',
   },
   card: {
     getPrompt: 'Get Prompt',
@@ -112,7 +112,7 @@ export const en = {
     recent_activity: 'Recent Activity',
     no_activity_title: 'No Activity Yet',
     no_activity: 'You don\'t have any activity yet. Browse and interact with cases to create activity.',
-    navigation: 'Awesome GPT-4 Images ✨',
+    navigation: 'Awesome GPT Images Prompt ✨',
     profile: 'My Homepage',
     explore: 'Explore More',
     switchLanguage: 'Switch Language',

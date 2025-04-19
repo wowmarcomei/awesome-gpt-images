@@ -1,7 +1,7 @@
 {
-  "name": "Awesome GPT-4 Images",
-  "short_name": "GPT-4 Images",
-  "description": "精选 GPT-4 Vision 图像创作案例展示，包含详细提示词、创作技巧和最佳实践。",
+  "name": "Awesome GPT Images Prompt",
+  "short_name": "GPT Images Prompt",
+  "description": "Curated GPT Image Prompt Catalog, Including Detailed Prompts, Creative Techniques, and Best Practices. | 精选 GPT 图像提示词目录，包含详细提示词、创作技巧和最佳实践。",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -23,9 +23,9 @@
   ],
   "shortcuts": [
     {
-      "name": "最新案例",
-      "short_name": "最新",
-      "description": "查看最新的GPT-4 Vision创作案例",
+      "name": "Latest Cases",
+      "short_name": "Latest",
+      "description": "View the latest GPT image prompt catalog | 查看最新的GPT图像提示词目录",
       "url": "/?sort=latest",
       "icons": [{ "src": "/android-chrome-192x192.png", "sizes": "192x192" }]
     }

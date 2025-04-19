@@ -7,7 +7,7 @@ export async function sendVerificationEmail(email: string, token: string) {
 
   try {
     const data = await resend.emails.send({
-      from: 'Awesome GPT-4 Images <noreply@awesome-gpt-images.com>',
+      from: 'Awesome GPT Images Prompt <noreply@awesome-gpt-images.com>',
       to: email,
       subject: '验证您的邮箱地址',
       html: `
@@ -17,7 +17,7 @@ export async function sendVerificationEmail(email: string, token: string) {
           </h1>
           
           <p style="margin-bottom: 24px; font-size: 16px; line-height: 24px;">
-            感谢您注册 Awesome GPT-4 Images！请点击下面的按钮验证您的邮箱地址：
+            感谢您注册 Awesome GPT Images Prompt！请点击下面的按钮验证您的邮箱地址：
           </p>
           
           <div style="margin-bottom: 24px;">
