@@ -16,6 +16,14 @@ export const zh = {
     no_items_found: '暂无内容',
     no_items_description: '暂无内容，请浏览案例并添加到您的收藏或点赞',
   },
+  activity: {
+    liked: '点赞了',
+    favorited: '收藏了',
+    unliked: '取消了点赞',
+    unfavorited: '取消了收藏',
+    interacted: '与案例互动',
+    unknown: '未知活动'
+  },
   categories: {
     style: '风格',
     scene: '场景',
@@ -101,6 +109,7 @@ export const zh = {
     navigation: 'Awesome GPT-4 Images ✨',
     profile: '我的主页',
     explore: '探索更多',
+    view: '查看案例',
     switchLanguage: '切换语言',
     toEnglish: '切换到英文',
     toChinese: '切换到中文',

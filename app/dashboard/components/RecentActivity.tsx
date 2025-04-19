@@ -4,16 +4,30 @@ import { useI18n } from '@/lib/i18n/context'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
-import { Heart, Star, Clock, History, MoreHorizontal, MessageSquare, User, FileText, Plus } from 'lucide-react'
+import { Heart, Star, Clock, History, MoreHorizontal, MessageSquare, User, FileText, Plus, RefreshCw } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { formatDistanceToNow } from 'date-fns'
 import { zhCN, enUS } from 'date-fns/locale'
 import { useActivities, Activity } from '@/hooks/use-activities'
+import { useState, useEffect } from 'react'
 
 export function RecentActivity() {
   const { t, currentLang } = useI18n()
-  const { activities, loading, error, getActivityText } = useActivities(10)
+  const { activities, loading, error, getActivityText, refresh } = useActivities(10)
+  const [refreshing, setRefreshing] = useState(false)
+  const [timeKey, setTimeKey] = useState(Date.now()) // 用于强制更新时间显示
+  
+
+  
+  // 每分钟更新一次时间显示
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeKey(Date.now())
+    }, 60000) // 每分钟更新一次
+    
+    return () => clearInterval(timer)
+  }, [])
 
   // 根据活动类型获取图标和颜色
   const getActivityIcon = (type: string) => {
@@ -22,8 +36,12 @@ export function RecentActivity() {
         return { icon: Plus, color: 'text-blue-500 bg-blue-100 dark:bg-blue-900/30' }
       case 'FAVORITE':
         return { icon: Star, color: 'text-amber-500 bg-amber-100 dark:bg-amber-900/30' }
+      case 'UNFAVORITE':
+        return { icon: Star, color: 'text-gray-500 bg-gray-100 dark:bg-gray-800' }
       case 'LIKE':
         return { icon: Heart, color: 'text-rose-500 bg-rose-100 dark:bg-rose-900/30' }
+      case 'UNLIKE':
+        return { icon: Heart, color: 'text-gray-500 bg-gray-100 dark:bg-gray-800' }
       case 'comment':
         return { icon: MessageSquare, color: 'text-green-500 bg-green-100 dark:bg-green-900/30' }
       case 'system':
@@ -123,8 +141,20 @@ export function RecentActivity() {
             </div>
             <CardTitle className="dark:text-white">{t('dashboard.recent_activity')}</CardTitle>
           </div>
-          <Button variant="ghost" size="icon" className="h-8 w-8">
-            <MoreHorizontal className="h-4 w-4" />
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="h-8 w-8"
+            onClick={() => {
+              setRefreshing(true);
+              refresh().finally(() => {
+                setRefreshing(false);
+                setTimeKey(Date.now()); // 刷新时间显示
+              });
+            }}
+            disabled={refreshing}
+          >
+            <RefreshCw className={`h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
           </Button>
         </div>
       </CardHeader>
@@ -149,20 +179,23 @@ export function RecentActivity() {
                 {/* 活动内容 */}
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium dark:text-white">
-                    {getActivityText(activity.type)}
+                    {getActivityText(activity.type)}{' '}
+                    <span className="font-bold">
+                      {currentLang === 'zh' ? activity.caseTitleZh : activity.caseTitleEn}
+                    </span>
                   </p>
                   {activity.caseId && (
                     <Link 
                       href={`/case/${activity.caseId}`} 
-                      className="text-xs text-primary hover:underline dark:text-blue-300"
+                      className="text-xs text-gray-500 dark:text-gray-400 hover:underline"
                     >
-                      {t('common.view_case')}
+                      {t('dashboard.view')}
                     </Link>
                   )}
                 </div>
                 
-                {/* 活动时间 */}
-                <div className="text-xs text-muted-foreground dark:text-gray-300 whitespace-nowrap">
+                {/* 时间 */}
+                <div className="text-xs text-gray-500 dark:text-gray-400 whitespace-nowrap">
                   {formatTime(activity.createdAt)}
                 </div>
               </motion.div>

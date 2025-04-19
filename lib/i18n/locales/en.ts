@@ -90,7 +90,7 @@ export const en = {
     likes: 'My Likes',
     creations: 'My Creations',
     logout: 'Logout',
-    view: 'View',
+    view: 'View Case',
     noData: 'No Data',
     loading: 'Loading...',
     welcome: 'Hello, User',
@@ -110,5 +110,13 @@ export const en = {
     total_items: 'Total Items',
     no_favorites: 'No favorites yet',
     no_likes: 'No likes yet'
+  },
+  activity: {
+    liked: 'liked',
+    favorited: 'favorited',
+    unliked: 'unliked',
+    unfavorited: 'unfavorited',
+    interacted: 'interacted with case',
+    unknown: 'unknown activity'
   },
 }; 

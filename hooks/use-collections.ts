@@ -5,6 +5,7 @@ import { useAuth } from '@/lib/auth/context'
 import { toast } from 'sonner'
 import { useI18n } from '@/lib/i18n/context'
 import { useEffect } from 'react'
+import { cases } from '@/lib/data'
 
 interface Collection {
   id: string
@@ -246,6 +247,24 @@ export function useCollections(type?: 'LIKE' | 'FAVORITE') {
       }
 
       console.log(`Sending ${action} ${type} request for case:`, caseId)
+      
+      // 获取案例数据
+      const caseData = cases.find(c => c.id === caseId);
+      
+      // 触发活动更新事件
+      const activityType = action === 'add' ? type : `UN${type}`
+      if (typeof window !== 'undefined' && caseData) {
+        window.dispatchEvent(new CustomEvent('activity-update', {
+          detail: {
+            caseId,
+            type: activityType,
+            action,
+            caseTitleZh: caseData.title.zh || '未知案例',
+            caseTitleEn: caseData.title.en || 'Unknown Case',
+            imageUrl: caseData.image || ''
+          }
+        }))
+      }
       
       // API 请求
       const response = await fetch('/api/collections', {
