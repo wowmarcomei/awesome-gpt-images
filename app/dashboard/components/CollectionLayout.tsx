@@ -62,21 +62,25 @@ export function CollectionLayout({
             router.push('/dashboard/likes')
           }
         }}>
-          <div className="p-1 bg-muted rounded-lg mb-4">
-            <TabsList className="grid grid-cols-2 w-full max-w-md bg-transparent gap-1">
+          <div className="my-6">
+            <TabsList className="w-full max-w-sm bg-background/5 backdrop-blur-sm rounded-full p-1.5 border border-border/30 shadow-sm">
               <TabsTrigger 
                 value="favorites" 
-                className="flex items-center gap-2 bg-muted hover:bg-background data-[state=active]:bg-background data-[state=active]:shadow-sm"
+                className="flex-1 flex items-center justify-center gap-2 rounded-full py-2 text-sm font-medium transition-all
+                data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:bg-background/50 data-[state=inactive]:hover:text-foreground
+                data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-md data-[state=active]:border data-[state=active]:border-primary/20"
               >
                 <Star className="h-4 w-4" />
-                <span className="font-medium">{t('dashboard.favorites')}</span>
+                <span>{t('dashboard.favorites')}</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="likes" 
-                className="flex items-center gap-2 bg-muted hover:bg-background data-[state=active]:bg-background data-[state=active]:shadow-sm"
+                className="flex-1 flex items-center justify-center gap-2 rounded-full py-2 text-sm font-medium transition-all ml-2
+                data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:bg-background/50 data-[state=inactive]:hover:text-foreground
+                data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-md data-[state=active]:border data-[state=active]:border-primary/20"
               >
                 <Heart className="h-4 w-4" />
-                <span className="font-medium">{t('dashboard.likes')}</span>
+                <span>{t('dashboard.likes')}</span>
               </TabsTrigger>
             </TabsList>
           </div>
