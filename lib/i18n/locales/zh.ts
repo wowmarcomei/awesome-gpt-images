@@ -10,6 +10,11 @@ export const zh = {
     getPrompt: '查看 Prompt',
     copied: '已复制',
     copy: '复制',
+    view_case: '查看案例',
+    error_loading: '加载数据失败',
+    retry: '重试',
+    no_items_found: '暂无内容',
+    no_items_description: '暂无内容，请浏览案例并添加到您的收藏或点赞',
   },
   categories: {
     style: '风格',
@@ -91,7 +96,8 @@ export const zh = {
     noData: '暂无数据',
     loading: '加载中...',
     recent_activity: '最近活动',
-    no_activity: '没有最近活动',
+    no_activity_title: '暂无活动',
+    no_activity: '你还没有任何活动记录，浏览并与案例互动来创建活动',
     navigation: 'Awesome GPT-4 Images ✨',
     profile: '我的主页',
     explore: '探索更多',
@@ -103,7 +109,6 @@ export const zh = {
     view_all: '查看全部',
     total_items: '总项目数',
     no_favorites: '还没有收藏的内容',
-    no_likes: '还没有点赞的内容',
-    no_activity_title: '暂无活动'
+    no_likes: '还没有点赞的内容'
   },
 }; 

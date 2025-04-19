@@ -10,6 +10,11 @@ export const en = {
     getPrompt: 'Original Prompt',
     copied: 'Copied',
     copy: 'Copy',
+    view_case: 'View Case',
+    error_loading: 'Failed to load data',
+    retry: 'Retry',
+    no_items_found: 'No items found',
+    no_items_description: 'No items found. Browse cases and add them to your favorites or likes.',
   },
   categories: {
     style: 'Style',
@@ -91,7 +96,8 @@ export const en = {
     welcome: 'Hello, User',
     welcome_back: 'Welcome Back',
     recent_activity: 'Recent Activity',
-    no_activity: 'No recent activity',
+    no_activity_title: 'No Activity Yet',
+    no_activity: 'You don\'t have any activity yet. Browse and interact with cases to create activity.',
     navigation: 'Awesome GPT-4 Images ✨',
     profile: 'My Homepage',
     explore: 'Explore More',
@@ -103,7 +109,6 @@ export const en = {
     view_all: 'View All',
     total_items: 'Total Items',
     no_favorites: 'No favorites yet',
-    no_likes: 'No likes yet',
-    no_activity_title: 'No Activity'
+    no_likes: 'No likes yet'
   },
 }; 

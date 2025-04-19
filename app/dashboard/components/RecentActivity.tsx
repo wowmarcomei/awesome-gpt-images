@@ -3,71 +3,28 @@
 import { useI18n } from '@/lib/i18n/context'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { useAuth } from '@/hooks/use-auth'
-import { useEffect, useState } from 'react'
-import { collections } from '@/lib/supabase/client'
 import { Skeleton } from '@/components/ui/skeleton'
 import { Heart, Star, Clock, History, MoreHorizontal, MessageSquare, User, FileText, Plus } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { formatDistanceToNow } from 'date-fns'
 import { zhCN, enUS } from 'date-fns/locale'
-import { mockActivities } from '../mock/data'
+import { useActivities, Activity } from '@/hooks/use-activities'
 
-type ActivityType = 'create' | 'favorite' | 'like' | 'comment' | 'system'
-
-interface Activity {
-  id: string
-  type: ActivityType
-  content: string
-  timestamp: string
-  meta?: {
-    caseId?: string
-    imageUrl?: string
-    comment?: string
-  }
-}
+type ActivityType = 'LIKE' | 'FAVORITE' | 'create' | 'comment' | 'system'
 
 export function RecentActivity() {
   const { t, currentLang } = useI18n()
-  const { user } = useAuth()
-  const [activities, setActivities] = useState<Activity[]>([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    // 使用模拟数据初始化
-    setActivities(mockActivities as Activity[])
-    setLoading(false)
-
-    // 如果有用户登录，则获取真实数据
-    if (user) {
-      const fetchActivities = async () => {
-        setLoading(true)
-        try {
-          // 这里将来会替换为真实API调用
-          // 目前使用模拟数据
-          setTimeout(() => {
-            setActivities(mockActivities as Activity[])
-            setLoading(false)
-          }, 500)
-        } catch (error) {
-          console.error('获取活动数据失败:', error)
-          setLoading(false)
-        }
-      }
-
-      fetchActivities()
-    }
-  }, [user])
+  const { activities, loading, error, getActivityText } = useActivities(10)
 
   // 根据活动类型获取图标和颜色
   const getActivityIcon = (type: ActivityType) => {
     switch (type) {
       case 'create':
         return { icon: Plus, color: 'text-blue-500 bg-blue-100 dark:bg-blue-900/30' }
-      case 'favorite':
+      case 'FAVORITE':
         return { icon: Star, color: 'text-amber-500 bg-amber-100 dark:bg-amber-900/30' }
-      case 'like':
+      case 'LIKE':
         return { icon: Heart, color: 'text-rose-500 bg-rose-100 dark:bg-rose-900/30' }
       case 'comment':
         return { icon: MessageSquare, color: 'text-green-500 bg-green-100 dark:bg-green-900/30' }
@@ -193,17 +150,22 @@ export function RecentActivity() {
                 
                 {/* 活动内容 */}
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium dark:text-white">{activity.content}</p>
-                  {activity.meta?.comment && (
-                    <p className="text-xs text-muted-foreground dark:text-gray-300 mt-1 italic">
-                      "{activity.meta.comment}"
-                    </p>
+                  <p className="text-sm font-medium dark:text-white">
+                    {getActivityText(activity.type, activity.caseTitle)}
+                  </p>
+                  {activity.caseId && (
+                    <Link 
+                      href={`/case/${activity.caseId}`} 
+                      className="text-xs text-primary hover:underline dark:text-blue-300"
+                    >
+                      {t('common.view_case')}
+                    </Link>
                   )}
                 </div>
                 
                 {/* 活动时间 */}
                 <div className="text-xs text-muted-foreground dark:text-gray-300 whitespace-nowrap">
-                  {formatTime(activity.timestamp)}
+                  {formatTime(activity.createdAt)}
                 </div>
               </motion.div>
             )
