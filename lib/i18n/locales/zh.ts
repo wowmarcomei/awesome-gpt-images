@@ -2,6 +2,7 @@ export const zh = {
   common: {
     search: '搜索',
     searchPlaceholder: '搜索案例、标签或作者',
+    back: '返回',
     all: '全部',
     by: '作者：',
     selected: '已选择：',
@@ -100,7 +101,9 @@ export const zh = {
     welcome: '你好，用户',
     welcome_back: '欢迎回来',
     favorites: '我的收藏',
+    favorites_description: '您收藏的所有案例，方便您随时查看和参考',
     likes: '我的点赞',
+    likes_description: '您点赞过的所有案例，记录您喜欢的创意',
     creations: '我的创造',
     logout: '退出登录',
     title: '用户中心',

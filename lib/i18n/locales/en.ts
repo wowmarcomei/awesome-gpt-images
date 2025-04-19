@@ -2,6 +2,7 @@ export const en = {
   common: {
     search: 'Search',
     searchPlaceholder: 'Search cases, tags, or authors',
+    back: 'Back',
     all: 'All',
     by: 'By:',
     selected: 'Selected:',
@@ -90,7 +91,9 @@ export const en = {
   },
   dashboard: {
     favorites: 'My Favorites',
+    favorites_description: 'All cases you have favorited for easy reference',
     likes: 'My Likes',
+    likes_description: 'All cases you have liked to remember creative ideas',
     creations: 'My Creations',
     logout: 'Logout',
     view: 'View Case',

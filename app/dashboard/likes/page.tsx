@@ -1,6 +1,7 @@
 'use client'
 
 import { CaseGrid } from '../components/CaseGrid'
+import { CollectionLayout } from '../components/CollectionLayout'
 import { useCollections } from '@/hooks/use-collections'
 import { useI18n } from '@/lib/i18n/context'
 import { useAuth } from '@/hooks/use-auth'
@@ -23,11 +24,17 @@ export default function LikesPage() {
   // 如果用户未登录，显示登录提示
   if (!user) {
     return (
-      <div className="flex flex-col items-center justify-center space-y-4 py-12">
-        <h1 className="text-2xl font-bold">{t('auth.login_required')}</h1>
-        <p className="text-muted-foreground">{t('auth.dialog.like_description')}</p>
-        <Button onClick={() => router.push('/auth')}>
-          {t('auth.login')}
+      <div className="flex flex-col items-center justify-center space-y-6 py-16 max-w-md mx-auto text-center">
+        <div className="space-y-2">
+          <h1 className="text-3xl font-bold tracking-tight">{t('auth.login_required')}</h1>
+          <p className="text-muted-foreground text-lg">{t('auth.dialog.like_description')}</p>
+        </div>
+        <Button 
+          size="lg" 
+          className="w-full sm:w-auto px-8 py-6 text-lg font-medium animate-pulse" 
+          onClick={() => router.push('/auth/login')}
+        >
+          {t('auth.dialog.login')}
         </Button>
       </div>
     )
@@ -52,39 +59,48 @@ export default function LikesPage() {
     .filter(Boolean)
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold tracking-tight">
-          {t('dashboard.likes')}
-        </h1>
-        <p className="text-sm text-muted-foreground">
-          {t('dashboard.likes_description')}
-        </p>
-      </div>
-
+    <CollectionLayout
+      title={t('dashboard.likes')}
+      description={t('dashboard.likes_description')}
+    >
       {likeCases.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-12 space-y-4 text-center">
-          <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">
-            <span className="text-2xl">❤️</span>
+        <div className="flex flex-col items-center justify-center py-16 space-y-6 text-center bg-muted/20 rounded-xl border border-border p-8">
+          <div className="h-20 w-20 rounded-full bg-primary/10 flex items-center justify-center">
+            <span className="text-4xl">❤️</span>
           </div>
-          <h3 className="text-lg font-medium">{t('dashboard.no_likes')}</h3>
-          <p className="text-muted-foreground max-w-md">
-            {t('common.no_items_description')}
-          </p>
-          <Button onClick={() => router.push('/')}>
+          <div className="space-y-2">
+            <h3 className="text-xl font-medium">{t('dashboard.no_likes')}</h3>
+            <p className="text-muted-foreground max-w-md mx-auto">
+              {t('common.no_items_description')}
+            </p>
+          </div>
+          <Button 
+            size="lg"
+            className="px-6"
+            onClick={() => router.push('/')}
+          >
             {t('dashboard.explore')}
           </Button>
         </div>
       ) : (
-        <CaseGrid
-          cases={likeCases}
-          isLoading={isLoading}
-          hasMore={false}
-          onLoadMore={() => {}}
-          onLike={(id) => toggleCollection(id, 'LIKE')}
-          onFavorite={(id) => toggleCollection(id, 'FAVORITE')}
-        />
+        <div className="space-y-6">
+          <div className="flex justify-between items-center">
+            <p className="text-sm text-muted-foreground">
+              {t('dashboard.total_items')}: {likeCases.length}
+            </p>
+            {/* 批量操作按钮可以在这里添加 */}
+          </div>
+          
+          <CaseGrid
+            cases={likeCases}
+            isLoading={isLoading}
+            hasMore={false}
+            onLoadMore={() => {}}
+            onLike={(id) => toggleCollection(id, 'LIKE')}
+            onFavorite={(id) => toggleCollection(id, 'FAVORITE')}
+          />
+        </div>
       )}
-    </div>
+    </CollectionLayout>
   )
 }

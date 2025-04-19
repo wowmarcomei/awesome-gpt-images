@@ -46,56 +46,67 @@ export function CaseGrid({
   }, [inView, hasMore, isLoading, onLoadMore])
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {cases.map((item) => (
         <div
           key={item.id}
-          className="group relative bg-background rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
+          className="group relative bg-background rounded-xl border border-border overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
         >
           {/* 图片容器 */}
-          <div className="relative aspect-[4/3]">
+          <div className="relative aspect-[4/3] overflow-hidden">
             <Image
               src={item.imageUrl}
               alt={item.title}
               fill
-              className="object-cover"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
+            
+            {/* 漂浮按钮容器 */}
+            <div className="absolute top-2 right-2 flex space-x-1">
+              <Button
+                variant="secondary"
+                size="icon"
+                className={cn(
+                  'h-8 w-8 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background shadow-sm',
+                  item.isLiked ? 'text-pink-500 dark:text-pink-400 hover:text-pink-600 dark:hover:text-pink-300' : 'text-muted-foreground hover:text-foreground'
+                )}
+                onClick={() => onLike(item.id)}
+              >
+                <Heart className={cn('h-4 w-4', item.isLiked && 'fill-current')} />
+              </Button>
+              
+              <Button
+                variant="secondary"
+                size="icon"
+                className={cn(
+                  'h-8 w-8 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background shadow-sm',
+                  item.isFavorited ? 'text-yellow-500 dark:text-yellow-400 hover:text-yellow-600 dark:hover:text-yellow-300' : 'text-muted-foreground hover:text-foreground'
+                )}
+                onClick={() => onFavorite(item.id)}
+              >
+                <Star className={cn('h-4 w-4', item.isFavorited && 'fill-current')} />
+              </Button>
+            </div>
           </div>
 
           {/* 卡片信息 */}
           <div className="p-4">
-            <h3 className="text-lg font-semibold mb-2 line-clamp-2">
+            <h3 className="text-lg font-semibold mb-2 line-clamp-2 text-muted-foreground group-hover:text-primary transition-colors">
               {item.title}
             </h3>
-
-            {/* 操作按钮 */}
-            <div className="flex items-center justify-between mt-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                className={cn(
-                  'gap-2',
-                  item.isLiked && 'text-pink-500 dark:text-pink-400'
-                )}
-                onClick={() => onLike(item.id)}
-              >
-                <Heart className="w-4 h-4" />
-                <span>{item.likes}</span>
-              </Button>
-
-              <Button
-                variant="ghost"
-                size="sm"
-                className={cn(
-                  'gap-2',
-                  item.isFavorited && 'text-yellow-500 dark:text-yellow-400'
-                )}
-                onClick={() => onFavorite(item.id)}
-              >
-                <Star className="w-4 h-4" />
-                <span>{item.favorites}</span>
-              </Button>
+            
+            {/* 统计信息 */}
+            <div className="flex items-center text-sm text-muted-foreground mt-2 space-x-4">
+              <div className="flex items-center">
+                <Heart className="w-3.5 h-3.5 mr-1.5" />
+                <span>{item.likes || 0}</span>
+              </div>
+              
+              <div className="flex items-center">
+                <Star className="w-3.5 h-3.5 mr-1.5" />
+                <span>{item.favorites || 0}</span>
+              </div>
             </div>
           </div>
         </div>
