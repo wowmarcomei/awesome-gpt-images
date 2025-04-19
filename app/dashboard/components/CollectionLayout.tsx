@@ -4,7 +4,7 @@ import { ReactNode } from 'react'
 import { useI18n } from '@/lib/i18n/context'
 import { useRouter, usePathname } from 'next/navigation'
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { ChevronLeft, Star, Heart } from 'lucide-react'
+import { ChevronLeft, Star, Heart, Bookmark } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 interface CollectionLayoutProps {
@@ -70,7 +70,7 @@ export function CollectionLayout({
                 data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:bg-background/50 data-[state=inactive]:hover:text-foreground
                 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-md data-[state=active]:border data-[state=active]:border-primary/20"
               >
-                <Star className="h-4 w-4" />
+                <Bookmark className="h-4 w-4" />
                 <span>{t('dashboard.favorites')}</span>
               </TabsTrigger>
               <TabsTrigger 

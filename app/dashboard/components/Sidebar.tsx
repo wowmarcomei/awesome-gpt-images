@@ -1,6 +1,6 @@
 'use client'
 
-import { Heart, Star, LogOut, Menu, User, Moon, Sun, Home, Compass, Globe, FileText, X } from 'lucide-react'
+import { Heart, Star, LogOut, Menu, User, Moon, Sun, Home, Compass, Globe, FileText, X, Bookmark } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
@@ -22,7 +22,7 @@ export function Sidebar() {
     {
       name: t('dashboard.favorites'),
       href: '/dashboard/favorites',
-      icon: Star,
+      icon: Bookmark,
       current: pathname === '/dashboard/favorites'
     },
     {
@@ -84,7 +84,7 @@ export function Sidebar() {
                   ? 'bg-blue-400'
                   : 'bg-blue-50 dark:bg-gray-600'
               }`}>
-                <Star className={`${
+                <Bookmark className={`${
                   pathname === '/dashboard/favorites'
                     ? 'text-white'
                     : 'text-blue-500 dark:text-blue-300'
