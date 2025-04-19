@@ -52,9 +52,9 @@ export function StatsCard() {
 
   const statItems = [
     {
-      name: t('dashboard.favorites'),
+      name: t('dashboard.bookmark'),
       value: stats.favorites,
-      href: '/dashboard/favorites',
+      href: '/dashboard/bookmark',
       icon: Star,
       gradient: 'from-amber-500/10 to-yellow-500/10',
       iconGradient: 'from-amber-500 to-yellow-500',

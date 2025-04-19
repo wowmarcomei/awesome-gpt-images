@@ -67,8 +67,8 @@ export default function FavoritesPage() {
 
   return (
     <CollectionLayout
-      title={t('dashboard.favorites')}
-      description={t('dashboard.favorites_description')}
+      title={t('dashboard.bookmark')}
+      description={t('dashboard.bookmark_description')}
     >
       {favoriteCases.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-16 space-y-6 text-center bg-muted/20 rounded-xl border border-border p-8">

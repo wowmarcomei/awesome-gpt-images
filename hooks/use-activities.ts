@@ -187,9 +187,9 @@ export function useActivities(limit: number = 10) {
   const getActivityText = (type: string) => {
     switch (type) {
       case 'FAVORITE':
-        return t('activity.favorited')
+        return t('activity.bookmarked')
       case 'UNFAVORITE':
-        return t('activity.unfavorited')
+        return t('activity.unbookmarked')
       case 'LIKE':
         return t('activity.liked')
       case 'UNLIKE':

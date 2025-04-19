@@ -141,7 +141,7 @@ export function ContentCarousel({
     return (
       <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-8 text-center">
         <p className="text-muted-foreground">
-          {title === t('dashboard.favorites') 
+          {title === t('dashboard.bookmark') 
             ? t('dashboard.no_favorites') 
             : t('dashboard.no_likes')}
         </p>

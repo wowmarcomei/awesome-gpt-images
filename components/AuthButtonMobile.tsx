@@ -20,7 +20,7 @@ interface AuthButtonMobileProps {
 const menuItems = [
   { icon: FiHome, label: '个人主页', href: '/dashboard' },
   { icon: FiHeart, label: '我的点赞', href: '/dashboard/likes' },
-  { icon: FiStar, label: '我的收藏', href: '/dashboard/favorites' },
+  { icon: FiStar, label: '我的收藏', href: '/dashboard/bookmark' },
   { icon: FiSettings, label: '设置', href: '/settings' },
 ];
 

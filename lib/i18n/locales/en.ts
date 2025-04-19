@@ -17,7 +17,7 @@ export const en = {
     error_loading: 'Failed to load data',
     retry: 'Retry',
     no_items_found: 'No items found',
-    no_items_description: 'No items found. Browse cases and add them to your favorites or likes.',
+    no_items_description: 'No items found. Browse cases and add them to your bookmarks or likes.',
     try_it: 'Try it myself',
     under_development: 'Feature under development, stay tuned',
   },
