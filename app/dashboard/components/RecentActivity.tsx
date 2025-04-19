@@ -11,14 +11,12 @@ import { formatDistanceToNow } from 'date-fns'
 import { zhCN, enUS } from 'date-fns/locale'
 import { useActivities, Activity } from '@/hooks/use-activities'
 
-type ActivityType = 'LIKE' | 'FAVORITE' | 'create' | 'comment' | 'system'
-
 export function RecentActivity() {
   const { t, currentLang } = useI18n()
   const { activities, loading, error, getActivityText } = useActivities(10)
 
   // 根据活动类型获取图标和颜色
-  const getActivityIcon = (type: ActivityType) => {
+  const getActivityIcon = (type: string) => {
     switch (type) {
       case 'create':
         return { icon: Plus, color: 'text-blue-500 bg-blue-100 dark:bg-blue-900/30' }
@@ -151,7 +149,7 @@ export function RecentActivity() {
                 {/* 活动内容 */}
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium dark:text-white">
-                    {getActivityText(activity.type, activity.caseTitle)}
+                    {getActivityText(activity.type)}
                   </p>
                   {activity.caseId && (
                     <Link 
