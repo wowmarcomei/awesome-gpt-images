@@ -8,6 +8,7 @@ import { formatDistanceToNow } from 'date-fns'
 import { zhCN, enUS } from 'date-fns/locale'
 import { useI18n } from '@/lib/i18n/context'
 import { cn } from '@/lib/utils'
+import { useState, useEffect } from 'react'
 
 interface ActionButtonProps {
   icon: any
@@ -60,8 +61,10 @@ interface ContentCardProps {
 }
 
 export function ContentCard({ item, onToggleLike, onToggleFavorite }: ContentCardProps) {
-  const { currentLang } = useI18n()
+  const { t, currentLang } = useI18n()
+  const [timeKey, setTimeKey] = useState(Date.now()) // 用于强制更新时间显示
   
+  // 格式化时间
   const formatDate = (dateString: string) => {
     try {
       const date = new Date(dateString)
@@ -73,6 +76,15 @@ export function ContentCard({ item, onToggleLike, onToggleFavorite }: ContentCar
       return dateString
     }
   }
+  
+  // 每分钟更新一次时间显示
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeKey(Date.now())
+    }, 60000) // 每分钟更新一次
+    
+    return () => clearInterval(timer)
+  }, [])
 
   return (
     <Card className="group overflow-hidden hover:shadow-md hover:shadow-blue-900/10 dark:hover:shadow-blue-500/5 transition-all duration-300 h-full border border-gray-100 dark:border-gray-500 bg-white dark:bg-gray-700">
@@ -93,10 +105,10 @@ export function ContentCard({ item, onToggleLike, onToggleFavorite }: ContentCar
           <div className="flex items-center justify-between mt-2">
             <div className="flex items-center space-x-1 text-xs text-gray-400 dark:text-gray-300">
               <Calendar className="w-3 h-3" />
-              <span>{formatDate(item.createdAt)}</span>
+              <span key={timeKey}>{formatDate(item.createdAt)}</span>
             </div>
             <div className="text-xs text-primary dark:text-blue-300 hover:underline hover:text-blue-600 dark:hover:text-blue-200 flex items-center gap-1 font-medium">
-              <span>查看详情</span>
+              <span>{t('dashboard.view_details')}</span>
               <ExternalLink className="w-3 h-3" />
             </div>
           </div>

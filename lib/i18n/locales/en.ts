@@ -91,6 +91,7 @@ export const en = {
     creations: 'My Creations',
     logout: 'Logout',
     view: 'View Case',
+    view_details: 'View Details',
     noData: 'No Data',
     loading: 'Loading...',
     welcome: 'Hello, User',

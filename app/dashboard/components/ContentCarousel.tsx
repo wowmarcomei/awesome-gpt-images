@@ -58,8 +58,8 @@ export function ContentCarousel({
     return () => window.removeEventListener('resize', handleResize)
   }, [])
   
-  // 计算总页数
-  const totalPages = Math.ceil(items.length / itemsPerPage)
+  // 计算总页数，对于滑动窗口模式，总页数等于项目数
+  const totalPages = items.length <= itemsPerPage ? 1 : items.length
 
   // 自动轮播
   useEffect(() => {
@@ -85,10 +85,25 @@ export function ContentCarousel({
     setCurrentPage((prev) => (prev + 1) % totalPages)
   }
 
-  // 获取当前页的卡片
+  // 获取当前页的卡片，使用滑动窗口模式
   const getCurrentPageItems = () => {
-    const startIndex = currentPage * itemsPerPage
-    return items.slice(startIndex, startIndex + itemsPerPage)
+    // 如果项目总数小于等于每页显示数量，直接返回所有项目
+    if (items.length <= itemsPerPage) {
+      return items
+    }
+    
+    // 使用滑动窗口模式，确保每次只滑动一个卡片
+    const startIndex = currentPage % items.length
+    let result = []
+    
+    // 从当前索引开始收集卡片
+    for (let i = 0; i < itemsPerPage; i++) {
+      // 使用模运算确保索引在有效范围内循环
+      const index = (startIndex + i) % items.length
+      result.push(items[index])
+    }
+    
+    return result
   }
   
   // 根据卡片数量动态计算高度
