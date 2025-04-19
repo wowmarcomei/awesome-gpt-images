@@ -34,21 +34,16 @@ export async function GET(request: Request) {
         .eq('type', 'FAVORITE')
         .order('created_at', { ascending: false })
 
-      // 将时间戳格式化为 ISO 格式
-      const formattedLikes = likesData?.map(item => ({
-        caseId: item.case_id,
-        createdAt: item.created_at
-      })) || [];
-
-      const formattedFavorites = favoritesData?.map(item => ({
-        caseId: item.case_id,
-        createdAt: item.created_at
-      })) || [];
-
+      // 返回原始格式，以保持兼容性
       return NextResponse.json({
-        likes: formattedLikes,
-        favorites: formattedFavorites,
-        timestamp: new Date().toISOString() // 添加当前时间戳供前端参考
+        likes: likesData?.map(item => item.case_id) || [],
+        favorites: favoritesData?.map(item => item.case_id) || [],
+        // 添加时间戳映射，便于前端使用
+        timestamps: {
+          ...Object.fromEntries((likesData || []).map(item => [item.case_id, item.created_at])),
+          ...Object.fromEntries((favoritesData || []).map(item => [item.case_id, item.created_at]))
+        },
+        timestamp: new Date().toISOString()
       })
     }
 

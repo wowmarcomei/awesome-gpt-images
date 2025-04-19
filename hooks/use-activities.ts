@@ -42,9 +42,10 @@ const processApiData = (data: any): Activity[] => {
   if (data.favorites && Array.isArray(data.favorites)) {
     const favoriteActivities = data.favorites
       .map((item: any) => {
-        const caseId = typeof item === 'string' ? item : item.caseId;
+        // 当前数据格式为字符串（case_id）
+        const caseId = item;
         // 使用数据库中的时间戳
-        const createdAt = item.createdAt || new Date().toISOString();
+        const createdAt = data.timestamps && data.timestamps[caseId] ? data.timestamps[caseId] : new Date().toISOString();
         
         const caseData = cases.find(c => c.id === caseId);
         if (!caseData) return null;
@@ -69,9 +70,10 @@ const processApiData = (data: any): Activity[] => {
   if (data.likes && Array.isArray(data.likes)) {
     const likeActivities = data.likes
       .map((item: any) => {
-        const caseId = typeof item === 'string' ? item : item.caseId;
+        // 当前数据格式为字符串（case_id）
+        const caseId = item;
         // 使用数据库中的时间戳
-        const createdAt = item.createdAt || new Date().toISOString();
+        const createdAt = data.timestamps && data.timestamps[caseId] ? data.timestamps[caseId] : new Date().toISOString();
         
         const caseData = cases.find(c => c.id === caseId);
         if (!caseData) return null;
@@ -126,7 +128,9 @@ export function useActivities(limit: number = 10) {
   // 处理 API 数据并更新本地状态
   useEffect(() => {
     if (data && !isLoading) {
+      console.log('调试: API 原始数据', data);
       const activities = processApiData(data);
+      console.log('调试: 处理后的活动数据', activities);
       setLocalActivities(activities.slice(0, limit));
     }
   }, [data, isLoading, limit]);
