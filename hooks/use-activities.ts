@@ -126,9 +126,7 @@ export function useActivities(limit: number = 10) {
   // 处理 API 数据并更新本地状态
   useEffect(() => {
     if (data && !isLoading) {
-      console.log('API 返回的原始数据:', data);
       const activities = processApiData(data);
-      console.log('处理后的活动数据:', activities);
       setLocalActivities(activities.slice(0, limit));
     }
   }, [data, isLoading, limit]);
