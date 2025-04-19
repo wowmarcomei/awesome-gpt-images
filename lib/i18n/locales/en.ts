@@ -18,6 +18,8 @@ export const en = {
     retry: 'Retry',
     no_items_found: 'No items found',
     no_items_description: 'No items found. Browse cases and add them to your favorites or likes.',
+    try_it: 'Try it myself',
+    under_development: 'Feature under development, stay tuned',
   },
   categories: {
     style: 'Style',
@@ -63,6 +65,7 @@ export const en = {
       title: 'Login Required',
       like_description: 'Login to like your favorite content',
       favorite_description: 'Login to bookmark content you\'re interested in',
+      try_description: 'Login to use this feature',
       cancel: 'Not Now',
       login: 'Login Now'
     },

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Image from 'next/image'
-import { Heart, Star, Eye, Bookmark, Heart as HeartIcon } from 'lucide-react'
+import { Heart, Star, Eye, Bookmark, Heart as HeartIcon, Sparkles } from 'lucide-react'
 import { useInView } from 'react-intersection-observer'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
@@ -57,6 +57,7 @@ export function CaseGrid({
   const [showPrompt, setShowPrompt] = useState<string | null>(null)
   const [showCopied, setShowCopied] = useState(false)
   const [activeToast, setActiveToast] = useState<{id: string, type: 'like' | 'favorite', isActive: boolean} | null>(null)
+  const [showDevelopmentModal, setShowDevelopmentModal] = useState(false)
   
   // 处理提示词复制
   const handleCopyPrompt = async (prompt: string) => {
@@ -94,14 +95,14 @@ export function CaseGrid({
           transition={{ duration: 0.3 }}
           className="group relative bg-background rounded-xl border border-border overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
         >
-          {/* 图片容器 */}
-          <div className="relative aspect-[4/3] overflow-hidden">
+          {/* 图片 */}
+          <div className="relative aspect-square overflow-hidden rounded-lg">
             <Image
               src={item.imageUrl}
-              alt={item.title}
+              alt={item.title || ''}
               fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover transition-all hover:scale-105"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
           </div>
 
@@ -153,7 +154,7 @@ export function CaseGrid({
             )}
             
             {/* 按钮与统计信息 */}
-            <div className="flex items-center justify-between mt-3">
+            <div className="flex items-center justify-between mt-3 mb-3">
               {/* 点赞与收藏按钮 */}
               <div className="flex space-x-2">
                 <motion.div whileTap={{ scale: 1.2 }} transition={{ type: "spring", stiffness: 400, damping: 10 }}>
@@ -257,6 +258,17 @@ export function CaseGrid({
                 </span>
               )}
             </div>
+            
+            {/* 我也试试按钮 */}
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full flex items-center justify-center gap-2 text-sm"
+              onClick={() => setShowDevelopmentModal(true)}
+            >
+              <Sparkles className="h-4 w-4" />
+              {t('common.try_it')}
+            </Button>
           </div>
         </motion.div>
       ))}
@@ -316,6 +328,43 @@ export function CaseGrid({
               <p className="text-muted-foreground whitespace-pre-wrap">
                 {showPrompt}
               </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      
+      {/* 开发中提示模态框 */}
+      <AnimatePresence>
+        {showDevelopmentModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setShowDevelopmentModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-background rounded-xl p-6 max-w-md w-full text-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex flex-col items-center gap-4">
+                <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Sparkles className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold text-foreground">
+                  {t('common.under_development')}
+                </h3>
+                <Button 
+                  variant="outline" 
+                  onClick={() => setShowDevelopmentModal(false)}
+                  className="mt-2"
+                >
+                  {t('common.back')}
+                </Button>
+              </div>
             </motion.div>
           </motion.div>
         )}

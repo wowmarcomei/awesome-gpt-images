@@ -9,7 +9,7 @@ import { LogIn } from 'lucide-react';
 interface AuthDialogProps {
   isOpen: boolean;
   onClose: () => void;
-  actionType: 'LIKE' | 'FAVORITE' | null;
+  actionType: 'LIKE' | 'FAVORITE' | 'TRY' | null;
 }
 
 export function AuthDialog({ isOpen, onClose, actionType }: AuthDialogProps) {
@@ -32,7 +32,9 @@ export function AuthDialog({ isOpen, onClose, actionType }: AuthDialogProps) {
           <DialogDescription className="text-gray-600 dark:text-gray-300">
             {actionType === 'LIKE' 
               ? t('auth.dialog.like_description')
-              : t('auth.dialog.favorite_description')}
+              : actionType === 'FAVORITE'
+                ? t('auth.dialog.favorite_description')
+                : t('auth.dialog.try_description')}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2">

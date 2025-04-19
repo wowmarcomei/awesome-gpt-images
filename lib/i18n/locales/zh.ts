@@ -18,6 +18,8 @@ export const zh = {
     retry: '重试',
     no_items_found: '暂无内容',
     no_items_description: '暂无内容，请浏览案例并添加到您的收藏或点赞',
+    try_it: '我也试试',
+    under_development: '功能开发中，敬请期待',
   },
   activity: {
     liked: '点赞了',
@@ -71,6 +73,7 @@ export const zh = {
       title: '登录提示',
       like_description: '登录后即可点赞喜欢的内容',
       favorite_description: '登录后即可将感兴趣的内容添加到书签',
+      try_description: '登录后即可使用该功能',
       cancel: '暂不登录',
       login: '立即登录'
     },

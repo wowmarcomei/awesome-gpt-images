@@ -11,7 +11,7 @@ import { FaExternalLinkAlt } from 'react-icons/fa';
 import Link from 'next/link';
 import { useCollections } from '@/hooks/use-collections';
 import { showLoginToast } from './ui/login-toast';
-import { HeartIcon, BookmarkIcon, EyeIcon } from 'lucide-react';
+import { HeartIcon, BookmarkIcon, EyeIcon, Sparkles } from 'lucide-react';
 import { Button } from './ui/button';
 import { cn } from '@/lib/utils';
 import { useRouter } from 'next/navigation';
@@ -35,7 +35,8 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
   const [showLikeToast, setShowLikeToast] = useState(false);
   const [showFavoriteToast, setShowFavoriteToast] = useState(false);
   const [showAuthDialog, setShowAuthDialog] = useState(false);
-  const [authAction, setAuthAction] = useState<'LIKE' | 'FAVORITE' | null>(null);
+  const [authAction, setAuthAction] = useState<'LIKE' | 'FAVORITE' | 'TRY' | null>(null);
+  const [showDevelopmentModal, setShowDevelopmentModal] = useState(false);
 
   // 确保 tags 存在且有当前语言的数据
   const currentTags = caseData.tags?.[currentLang] || [];
@@ -62,6 +63,17 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
     setShowFavoriteToast(true);
     await toggleCollection(caseData.id, 'FAVORITE');
     setTimeout(() => setShowFavoriteToast(false), 2000);
+  };
+
+  const handleTryIt = () => {
+    if (!user) {
+      // 用户未登录，显示登录提示
+      setAuthAction('TRY');
+      setShowAuthDialog(true);
+      return;
+    }
+    // 用户已登录，显示开发中提示
+    setShowDevelopmentModal(true);
   };
 
   const handleShowPrompt = async () => {
@@ -126,18 +138,19 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
             ))}
           </div>
 
-          <div className="mt-4 flex items-center gap-2">
-            <Button
-              variant="ghost"
-              size="icon"
-              className={cn(
-                "h-10 w-10 rounded-full transition-all duration-300",
-                "bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600",
-                "relative overflow-visible",
-                isLiked(caseData.id) && "bg-red-50 text-red-500 dark:bg-red-900/20 dark:text-red-400"
-              )}
-              onClick={handleLike}
-            >
+          <div className="mt-4 flex flex-col gap-3">
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                className={cn(
+                  "h-10 w-10 rounded-full transition-all duration-300",
+                  "bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600",
+                  "relative overflow-visible",
+                  isLiked(caseData.id) && "bg-red-50 text-red-500 dark:bg-red-900/20 dark:text-red-400"
+                )}
+                onClick={handleLike}
+              >
               <motion.div
                 whileTap={{ scale: 1.2 }}
                 transition={{ type: "spring", stiffness: 400, damping: 10 }}
@@ -232,6 +245,18 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
               <EyeIcon className="mr-2 h-4 w-4" />
               {t('common.getPrompt')}
             </Button>
+            </div>
+            
+            {/* 我也试试按钮 */}
+            <Button
+              variant="outline"
+              size="sm"
+              className="w-full flex items-center justify-center gap-2 text-sm"
+              onClick={handleTryIt}
+            >
+              <Sparkles className="h-4 w-4" />
+              {t('common.try_it')}
+            </Button>
           </div>
         </div>
       </div>
@@ -285,6 +310,43 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
         }}
         actionType={authAction}
       />
+      
+      {/* 开发中提示模态框 */}
+      <AnimatePresence>
+        {showDevelopmentModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+            onClick={() => setShowDevelopmentModal(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full text-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex flex-col items-center gap-4">
+                <div className="h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center">
+                  <Sparkles className="h-8 w-8 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+                  {t('common.under_development')}
+                </h3>
+                <Button 
+                  variant="outline" 
+                  onClick={() => setShowDevelopmentModal(false)}
+                  className="mt-2 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                >
+                  {t('common.back')}
+                </Button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 } 
