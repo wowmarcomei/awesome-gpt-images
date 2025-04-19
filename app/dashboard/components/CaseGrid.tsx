@@ -56,7 +56,7 @@ export function CaseGrid({
 
   const [showPrompt, setShowPrompt] = useState<string | null>(null)
   const [showCopied, setShowCopied] = useState(false)
-  const [activeToast, setActiveToast] = useState<{id: string, type: 'like' | 'favorite'} | null>(null)
+  const [activeToast, setActiveToast] = useState<{id: string, type: 'like' | 'favorite', isActive: boolean} | null>(null)
   
   // 处理提示词复制
   const handleCopyPrompt = async (prompt: string) => {
@@ -70,9 +70,9 @@ export function CaseGrid({
   }
   
   // 处理点赞/收藏后的提示
-  const handleAction = (id: string, type: 'like' | 'favorite', callback: (id: string) => void) => {
+  const handleAction = (id: string, type: 'like' | 'favorite', callback: (id: string) => void, currentStatus: boolean) => {
     callback(id)
-    setActiveToast({id, type})
+    setActiveToast({id, type, isActive: !currentStatus})
     setTimeout(() => setActiveToast(null), 2000)
   }
 
@@ -95,73 +95,6 @@ export function CaseGrid({
               className="object-cover transition-transform duration-500 group-hover:scale-105"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
-            
-            {/* 漂浮按钮容器 */}
-            <div className="absolute top-2 right-2 flex space-x-1">
-              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                <Button
-                  variant="secondary"
-                  size="icon"
-                  className={cn(
-                    'h-8 w-8 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background shadow-sm',
-                    item.isLiked ? 'text-pink-500 dark:text-pink-400 hover:text-pink-600 dark:hover:text-pink-300' : 'text-muted-foreground hover:text-foreground'
-                  )}
-                  onClick={() => handleAction(item.id, 'like', onLike)}
-                >
-                  <Heart className={cn('h-4 w-4', item.isLiked && 'fill-current')} />
-                  <AnimatePresence>
-                    {activeToast?.id === item.id && activeToast?.type === 'like' && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, y: -40, scale: 1 }}
-                        exit={{ opacity: 0, y: -20, scale: 0.9 }}
-                        transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                        className="absolute top-0 left-1/2 -translate-x-1/2 z-50 px-3 py-1.5 rounded-full text-sm
-                          bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm shadow-lg border border-gray-200 dark:border-gray-700
-                          flex items-center gap-1.5"
-                      >
-                        <span className="text-base">{item.isLiked ? '❤️' : '🤍'}</span>
-                        <span className="text-gray-700 dark:text-gray-300">
-                          {item.isLiked ? '已点赞' : '已取消点赞'}
-                        </span>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </Button>
-              </motion.div>
-              
-              <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
-                <Button
-                  variant="secondary"
-                  size="icon"
-                  className={cn(
-                    'h-8 w-8 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background shadow-sm',
-                    item.isFavorited ? 'text-yellow-500 dark:text-yellow-400 hover:text-yellow-600 dark:hover:text-yellow-300' : 'text-muted-foreground hover:text-foreground'
-                  )}
-                  onClick={() => handleAction(item.id, 'favorite', onFavorite)}
-                >
-                  <Star className={cn('h-4 w-4', item.isFavorited && 'fill-current')} />
-                  <AnimatePresence>
-                    {activeToast?.id === item.id && activeToast?.type === 'favorite' && (
-                      <motion.div
-                        initial={{ opacity: 0, y: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, y: -40, scale: 1 }}
-                        exit={{ opacity: 0, y: -20, scale: 0.9 }}
-                        transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                        className="absolute top-0 left-1/2 -translate-x-1/2 z-50 px-3 py-1.5 rounded-full text-sm
-                          bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm shadow-lg border border-gray-200 dark:border-gray-700
-                          flex items-center gap-1.5"
-                      >
-                        <span className="text-base">{item.isFavorited ? '⭐️' : '☆'}</span>
-                        <span className="text-gray-700 dark:text-gray-300">
-                          {item.isFavorited ? '已收藏' : '已取消收藏'}
-                        </span>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </Button>
-              </motion.div>
-            </div>
           </div>
 
           {/* 卡片信息 */}
@@ -207,44 +140,6 @@ export function CaseGrid({
                   <pre className="text-xs text-muted-foreground whitespace-pre-wrap line-clamp-3 font-mono">
                     {item.prompt}
                   </pre>
-                  
-                  <div className="absolute top-2 right-2 flex space-x-1">
-                    <motion.div 
-                      whileHover={{ scale: 1.1 }} 
-                      whileTap={{ scale: 0.9 }}
-                      className="relative"
-                    >
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="h-6 w-6 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background shadow-sm text-muted-foreground hover:text-foreground"
-                        onClick={() => {
-                          navigator.clipboard.writeText(item.prompt || '');
-                          setActiveToast({id: item.id, type: 'like'});
-                          setTimeout(() => setActiveToast(null), 2000);
-                        }}
-                      >
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5">
-                          <path fillRule="evenodd" d="M13.887 3.182c.396.037.79.08 1.183.128C16.194 3.45 17 4.414 17 5.517V16.75A2.25 2.25 0 0114.75 19h-9.5A2.25 2.25 0 013 16.75V5.517c0-1.103.806-2.068 1.93-2.207.393-.048.787-.09 1.183-.128A3.001 3.001 0 019 1h2c1.373 0 2.531.923 2.887 2.182zM7.5 4A1.5 1.5 0 019 2.5h2A1.5 1.5 0 0112.5 4v.5h-5V4z" clipRule="evenodd" />
-                        </svg>
-                        <AnimatePresence>
-                          {activeToast?.id === item.id && activeToast?.type === 'like' && (
-                            <motion.div
-                              initial={{ opacity: 0, y: 0, scale: 0.9 }}
-                              animate={{ opacity: 1, y: -40, scale: 1 }}
-                              exit={{ opacity: 0, y: -20, scale: 0.9 }}
-                              transition={{ type: "spring", stiffness: 300, damping: 25 }}
-                              className="absolute top-0 left-1/2 -translate-x-1/2 z-50 px-3 py-1.5 rounded-full text-xs
-                                bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm shadow-lg border border-gray-200 dark:border-gray-700
-                                flex items-center gap-1.5 whitespace-nowrap"
-                            >
-                              <span className="text-green-500 dark:text-green-400">✓ 已复制</span>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </Button>
-                    </motion.div>
-                  </div>
                 </div>
                 
                 <motion.div 
@@ -265,20 +160,76 @@ export function CaseGrid({
               </div>
             )}
             
-            {/* 统计信息 */}
-            <div className="flex items-center justify-between mt-2">
-              <div className="flex items-center text-sm text-muted-foreground space-x-4">
-                <div className="flex items-center">
-                  <Heart className="w-3.5 h-3.5 mr-1.5" />
-                  <span>{item.likes || 0}</span>
-                </div>
+            {/* 按钮与统计信息 */}
+            <div className="flex items-center justify-between mt-3">
+              {/* 点赞与收藏按钮 */}
+              <div className="flex space-x-2">
+                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                  <Button
+                    variant="secondary"
+                    size="icon"
+                    className={cn(
+                      'h-8 w-8 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background shadow-sm',
+                      item.isLiked ? 'text-pink-500 dark:text-pink-400 hover:text-pink-600 dark:hover:text-pink-300' : 'text-muted-foreground hover:text-foreground'
+                    )}
+                    onClick={() => handleAction(item.id, 'like', onLike, item.isLiked)}
+                  >
+                    <Heart className={cn('h-4 w-4', item.isLiked && 'fill-current')} />
+                    <AnimatePresence>
+                      {activeToast?.id === item.id && activeToast?.type === 'like' && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 0, scale: 0.9 }}
+                          animate={{ opacity: 1, y: -40, scale: 1 }}
+                          exit={{ opacity: 0, y: -20, scale: 0.9 }}
+                          transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                          className="absolute top-0 left-1/2 -translate-x-1/2 z-50 px-3 py-1.5 rounded-full text-sm
+                            bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm shadow-lg border border-gray-200 dark:border-gray-700
+                            flex items-center gap-1.5"
+                        >
+                          <span className="text-base">{activeToast?.isActive ? '❤️' : '🤍'}</span>
+                          <span className="text-gray-700 dark:text-gray-300">
+                            {activeToast?.isActive ? '已点赞' : '已取消点赞'}
+                          </span>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </Button>
+                </motion.div>
                 
-                <div className="flex items-center">
-                  <Star className="w-3.5 h-3.5 mr-1.5" />
-                  <span>{item.favorites || 0}</span>
-                </div>
+                <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                  <Button
+                    variant="secondary"
+                    size="icon"
+                    className={cn(
+                      'h-8 w-8 rounded-full bg-background/80 backdrop-blur-sm hover:bg-background shadow-sm',
+                      item.isFavorited ? 'text-yellow-500 dark:text-yellow-400 hover:text-yellow-600 dark:hover:text-yellow-300' : 'text-muted-foreground hover:text-foreground'
+                    )}
+                    onClick={() => handleAction(item.id, 'favorite', onFavorite, item.isFavorited)}
+                  >
+                    <Star className={cn('h-4 w-4', item.isFavorited && 'fill-current')} />
+                    <AnimatePresence>
+                      {activeToast?.id === item.id && activeToast?.type === 'favorite' && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 0, scale: 0.9 }}
+                          animate={{ opacity: 1, y: -40, scale: 1 }}
+                          exit={{ opacity: 0, y: -20, scale: 0.9 }}
+                          transition={{ type: "spring", stiffness: 300, damping: 25 }}
+                          className="absolute top-0 left-1/2 -translate-x-1/2 z-50 px-3 py-1.5 rounded-full text-sm
+                            bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm shadow-lg border border-gray-200 dark:border-gray-700
+                            flex items-center gap-1.5"
+                        >
+                          <span className="text-base">{activeToast?.isActive ? '⭐️' : '☆'}</span>
+                          <span className="text-gray-700 dark:text-gray-300">
+                            {activeToast?.isActive ? '已收藏' : '已取消收藏'}
+                          </span>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </Button>
+                </motion.div>
               </div>
               
+              {/* 创建时间 */}
               {item.createdAt && (
                 <span className="text-xs text-muted-foreground">
                   {new Date(item.createdAt).toLocaleDateString()}
