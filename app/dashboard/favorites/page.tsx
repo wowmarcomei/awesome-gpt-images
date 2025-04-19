@@ -26,7 +26,7 @@ export default function FavoritesPage() {
       <div className="flex flex-col items-center justify-center space-y-4 py-12">
         <h1 className="text-2xl font-bold">{t('auth.login_required')}</h1>
         <p className="text-muted-foreground">{t('auth.dialog.favorite_description')}</p>
-        <Button onClick={() => router.push('/auth/login')}>
+        <Button onClick={() => router.push('/auth')}>
           {t('auth.login')}
         </Button>
       </div>

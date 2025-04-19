@@ -57,7 +57,7 @@ export default function ForgotPasswordPage() {
         </CardContent>
         <CardFooter className="flex justify-center">
           <Link
-            href="/auth/login"
+            href="/auth"
             className="text-sm text-gray-500 dark:text-gray-400 hover:underline"
           >
             返回登录
