@@ -23,14 +23,14 @@ export default function DashboardLayout({
             <div className="w-72" /> {/* 占位，宽度与新 Sidebar 一致 */}
           </div>
           
-          {/* 移动端侧边栏 */}
-          <div className="lg:hidden">
+          {/* 移动端侧边栏 - 放在外层以避免布局问题 */}
+          <div className="lg:hidden fixed top-0 left-0 z-[100]">
             <Sidebar />
           </div>
           
           {/* 主内容区 */}
-          <main className="flex-1 min-h-screen">
-            <div className="px-4 py-8 md:px-8 md:py-12 max-w-6xl mx-auto">
+          <main className="flex-1 min-h-screen w-full">
+            <div className="px-4 pt-16 pb-8 md:px-8 md:pt-12 md:pb-12 max-w-6xl mx-auto">
               <div className="grid gap-8">
                 {children}
               </div>

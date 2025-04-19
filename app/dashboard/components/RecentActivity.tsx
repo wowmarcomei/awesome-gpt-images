@@ -163,10 +163,10 @@ export function RecentActivity() {
       <CardHeader className="px-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
-              <History className="w-5 h-5 text-primary" />
+            <div className="h-10 w-10 rounded-xl bg-primary/10 dark:bg-blue-900/30 flex items-center justify-center">
+              <History className="w-5 h-5 text-primary dark:text-blue-300" />
             </div>
-            <CardTitle>{t('dashboard.recent_activity')}</CardTitle>
+            <CardTitle className="dark:text-white">{t('dashboard.recent_activity')}</CardTitle>
           </div>
           <Button variant="ghost" size="icon" className="h-8 w-8">
             <MoreHorizontal className="h-4 w-4" />
@@ -193,16 +193,16 @@ export function RecentActivity() {
                 
                 {/* 活动内容 */}
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium">{activity.content}</p>
+                  <p className="text-sm font-medium dark:text-white">{activity.content}</p>
                   {activity.meta?.comment && (
-                    <p className="text-xs text-muted-foreground mt-1 italic">
+                    <p className="text-xs text-muted-foreground dark:text-gray-300 mt-1 italic">
                       "{activity.meta.comment}"
                     </p>
                   )}
                 </div>
                 
                 {/* 活动时间 */}
-                <div className="text-xs text-muted-foreground whitespace-nowrap">
+                <div className="text-xs text-muted-foreground dark:text-gray-300 whitespace-nowrap">
                   {formatTime(activity.timestamp)}
                 </div>
               </motion.div>

@@ -83,10 +83,12 @@ export const en = {
   dashboard: {
     favorites: 'My Favorites',
     likes: 'My Likes',
+    creations: 'My Creations',
     logout: 'Logout',
-    title: 'Dashboard',
-    noData: 'No data available',
+    view: 'View',
+    noData: 'No Data',
     loading: 'Loading...',
+    welcome: 'Hello, User',
     welcome_back: 'Welcome Back',
     recent_activity: 'Recent Activity',
     no_activity: 'No recent activity',
@@ -96,7 +98,12 @@ export const en = {
     switchLanguage: 'Switch Language',
     toEnglish: 'Switch to English',
     toChinese: 'Switch to Chinese',
-    darkMode: 'Switch to Dark Mode',
-    lightMode: 'Switch to Light Mode'
+    darkMode: 'Switch Theme',
+    lightMode: 'Switch Theme',
+    view_all: 'View All',
+    total_items: 'Total Items',
+    no_favorites: 'No favorites yet',
+    no_likes: 'No likes yet',
+    no_activity_title: 'No Activity'
   },
 }; 
