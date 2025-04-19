@@ -10,6 +10,7 @@ import { ContentItem } from './components/ContentCard'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
 import { cases } from '@/lib/data'
+import { ChevronLeft } from 'lucide-react'
 
 export default function DashboardPage() {
   const { t, currentLang } = useI18n()
@@ -99,6 +100,19 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-8">
+      {/* 面包屑导航 */}
+      <div className="mb-6">
+        <Button 
+          variant="ghost" 
+          size="sm" 
+          className="w-fit flex items-center text-muted-foreground hover:text-foreground -ml-2"
+          onClick={() => router.push('/')}
+        >
+          <ChevronLeft className="h-4 w-4 mr-1" />
+          {t('common.back')}
+        </Button>
+      </div>
+      
       {/* 我的收藏区域 - 轮播图形式 */}
       <ContentCarousel
         title={t('dashboard.favorites')}
