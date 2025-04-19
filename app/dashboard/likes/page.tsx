@@ -53,7 +53,14 @@ export default function LikesPage() {
         likes: 0, // 暂无真实数据
         favorites: 0, // 暂无真实数据
         isLiked: true,
-        isFavorited: isFavorited(caseData.id)
+        isFavorited: isFavorited(caseData.id),
+        author: {
+          name: caseData.author.name,
+          twitter: caseData.author.twitter
+        },
+        prompt: currentLang === 'zh' ? caseData.prompt.zh : caseData.prompt.en,
+        originalLink: caseData.originalLink,
+        createdAt: new Date().toISOString() // 暂时使用当前时间
       }
     })
     .filter(Boolean)
