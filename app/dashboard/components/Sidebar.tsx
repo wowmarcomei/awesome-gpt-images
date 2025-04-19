@@ -1,6 +1,6 @@
 'use client'
 
-import { Heart, Star, LogOut, Menu } from 'lucide-react'
+import { Heart, Star, LogOut, Menu, User, Moon, Sun, Home, Compass, Globe } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/lib/utils'
@@ -8,13 +8,15 @@ import { Button } from '@/components/ui/button'
 import { useI18n } from '@/lib/i18n/context'
 import { useAuth } from '@/hooks/use-auth'
 import { useSidebar } from '@/hooks/use-sidebar'
+import { useTheme } from 'next-themes'
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet'
 
 export function Sidebar() {
   const pathname = usePathname()
-  const { t } = useI18n()
+  const { t, locale, setLanguage } = useI18n()
   const { signOut } = useAuth()
   const sidebar = useSidebar()
+  const { theme, setTheme } = useTheme()
 
   const navigation = [
     {
@@ -32,40 +34,158 @@ export function Sidebar() {
   ]
 
   const SidebarContent = () => (
-    <div className="flex flex-col h-full bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      {/* 导航菜单 */}
-      <nav className="flex-1 p-4 space-y-2 overflow-y-auto">
-        {navigation.map((item) => (
+    <div className="flex flex-col h-full">
+      <div className="sticky top-4 bg-white dark:bg-gray-700 rounded-xl shadow-lg p-4 border border-gray-100 dark:border-gray-600">
+        <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white flex items-center gap-2">
+          <img src="/logo2.png" alt="Logo" className="w-6 h-6 object-contain" />
+          {t('dashboard.navigation')}
+        </h2>
+        
+        <div className="space-y-1.5">
+          {/* 我的主页链接 */}
           <Link
-            key={item.name}
-            href={item.href}
-            onClick={() => sidebar.onClose()} // 移动端点击导航后关闭侧边栏
-            className={cn(
-              'flex items-center px-4 py-2 text-sm font-medium rounded-md',
-              item.current
-                ? 'bg-gray-200 dark:bg-gray-800 text-gray-900 dark:text-gray-100'
-                : 'text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800'
-            )}
+            href="/dashboard"
+            onClick={() => sidebar.onClose()}
+            className={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm transition-all duration-200 ${
+              pathname === '/dashboard'
+                ? 'bg-blue-500 text-white shadow-md'
+                : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600/70'
+            }`}
           >
-            <item.icon className="w-5 h-5 mr-3" />
-            {item.name}
+            <div className="flex items-center gap-3">
+              <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
+                pathname === '/dashboard'
+                  ? 'bg-blue-400'
+                  : 'bg-blue-50 dark:bg-gray-600'
+              }`}>
+                <Home className={`${
+                  pathname === '/dashboard'
+                    ? 'text-white'
+                    : 'text-blue-500 dark:text-blue-300'
+                }`} />
+              </div>
+              <span className="font-medium">{t('dashboard.profile')}</span>
+            </div>
           </Link>
-        ))}
-      </nav>
-
-      {/* 底部退出按钮 */}
-      <div className="p-4 border-t border-gray-200 dark:border-gray-800">
-        <Button
-          variant="ghost"
-          className="w-full justify-start"
-          onClick={() => {
-            signOut()
-            sidebar.onClose()
-          }}
-        >
-          <LogOut className="w-5 h-5 mr-3" />
-          {t('dashboard.logout')}
-        </Button>
+          
+          {/* 收藏夹链接 */}
+          <Link
+            href="/dashboard/favorites"
+            onClick={() => sidebar.onClose()}
+            className={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm transition-all duration-200 ${
+              pathname === '/dashboard/favorites'
+                ? 'bg-blue-500 text-white shadow-md'
+                : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600/70'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
+                pathname === '/dashboard/favorites'
+                  ? 'bg-blue-400'
+                  : 'bg-blue-50 dark:bg-gray-600'
+              }`}>
+                <Star className={`${
+                  pathname === '/dashboard/favorites'
+                    ? 'text-white'
+                    : 'text-blue-500 dark:text-blue-300'
+                }`} />
+              </div>
+              <span className="font-medium">{t('dashboard.favorites')}</span>
+            </div>
+          </Link>
+          
+          {/* 点赞链接 */}
+          <Link
+            href="/dashboard/likes"
+            onClick={() => sidebar.onClose()}
+            className={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm transition-all duration-200 ${
+              pathname === '/dashboard/likes'
+                ? 'bg-blue-500 text-white shadow-md'
+                : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600/70'
+            }`}
+          >
+            <div className="flex items-center gap-3">
+              <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
+                pathname === '/dashboard/likes'
+                  ? 'bg-blue-400'
+                  : 'bg-blue-50 dark:bg-gray-600'
+              }`}>
+                <Heart className={`${
+                  pathname === '/dashboard/likes'
+                    ? 'text-white'
+                    : 'text-blue-500 dark:text-blue-300'
+                }`} />
+              </div>
+              <span className="font-medium">{t('dashboard.likes')}</span>
+            </div>
+          </Link>
+          
+          {/* 探索更多链接 */}
+          <Link
+            href="/"
+            onClick={() => sidebar.onClose()}
+            className="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm transition-all duration-200 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600/70 mt-4"
+          >
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-50 dark:bg-gray-600">
+                <Compass className="text-blue-500 dark:text-blue-300" />
+              </div>
+              <span className="font-medium">{t('dashboard.explore')}</span>
+            </div>
+          </Link>
+          
+          {/* 语言切换按钮 */}
+          <button
+            onClick={() => {
+              setLanguage(locale === 'zh' ? 'en' : 'zh')
+              sidebar.onClose()
+            }}
+            className="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm transition-all duration-200 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600/70 mt-4"
+          >
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-50 dark:bg-gray-600">
+                <Globe className="text-blue-500 dark:text-blue-300" />
+              </div>
+              <span className="font-medium">{locale === 'zh' ? t('dashboard.toEnglish') : t('dashboard.toChinese')}</span>
+            </div>
+          </button>
+          
+          {/* 主题切换按钮 */}
+          <button
+            onClick={() => {
+              setTheme(theme === 'dark' ? 'light' : 'dark')
+              sidebar.onClose()
+            }}
+            className="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm transition-all duration-200 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600/70 mt-4"
+          >
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-50 dark:bg-gray-600">
+                {theme === 'dark' ? (
+                  <Sun className="text-blue-500 dark:text-blue-300" />
+                ) : (
+                  <Moon className="text-blue-500 dark:text-blue-300" />
+                )}
+              </div>
+              <span className="font-medium">{theme === 'dark' ? t('dashboard.lightMode') : t('dashboard.darkMode')}</span>
+            </div>
+          </button>
+          
+          {/* 退出按钮 */}
+          <button
+            onClick={() => {
+              signOut()
+              sidebar.onClose()
+            }}
+            className="w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm transition-all duration-200 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600/70 mt-4"
+          >
+            <div className="flex items-center gap-3">
+              <div className="flex items-center justify-center w-8 h-8 rounded-full bg-blue-50 dark:bg-gray-600">
+                <LogOut className="text-blue-500 dark:text-blue-300" />
+              </div>
+              <span className="font-medium">{t('dashboard.logout')}</span>
+            </div>
+          </button>
+        </div>
       </div>
     </div>
   )
@@ -87,7 +207,7 @@ export function Sidebar() {
       </div>
 
       {/* 桌面端侧边栏 */}
-      <div className="hidden lg:block h-full">
+      <div className="hidden lg:block h-full w-72">
         <SidebarContent />
       </div>
     </>

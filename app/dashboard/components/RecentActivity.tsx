@@ -93,7 +93,7 @@ export function RecentActivity() {
 
   if (loading) {
     return (
-      <Card className="border border-slate-100 dark:border-slate-800 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-300">
+      <Card className="border border-gray-100 dark:border-gray-600 bg-white dark:bg-gray-700 shadow-md hover:shadow-lg transition-all duration-300">
         <CardHeader className="px-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
@@ -127,7 +127,7 @@ export function RecentActivity() {
 
   if (!activities.length) {
     return (
-      <Card className="border border-slate-100 dark:border-slate-800 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-300">
+      <Card className="border border-gray-100 dark:border-gray-600 bg-white dark:bg-gray-700 shadow-md hover:shadow-lg transition-all duration-300">
         <CardHeader className="px-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
@@ -159,7 +159,7 @@ export function RecentActivity() {
   }
 
   return (
-    <Card className="border border-slate-100 dark:border-slate-800 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-300">
+    <Card className="border border-gray-100 dark:border-gray-600 bg-white dark:bg-gray-700 shadow-md hover:shadow-lg transition-all duration-300">
       <CardHeader className="px-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">

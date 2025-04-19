@@ -72,7 +72,7 @@ export function StatsCard() {
   ]
 
   return (
-    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-2">
+    <div className="grid gap-6 grid-cols-1 md:grid-cols-2 w-full">
       {statItems.map((item, index) => (
         <motion.div
           key={item.name}
@@ -80,7 +80,7 @@ export function StatsCard() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: index * 0.1 }}
         >
-          <Card className="group overflow-hidden border border-slate-100 dark:border-slate-800 bg-white dark:bg-gray-800 shadow-sm hover:shadow-md transition-all duration-300 h-full">
+          <Card className="h-full overflow-hidden border border-gray-100 dark:border-gray-600 bg-white dark:bg-gray-700 shadow-md">
             <CardContent className="p-6">
               <div className="relative h-full">
                 {/* 背景装饰 */}

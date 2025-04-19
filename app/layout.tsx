@@ -4,12 +4,13 @@ import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from 'next-themes';
 import { cn } from '../lib/utils';
-import { Navbar } from '../components/Navbar';
-import { ScrollButton } from '../components/ScrollButton';
 import { I18nProvider } from '../lib/i18n/context';
 import { LanguageAwareLayout } from '../components/LanguageAwareLayout';
 import { AuthProvider } from '../lib/auth/context';
 import { Toaster } from 'sonner';
+import { Navbar } from '../components/Navbar';
+import { ScrollButton } from '../components/ScrollButton';
+import { usePathname } from 'next/navigation';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -163,6 +164,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { LayoutContentWrapper } from '../components/LayoutContentWrapper';
+
 export default function RootLayout({
   children,
 }: {
@@ -180,11 +183,9 @@ export default function RootLayout({
           <AuthProvider>
             <I18nProvider>
               <LanguageAwareLayout>
-                <Navbar />
-                <div className="pt-12">
+                <LayoutContentWrapper>
                   {children}
-                </div>
-                <ScrollButton />
+                </LayoutContentWrapper>
                 <Analytics debug={process.env.NODE_ENV === 'development'} />
               </LanguageAwareLayout>
             </I18nProvider>

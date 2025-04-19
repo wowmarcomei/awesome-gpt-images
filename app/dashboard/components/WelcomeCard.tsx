@@ -28,7 +28,7 @@ export function WelcomeCard() {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
     >
-      <Card className="overflow-hidden border-0 bg-gradient-to-br from-primary/10 via-background to-background">
+      <Card className="overflow-hidden border border-gray-100 dark:border-gray-600 bg-white dark:bg-gray-700 shadow-md">
         <CardContent className="p-8 relative">
           {/* 装饰性元素 */}
           <div className="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />

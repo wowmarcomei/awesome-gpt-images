@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import CaseCard from '../components/CaseCard';
-import { cases, authors } from '../lib/data';
+import { cases } from '../lib/data';
 import { CategoryFilter } from '../components/CategoryFilter';
 import { categories } from '../lib/categories';
 import { FaGithub, FaShareAlt } from 'react-icons/fa';

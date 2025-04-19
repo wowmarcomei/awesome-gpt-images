@@ -89,6 +89,14 @@ export const en = {
     loading: 'Loading...',
     welcome_back: 'Welcome Back',
     recent_activity: 'Recent Activity',
-    no_activity: 'No recent activity'
+    no_activity: 'No recent activity',
+    navigation: 'Awesome GPT-4 Images ✨',
+    profile: 'My Homepage',
+    explore: 'Explore More',
+    switchLanguage: 'Switch Language',
+    toEnglish: 'Switch to English',
+    toChinese: 'Switch to Chinese',
+    darkMode: 'Switch to Dark Mode',
+    lightMode: 'Switch to Light Mode'
   },
 }; 

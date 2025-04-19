@@ -89,6 +89,14 @@ export const zh = {
     loading: '加载中...',
     welcome_back: '欢迎回来',
     recent_activity: '最近活动',
-    no_activity: '暂无活动记录'
+    no_activity: '暂无活动记录',
+    navigation: 'Awesome GPT-4 Images ✨',
+    profile: '我的主页',
+    explore: '探索更多',
+    switchLanguage: '切换语言',
+    toEnglish: '切换到英文',
+    toChinese: '切换到中文',
+    darkMode: '切换到深色模式',
+    lightMode: '切换到浅色模式'
   },
 }; 
