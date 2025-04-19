@@ -25,8 +25,8 @@ export function CollectionLayout({
   const pathname = usePathname()
   
   // 确定当前活动的标签
-  const activeTab = pathname.includes('/favorites') 
-    ? 'favorites' 
+  const activeTab = pathname.includes('/bookmark') 
+    ? 'bookmark' 
     : pathname.includes('/likes') 
       ? 'likes' 
       : 'dashboard'
@@ -56,8 +56,8 @@ export function CollectionLayout({
       {/* 标签切换 */}
       {showTabs && (
         <Tabs defaultValue={activeTab} className="w-full" onValueChange={(value) => {
-          if (value === 'favorites') {
-            router.push('/dashboard/favorites')
+          if (value === 'bookmark') {
+            router.push('/dashboard/bookmark')
           } else if (value === 'likes') {
             router.push('/dashboard/likes')
           }
@@ -65,13 +65,13 @@ export function CollectionLayout({
           <div className="my-6">
             <TabsList className="w-full max-w-sm bg-background/5 backdrop-blur-sm rounded-full p-1.5 border border-border/30 shadow-sm">
               <TabsTrigger 
-                value="favorites" 
+                value="bookmark" 
                 className="flex-1 flex items-center justify-center gap-2 rounded-full py-2 text-sm font-medium transition-all
                 data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:bg-background/50 data-[state=inactive]:hover:text-foreground
                 data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-md data-[state=active]:border data-[state=active]:border-primary/20"
               >
                 <Bookmark className="h-4 w-4" />
-                <span>{t('dashboard.favorites')}</span>
+                <span>{t('dashboard.bookmark')}</span>
               </TabsTrigger>
               <TabsTrigger 
                 value="likes" 

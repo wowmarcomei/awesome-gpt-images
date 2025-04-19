@@ -113,10 +113,10 @@ export default function DashboardPage() {
         </Button>
       </div>
       
-      {/* 我的收藏区域 - 轮播图形式 */}
+      {/* 我的书签区域 - 轮播图形式 */}
       <ContentCarousel
-        title={t('dashboard.favorites')}
-        viewAllLink="/dashboard/favorites"
+        title={t('dashboard.bookmark')}
+        viewAllLink="/dashboard/bookmark"
         items={getFavoriteItems()}
         loading={loading}
         onToggleLike={handleToggleLike}

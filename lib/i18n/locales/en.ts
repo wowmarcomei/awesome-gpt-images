@@ -62,7 +62,7 @@ export const en = {
     dialog: {
       title: 'Login Required',
       like_description: 'Login to like your favorite content',
-      favorite_description: 'Login to save content you\'re interested in',
+      favorite_description: 'Login to bookmark content you\'re interested in',
       cancel: 'Not Now',
       login: 'Login Now'
     },
@@ -90,8 +90,8 @@ export const en = {
     original: 'Original',
   },
   dashboard: {
-    favorites: 'My Favorites',
-    favorites_description: 'All cases you have favorited for easy reference',
+    bookmark: 'My Bookmarks',
+    bookmark_description: 'All cases you have bookmarked for easy reference',
     likes: 'My Likes',
     likes_description: 'All cases you have liked to remember creative ideas',
     creations: 'My Creations',
@@ -115,14 +115,14 @@ export const en = {
     lightMode: 'Switch Theme',
     view_all: 'View All',
     total_items: 'Total Items',
-    no_favorites: 'No favorites yet',
+    no_bookmark: 'No bookmarks yet',
     no_likes: 'No likes yet'
   },
   activity: {
     liked: 'liked',
-    favorited: 'favorited',
+    bookmarked: 'bookmarked',
     unliked: 'unliked',
-    unfavorited: 'unfavorited',
+    unbookmarked: 'removed bookmark',
     interacted: 'interacted with case',
     unknown: 'unknown activity'
   },

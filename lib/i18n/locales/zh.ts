@@ -21,9 +21,9 @@ export const zh = {
   },
   activity: {
     liked: '点赞了',
-    favorited: '收藏了',
+    bookmarked: '添加了书签',
     unliked: '取消了点赞',
-    unfavorited: '取消了收藏',
+    unbookmarked: '取消了书签',
     interacted: '与案例互动',
     unknown: '未知活动'
   },
@@ -70,7 +70,7 @@ export const zh = {
     dialog: {
       title: '登录提示',
       like_description: '登录后即可点赞喜欢的内容',
-      favorite_description: '登录后即可收藏感兴趣的内容',
+      favorite_description: '登录后即可将感兴趣的内容添加到书签',
       cancel: '暂不登录',
       login: '立即登录'
     },
@@ -100,8 +100,8 @@ export const zh = {
   dashboard: {
     welcome: '你好，用户',
     welcome_back: '欢迎回来',
-    favorites: '我的收藏',
-    favorites_description: '您收藏的所有案例，方便您随时查看和参考',
+    bookmark: '我的书签',
+    bookmark_description: '您加入书签的所有案例，方便您随时查看和参考',
     likes: '我的点赞',
     likes_description: '您点赞过的所有案例，记录您喜欢的创意',
     creations: '我的创造',
@@ -124,7 +124,7 @@ export const zh = {
     darkMode: '切换主题',
     lightMode: '切换主题',
     total_items: '总项目数',
-    no_favorites: '还没有收藏的内容',
+    no_bookmark: '还没有添加书签的内容',
     no_likes: '还没有点赞的内容'
   },
 }; 

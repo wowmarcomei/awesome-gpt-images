@@ -187,7 +187,7 @@ export function CaseGrid({
                         >
                           <span className="text-base">{activeToast?.isActive ? '❤️' : '🤍'}</span>
                           <span className="text-gray-700 dark:text-gray-300">
-                            {activeToast?.isActive ? '已点赞' : '已取消点赞'}
+                            {activeToast?.isActive ? t('activity.liked') : t('activity.unliked')}
                           </span>
                         </motion.div>
                       )}
@@ -224,9 +224,9 @@ export function CaseGrid({
                             bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm shadow-lg border border-gray-200 dark:border-gray-700
                             flex items-center gap-1.5"
                         >
-                          <span className="text-base">{activeToast?.isActive ? '⭐️' : '☆'}</span>
+                          <span className="text-base">{activeToast?.isActive ? '📚' : '☆'}</span>
                           <span className="text-gray-700 dark:text-gray-300">
-                            {activeToast?.isActive ? '已收藏' : '已取消收藏'}
+                            {activeToast?.isActive ? t('activity.bookmarked') : t('activity.unbookmarked')}
                           </span>
                         </motion.div>
                       )}

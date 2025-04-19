@@ -20,10 +20,10 @@ export function Sidebar() {
 
   const navigation = [
     {
-      name: t('dashboard.favorites'),
-      href: '/dashboard/favorites',
+      name: t('dashboard.bookmark'),
+      href: '/dashboard/bookmark',
       icon: Bookmark,
-      current: pathname === '/dashboard/favorites'
+      current: pathname === '/dashboard/bookmark'
     },
     {
       name: t('dashboard.likes'),
@@ -70,27 +70,27 @@ export function Sidebar() {
           
           {/* 收藏夹链接 */}
           <Link
-            href="/dashboard/favorites"
+            href="/dashboard/bookmark"
             onClick={() => sidebar.onClose()}
             className={`w-full flex items-center justify-between px-4 py-2.5 rounded-lg text-sm transition-all duration-200 ${
-              pathname === '/dashboard/favorites'
+              pathname === '/dashboard/bookmark'
                 ? 'bg-blue-500 text-white shadow-md'
                 : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600/70'
             }`}
           >
             <div className="flex items-center gap-3">
               <div className={`flex items-center justify-center w-8 h-8 rounded-full ${
-                pathname === '/dashboard/favorites'
+                pathname === '/dashboard/bookmark'
                   ? 'bg-blue-400'
                   : 'bg-blue-50 dark:bg-gray-600'
               }`}>
                 <Bookmark className={`${
-                  pathname === '/dashboard/favorites'
+                  pathname === '/dashboard/bookmark'
                     ? 'text-white'
                     : 'text-blue-500 dark:text-blue-300'
                 }`} />
               </div>
-              <span className="font-medium">{t('dashboard.favorites')}</span>
+              <span className="font-medium">{t('dashboard.bookmark')}</span>
             </div>
           </Link>
           
