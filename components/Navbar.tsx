@@ -10,7 +10,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
 import Image from 'next/image';
 import { cn } from '../lib/utils';
-import { LanguageSwitch } from './LanguageSwitch';
+import { LanguageMenu } from './LanguageMenu';
+import { LanguageMenuMobile } from './LanguageMenuMobile';
 import { useTheme } from 'next-themes';
 import { AuthButton } from './AuthButton';
 import { useI18n } from '../lib/i18n/context';
@@ -85,7 +86,7 @@ export function Navbar() {
 
             {/* 桌面端导航 */}
             <nav className="hidden md:flex items-center gap-3">
-              <LanguageSwitch />
+              <LanguageMenu />
               <ThemeToggle />
               <a
                 href="https://x.com/wowmarcomei"
@@ -204,12 +205,7 @@ export function Navbar() {
                 <div className="p-4 space-y-3">
                   <div className="flex flex-col gap-3">
                     {/* 语言切换 */}
-                    <div 
-                      className="flex items-center"
-                      onClick={handleItemClick}
-                    >
-                      <LanguageSwitch />
-                    </div>
+                    <LanguageMenuMobile onItemClick={handleItemClick} />
 
                     {/* 主题切换 */}
                     <button
@@ -231,7 +227,7 @@ export function Navbar() {
                         )}
                       </div>
                       <span className="text-sm font-medium">
-                        {theme === 'dark' ? '浅色模式' : '深色模式'}
+                        {theme === 'dark' ? t('dashboard.lightMode') : t('dashboard.darkMode')}
                       </span>
                     </button>
 
