@@ -5,6 +5,7 @@ import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Session, User } from '@supabase/supabase-js';
 import { useRouter } from 'next/navigation';
 import { clientLog } from '../logger';
+import { toast } from 'sonner';
 
 export type AuthContextType = {
   user: User | null;
@@ -169,20 +170,48 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // 构建回调 URL
       const redirectUrl = `${appUrl}/auth/callback`;
       await clientLog.info('Twitter 登录 - 使用回调 URL:', redirectUrl);
+
+      // 检查是否在开发环境
+      const isDevelopment = process.env.NODE_ENV === 'development';
+      await clientLog.info('环境:', { isDevelopment, NODE_ENV: process.env.NODE_ENV });
       
-      const { error } = await supabase.auth.signInWithOAuth({
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'twitter',
         options: {
-          redirectTo: redirectUrl
+          redirectTo: redirectUrl,
+          scopes: 'email',
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+            include_email: 'true'  // 明确请求邮箱
+          }
         }
       });
       
+      await clientLog.info('OAuth 响应:', { data, error });
+      
       if (error) {
         await clientLog.error('Twitter 登录错误:', error);
-        throw error;
+        toast.error('Twitter 登录失败: ' + error.message);
+        return;
+      }
+
+      // 如果有授权 URL，手动重定向
+      if (data?.url) {
+        const authUrl = new URL(data.url);
+        // 添加额外的参数确保请求邮箱
+        authUrl.searchParams.append('include_email', 'true');
+        
+        await clientLog.info('重定向到授权 URL:', authUrl.toString());
+        // 使用 replace 而不是 assign
+        window.location.replace(authUrl.toString());
+      } else {
+        await clientLog.error('未收到授权 URL');
+        toast.error('登录配置错误，请稍后重试');
       }
     } catch (error) {
       console.error('Error signing in with Twitter:', error);
+      toast.error('Twitter 登录过程中发生错误，请稍后重试');
     }
   };
 
