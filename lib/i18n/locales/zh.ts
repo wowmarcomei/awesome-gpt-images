@@ -111,6 +111,10 @@ export const zh = {
     getPrompt: '获取 Prompt',
     copied: '已复制到剪贴板',
     original: '原文',
+    liked: '已点赞',
+    unliked: '已取消点赞',
+    bookmarked: '已收藏',
+    unbookmarked: '已取消收藏',
   },
   dashboard: {
     welcome: '你好，用户',

@@ -103,6 +103,10 @@ export const en = {
     getPrompt: 'Get Prompt',
     copied: 'Copied to clipboard',
     original: 'Original',
+    liked: 'Liked',
+    unliked: 'Unliked',
+    bookmarked: 'Bookmarked',
+    unbookmarked: 'Unbookmarked',
   },
   dashboard: {
     bookmark: 'My Bookmarks',

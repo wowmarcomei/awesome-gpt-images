@@ -181,7 +181,7 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
                     >
                       <span className="text-base">{isLiked(caseData.id) ? '❤️' : '🤍'}</span>
                       <span className="text-gray-700 dark:text-gray-300">
-                        {isLiked(caseData.id) ? '已点赞' : '已取消点赞'}
+                        {isLiked(caseData.id) ? t('card.liked') : t('card.unliked')}
                       </span>
                     </motion.div>
                   )}
@@ -230,7 +230,7 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
                     >
                       <span className="text-base">{isFavorited(caseData.id) ? '⭐️' : '☆'}</span>
                       <span className="text-gray-700 dark:text-gray-300">
-                        {isFavorited(caseData.id) ? '已收藏' : '已取消收藏'}
+                        {isFavorited(caseData.id) ? t('card.bookmarked') : t('card.unbookmarked')}
                       </span>
                     </motion.div>
                   )}
