@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { Analytics } from '@vercel/analytics/react';
 import { ThemeProvider } from 'next-themes';
 import { cn } from '../lib/utils';
 import { I18nProvider } from '../lib/i18n/context';
@@ -186,7 +185,6 @@ export default function RootLayout({
                 <LayoutContentWrapper>
                   {children}
                 </LayoutContentWrapper>
-                <Analytics debug={process.env.NODE_ENV === 'development'} />
               </LanguageAwareLayout>
             </I18nProvider>
           </AuthProvider>
