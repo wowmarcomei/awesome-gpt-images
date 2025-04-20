@@ -76,7 +76,7 @@ export default function FavoritesPage() {
             <span className="text-4xl">⭐</span>
           </div>
           <div className="space-y-2">
-            <h3 className="text-xl font-medium">{t('dashboard.no_favorites')}</h3>
+            <h3 className="text-xl font-medium">{t('dashboard.no_bookmark')}</h3>
             <p className="text-muted-foreground max-w-md mx-auto">
               {t('common.no_items_description')}
             </p>
