@@ -101,13 +101,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithGoogle = async () => {
     try {
+      await clientLog.info('开始 Google 登录流程...');
+      await clientLog.info('当前 URL:', window.location.href);
+      
+      // 直接使用当前域名作为应用 URL
+      const appUrl = window.location.origin;
+      await clientLog.info('Google 登录 - 当前网站域名:', appUrl);
+      
+      // 构建回调 URL
+      const redirectUrl = `${appUrl}/auth/callback`;
+      await clientLog.info('Google 登录 - 使用回调 URL:', redirectUrl);
+      
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`
+          redirectTo: redirectUrl
         }
       });
-      if (error) throw error;
+      
+      if (error) {
+        await clientLog.error('Google 登录错误:', error);
+        throw error;
+      }
     } catch (error) {
       console.error('Error signing in with Google:', error);
     }
@@ -115,13 +130,28 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const signInWithGitHub = async () => {
     try {
+      await clientLog.info('开始 GitHub 登录流程...');
+      await clientLog.info('当前 URL:', window.location.href);
+      
+      // 直接使用当前域名作为应用 URL
+      const appUrl = window.location.origin;
+      await clientLog.info('GitHub 登录 - 当前网站域名:', appUrl);
+      
+      // 构建回调 URL
+      const redirectUrl = `${appUrl}/auth/callback`;
+      await clientLog.info('GitHub 登录 - 使用回调 URL:', redirectUrl);
+      
       const { error } = await supabase.auth.signInWithOAuth({
         provider: 'github',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`
+          redirectTo: redirectUrl
         }
       });
-      if (error) throw error;
+      
+      if (error) {
+        await clientLog.error('GitHub 登录错误:', error);
+        throw error;
+      }
     } catch (error) {
       console.error('Error signing in with GitHub:', error);
     }
