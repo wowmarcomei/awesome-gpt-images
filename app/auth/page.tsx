@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Card } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
 import { Input } from '../../components/ui/input';
@@ -14,6 +14,30 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/ta
 import { toast } from 'sonner';
 import { cn } from '../../lib/utils';
 import { useI18n } from '../../lib/i18n/context';
+
+// 使用 Suspense 边界包裹的 SearchParams 组件
+function SearchParamsHandler() {
+  const searchParams = useSearchParams();
+  const { t } = useI18n();
+  
+  // 处理URL参数中的状态
+  useEffect(() => {
+    const error = searchParams.get('error');
+    const verified = searchParams.get('verified');
+
+    if (error === 'missing_token') {
+      toast.error(t('auth.error.invalid_token'));
+    } else if (error === 'verification_failed') {
+      toast.error(t('auth.error.verification_failed'));
+    }
+
+    if (verified === 'true') {
+      toast.success(t('auth.success.email_verified'));
+    }
+  }, [searchParams, t]);
+  
+  return null;
+}
 
 export default function AuthPage() {
   // 登录状态
@@ -31,24 +55,7 @@ export default function AuthPage() {
   
   const { signInWithEmail, signInWithGitHub, signInWithGoogle, signInWithTwitter } = useAuth();
   const router = useRouter();
-  const searchParams = useSearchParams();
   const { t } = useI18n();
-
-  // 处理URL参数中的状态
-  useEffect(() => {
-    const error = searchParams.get('error');
-    const verified = searchParams.get('verified');
-
-    if (error === 'missing_token') {
-      toast.error(t('auth.error.invalid_token'));
-    } else if (error === 'verification_failed') {
-      toast.error(t('auth.error.verification_failed'));
-    }
-
-    if (verified === 'true') {
-      toast.success(t('auth.success.email_verified'));
-    }
-  }, [searchParams, t]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -119,6 +126,9 @@ export default function AuthPage() {
 
   return (
     <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center p-4 bg-gray-50/50 dark:bg-gray-900/50">
+      <Suspense fallback={null}>
+        <SearchParamsHandler />
+      </Suspense>
       <div className="w-full max-w-md">
         <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-lg p-8">
           {/* 标题 */}
