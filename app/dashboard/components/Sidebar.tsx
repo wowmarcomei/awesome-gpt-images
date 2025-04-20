@@ -36,8 +36,7 @@ export function Sidebar() {
   const SidebarContent = () => (
     <div className="flex flex-col h-full">
       <div className="sticky top-4 bg-white dark:bg-gray-700 rounded-xl shadow-lg p-4 border border-gray-100 dark:border-gray-600">
-        <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white flex items-center gap-2">
-          <img src="/logo2.png" alt="Logo" className="w-6 h-6 object-contain" />
+        <h2 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">
           {t('dashboard.navigation')}
         </h2>
         
