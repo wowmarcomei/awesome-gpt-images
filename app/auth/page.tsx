@@ -9,7 +9,7 @@ import { useAuth } from '../../lib/auth/context';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
-import { FaGoogle, FaGithub } from 'react-icons/fa6';
+import { FaGoogle, FaGithub, FaXTwitter } from 'react-icons/fa6';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { toast } from 'sonner';
 import { cn } from '../../lib/utils';
@@ -29,7 +29,7 @@ export default function AuthPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isEmailSent, setIsEmailSent] = useState(false);
   
-  const { signInWithEmail, signInWithGitHub, signInWithGoogle } = useAuth();
+  const { signInWithEmail, signInWithGitHub, signInWithGoogle, signInWithTwitter } = useAuth();
   const router = useRouter();
   const searchParams = useSearchParams();
   const { t } = useI18n();
@@ -292,7 +292,7 @@ export default function AuthPage() {
           </div>
 
           {/* 社交登录按钮 */}
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-3 gap-4">
             <Button 
               variant="outline" 
               className={cn(
@@ -310,6 +310,21 @@ export default function AuthPage() {
             </Button>
             <Button 
               variant="outline"
+              className={cn(
+                "h-11",
+                "bg-white dark:bg-gray-800",
+                "hover:bg-gray-50 dark:hover:bg-gray-700",
+                "text-gray-900 dark:text-gray-100",
+                "border-gray-200 dark:border-gray-600",
+                "hover:border-gray-300 dark:hover:border-gray-500"
+              )}
+              onClick={() => signInWithTwitter()}
+            >
+              <FaXTwitter className="mr-2 h-4 w-4" />
+              Twitter
+            </Button>
+            <Button 
+              variant="outline" 
               className={cn(
                 "h-11",
                 "bg-white dark:bg-gray-800",
