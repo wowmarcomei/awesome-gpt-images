@@ -284,6 +284,12 @@ export function useCollections(type?: 'LIKE' | 'FAVORITE') {
       const updatedData = await response.json()
       store.initializeFromServer(user.id, updatedData.likes || [], updatedData.favorites || [])
       
+      // 显示成功消息
+      const messageKey = isLike 
+        ? (action === 'add' ? 'success.like_added' : 'success.like_removed')
+        : (action === 'add' ? 'success.bookmark_added' : 'success.bookmark_removed')
+      toast.success(t(messageKey))
+      
     } catch (error) {
       console.error('Error toggling collection:', error)
       // 发生错误时回滚乐观更新

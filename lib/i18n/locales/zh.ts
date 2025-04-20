@@ -75,7 +75,11 @@ export const zh = {
     success: {
       email_verified: '邮箱验证成功，请登录',
       login: '登录成功',
-      register: '注册成功，请查收验证邮件'
+      register: '注册成功，请查收验证邮件',
+      like_added: '已添加点赞',
+      like_removed: '已取消点赞',
+      bookmark_added: '已添加到收藏',
+      bookmark_removed: '已从收藏中移除'
     },
     dialog: {
       title: '登录提示',

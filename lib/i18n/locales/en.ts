@@ -67,7 +67,11 @@ export const en = {
     success: {
       email_verified: 'Email verified successfully, please login',
       login: 'Login successful',
-      register: 'Registration successful, please check your email'
+      register: 'Registration successful, please check your email',
+      like_added: 'Like added',
+      like_removed: 'Like removed',
+      bookmark_added: 'Added to bookmarks',
+      bookmark_removed: 'Removed from bookmarks'
     },
     dialog: {
       title: 'Login Required',
