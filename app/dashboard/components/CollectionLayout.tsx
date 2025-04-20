@@ -63,12 +63,14 @@ export function CollectionLayout({
           }
         }}>
           <div className="my-6">
-            <TabsList className="w-full max-w-sm bg-background/5 backdrop-blur-sm rounded-full p-1.5 border border-border/30 shadow-sm">
+            <TabsList className="w-full max-w-sm bg-background/5 backdrop-blur-sm rounded-full p-1.5 border border-border/30 shadow-sm dark:bg-gray-800/50 dark:border-gray-700">
               <TabsTrigger 
                 value="bookmark" 
                 className="flex-1 flex items-center justify-center gap-2 rounded-full py-2 text-sm font-medium transition-all
                 data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:bg-background/50 data-[state=inactive]:hover:text-foreground
-                data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-md data-[state=active]:border data-[state=active]:border-primary/20"
+                data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-md data-[state=active]:border data-[state=active]:border-primary/20
+                dark:data-[state=inactive]:text-gray-400 dark:data-[state=inactive]:hover:bg-gray-700 dark:data-[state=inactive]:hover:text-gray-200
+                dark:data-[state=active]:bg-gray-700 dark:data-[state=active]:text-gray-200 dark:data-[state=active]:border-gray-600"
               >
                 <Bookmark className="h-4 w-4" />
                 <span>{t('dashboard.bookmark')}</span>
@@ -77,7 +79,9 @@ export function CollectionLayout({
                 value="likes" 
                 className="flex-1 flex items-center justify-center gap-2 rounded-full py-2 text-sm font-medium transition-all ml-2
                 data-[state=inactive]:text-muted-foreground data-[state=inactive]:hover:bg-background/50 data-[state=inactive]:hover:text-foreground
-                data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-md data-[state=active]:border data-[state=active]:border-primary/20"
+                data-[state=active]:bg-primary/10 data-[state=active]:text-primary data-[state=active]:shadow-md data-[state=active]:border data-[state=active]:border-primary/20
+                dark:data-[state=inactive]:text-gray-400 dark:data-[state=inactive]:hover:bg-gray-700 dark:data-[state=inactive]:hover:text-gray-200
+                dark:data-[state=active]:bg-gray-700 dark:data-[state=active]:text-gray-200 dark:data-[state=active]:border-gray-600"
               >
                 <Heart className="h-4 w-4" />
                 <span>{t('dashboard.likes')}</span>

@@ -240,7 +240,7 @@ export default function CaseCard({ case: caseData, onTagClick, className }: Case
 
             <Button
               variant="outline"
-              className="flex-1 border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+              className="flex-1 border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 dark:bg-gray-700 dark:shadow-sm rounded-md"
               onClick={handleShowPrompt}
             >
               <EyeIcon className="mr-2 h-4 w-4" />

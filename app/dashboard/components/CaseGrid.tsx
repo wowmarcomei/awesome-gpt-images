@@ -241,7 +241,7 @@ export function CaseGrid({
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-xs px-2 py-1 h-8 bg-background/80 backdrop-blur-sm shadow-sm text-muted-foreground hover:text-primary border border-border rounded-full"
+                      className="text-xs px-2 py-1 h-8 bg-background/80 backdrop-blur-sm shadow-sm text-muted-foreground hover:text-primary border border-border rounded-full dark:bg-gray-600 dark:border-gray-500 dark:border-2 dark:text-white dark:font-medium dark:hover:bg-gray-500 dark:hover:text-white dark:shadow-md dark:shadow-gray-900/50"
                       onClick={() => handleShowPrompt(item.prompt || null)}
                     >
                       <Eye className="w-3.5 h-3.5 mr-1.5" />
