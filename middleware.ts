@@ -6,8 +6,16 @@ export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname.startsWith('/dashboard')) {
     console.log('Checking dashboard access...')
     
+    // 从环境变量中获取 Supabase URL 并提取项目 ID
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+    const projectId = supabaseUrl.match(/https:\/\/([^\.]+)\./)?.[1] || ''
+    
+    // 构建 cookie 名称
+    const cookieName = `sb-${projectId}-auth-token`
+    console.log('Looking for cookie:', cookieName)
+    
     // 从 cookie 中获取 auth token
-    const token = request.cookies.get('sb-rxiqowwjimgmjipwmteh-auth-token')?.value
+    const token = request.cookies.get(cookieName)?.value
     console.log('Found token:', !!token)
 
     if (!token) {
