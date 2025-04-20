@@ -1,4 +1,8 @@
 export const zh = {
+  site: {
+    title: '精选 GPT4o 图像提示词目录',
+    description: '精选 GPT4o 图像提示词目录 | 探索 AI 图像理解的未来'
+  },
   common: {
     search: '搜索',
     searchPlaceholder: '搜索案例、标签或作者',

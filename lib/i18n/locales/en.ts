@@ -1,4 +1,8 @@
 export const en = {
+  site: {
+    title: 'Awesome GPT4o Images Prompt List',
+    description: 'Curated GPT4o Images Prompt List Directory | Explore the Future of AI Image Understanding'
+  },
   common: {
     search: 'Search',
     searchPlaceholder: 'Search cases, tags, or authors',

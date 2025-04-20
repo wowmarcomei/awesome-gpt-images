@@ -15,13 +15,13 @@ import { usePathname } from 'next/navigation';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://awesome-gpt-images.vercel.app'),
+  metadataBase: new URL('https://prompt.laomeinote.com'),
   title: {
-    default: 'Awesome GPT Images Prompt',
-    template: '%s | Awesome GPT Images Prompt'
+    default: 'Awesome GPT4o Images Prompt List',
+    template: '%s | Awesome GPT4o Images Prompt List'
   },
-  description: '精选 GPT 图像提示词目录 | Curated GPT Images Prompt Directory',
-  keywords: ['GPT', 'AI', 'Image', 'Prompt', 'Directory', 'Showcase', '人工智能', '图像生成', '提示词', '提示词目录', 'GPT图像'],
+  description: '精选 GPT4o 图像提示词目录 | Curated GPT4o Images Prompt List Directory',
+  keywords: ['GPT4o', 'AI', 'Image', 'Prompt', 'Directory', 'Showcase', '人工智能', '图像生成', '提示词', '提示词目录', 'GPT4o图像'],
   authors: [{ 
     name: 'wowmarcomei',
     url: 'https://github.com/wowmarcomei'
@@ -42,10 +42,10 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Awesome GPT Images Prompt',
-    description: '精选 GPT 图像提示词目录 | Curated GPT Images Prompt Directory',
-    url: 'https://awesome-gpt-images.vercel.app',
-    siteName: 'Awesome GPT Images Prompt',
+    title: 'Awesome GPT4o Images Prompt List',
+    description: '精选 GPT4o 图像提示词目录 | Curated GPT4o Images Prompt List Directory',
+    url: 'https://prompt.laomeinote.com',
+    siteName: 'Awesome GPT4o Images Prompt List',
     locale: 'zh_CN',
     type: 'website',
     images: [
@@ -60,8 +60,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Awesome GPT Images Prompt',
-    description: '精选 GPT 图像提示词目录 | Curated GPT Images Prompt Directory',
+    title: 'Awesome GPT4o Images Prompt List',
+    description: '精选 GPT4o 图像提示词目录 | Curated GPT4o Images Prompt List Directory',
     site: '@your-twitter-handle',
     creator: '@your-twitter-handle',
     images: [

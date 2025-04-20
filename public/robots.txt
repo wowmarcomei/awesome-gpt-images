@@ -5,7 +5,7 @@ Disallow: /api/*
 Disallow: /_next/*
 
 # Host
-Host: https://awesome-gpt-images.com
+Host: https://prompt.laomeinote.com
 
 # Sitemaps
-Sitemap: https://awesome-gpt-images.com/sitemap.xml
+Sitemap: https://prompt.laomeinote.com/sitemap.xml
