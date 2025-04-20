@@ -26,9 +26,8 @@ const nextConfig = {
   },
   // 添加实验性功能支持
   experimental: {
-    optimizeImages: true,
     optimizeCss: true,
   },
 }
 
-module.exports = nextConfig 
+module.exports = nextConfig
