@@ -50,10 +50,10 @@ export const metadata: Metadata = {
     type: 'website',
     images: [
       {
-        url: 'https://awesome-gpt-images.com/og-image/og-image.png?v=1',
+        url: 'https://prompt.laomeinote.com/og-image/og-image.png?v=1',
         width: 1088,
         height: 992,
-        alt: 'Awesome GPT Images Prompt - 探索 AI 图像理解的未来',
+        alt: 'Awesome GPT4o Images Prompt List - 探索 AI 图像理解的未来',
         type: 'image/png',
       },
     ],
@@ -66,10 +66,10 @@ export const metadata: Metadata = {
     creator: '@your-twitter-handle',
     images: [
       {
-        url: 'https://awesome-gpt-images.com/og-image/og-image.png?v=1',
+        url: 'https://prompt.laomeinote.com/og-image/og-image.png?v=1',
         width: 1088,
         height: 992,
-        alt: 'Awesome GPT Images Prompt - 探索 AI 图像理解的未来',
+        alt: 'Awesome GPT4o Images Prompt List - 探索 AI 图像理解的未来',
       }
     ],
   },

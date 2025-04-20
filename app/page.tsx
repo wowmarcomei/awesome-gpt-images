@@ -156,8 +156,8 @@ export default function Home() {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: 'Awesome GPT Images Prompt',
-          text: 'Curated GPT Image Prompt Catalog | 精选 GPT 图像提示词目录  ',
+          title: t('site.title'),
+          text: t('site.description'),
           url: window.location.href,
         });
       } catch (error) {
@@ -173,9 +173,6 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
       <div className="container mx-auto px-4">
-        <h1 className="text-4xl font-bold text-center mb-8 text-gray-900 dark:text-white">
-          Awesome GPT Images Prompt 
-        </h1>
 
         <div className="flex flex-col lg:flex-row gap-8">
           {/* 左侧作者列表 - 仅在桌面端显示 */}
