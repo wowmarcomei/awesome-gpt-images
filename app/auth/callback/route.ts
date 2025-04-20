@@ -3,6 +3,9 @@ import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';
 import { serverLog } from '../../../lib/logger';
 
+// 设置 Edge Runtime
+export const runtime = 'edge';
+
 export async function GET(request: Request) {
   // 记录完整的请求 URL 和所有参数
   serverLog.info('===== Auth 回调处理开始 =====');

@@ -1,5 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// 设置 Edge Runtime
+export const runtime = 'edge';
+
 // 日志级别类型
 type LogLevel = 'info' | 'error' | 'warn' | 'debug';
 

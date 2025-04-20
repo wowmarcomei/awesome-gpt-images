@@ -1,6 +1,10 @@
-import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
-import { NextResponse } from 'next/server';
+import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs'
+import { cookies } from 'next/headers'
+import { NextResponse } from 'next/server'
+
+// 设置 Edge Runtime
+export const runtime = 'edge';
+
 import { sendVerificationEmail } from '../../../../lib/email';
 
 export async function POST(request: Request) {
