@@ -145,9 +145,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // 使用简化的方式尝试登录
       await clientLog.info('尝试使用 signInWithOAuth 方法并简化参数');
       
-      // 使用环境变量中的应用 URL
-      const appUrl = process.env.NEXT_PUBLIC_APP_URL || window.location.origin;
-      await clientLog.info('环境变量中的应用 URL:', appUrl);
+      // 直接使用当前域名作为应用 URL
+      const appUrl = window.location.origin;
+      await clientLog.info('当前网站域名:', appUrl);
       
       // 构建回调 URL
       const redirectUrl = `${appUrl}/auth/callback`;
