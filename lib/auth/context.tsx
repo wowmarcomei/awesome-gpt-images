@@ -162,53 +162,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       await clientLog.info('开始 Twitter 登录流程...');
       await clientLog.info('当前 URL:', window.location.href);
       
-      // 尝试直接使用 signInWithProvider
-      await clientLog.info('尝试使用简化的 Twitter 登录方式');
-      
-      // 记录 Supabase 项目 URL
-      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '未设置';
-      await clientLog.info('Supabase URL:', supabaseUrl);
-      
-      // 添加额外的调试信息
-      await clientLog.info('浏览器 User Agent:', navigator.userAgent);
-      
-      // 使用简化的方式尝试登录
-      await clientLog.info('尝试使用 signInWithOAuth 方法并简化参数');
-      
       // 直接使用当前域名作为应用 URL
       const appUrl = window.location.origin;
-      await clientLog.info('当前网站域名:', appUrl);
+      await clientLog.info('Twitter 登录 - 当前网站域名:', appUrl);
       
       // 构建回调 URL
       const redirectUrl = `${appUrl}/auth/callback`;
-      await clientLog.info('使用回调 URL:', redirectUrl);
+      await clientLog.info('Twitter 登录 - 使用回调 URL:', redirectUrl);
       
-      // 检测是否在本地开发环境
-      const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-      if (isLocalhost) {
-        await clientLog.info('在本地开发环境中运行，使用环境变量中的 URL');
-      }
-      
-      // 使用最简化的配置
-      const { data, error } = await supabase.auth.signInWithOAuth({
+      const { error } = await supabase.auth.signInWithOAuth({
         provider: 'twitter',
         options: {
           redirectTo: redirectUrl
         }
       });
       
-      await clientLog.info('Supabase OAuth 响应:', { data, error });
-      
       if (error) {
-        await clientLog.error('Twitter OAuth 错误:', error);
+        await clientLog.error('Twitter 登录错误:', error);
         throw error;
-      } else if (data?.url) {
-        await clientLog.info('将重定向到:', data.url);
-        // 手动重定向到授权 URL
-        window.location.href = data.url;
       }
     } catch (error) {
-      await clientLog.error('Twitter 登录过程中发生错误:', error);
+      console.error('Error signing in with Twitter:', error);
     }
   };
 
