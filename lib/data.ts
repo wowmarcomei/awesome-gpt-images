@@ -950,19 +950,422 @@ export const cases: Case[] = [
       zh: ["俄罗斯套娃", "Q版", "可爱", "名画"],
       en: ["Matryoshka Doll", "Chibi", "Cute", "Masterpiece"]
     }
+  },
+  {
+    id: "44",
+    title: {
+      zh: "RPG 风格角色卡片制作",
+      en: "RPG Style Character Card"
+    },
+    author: {
+      name: "berryxia_ai",
+      twitter: "https://x.com/berryxia_ai"
+    },
+    originalLink: "https://x.com/berryxia_ai/status/1911334046724165905",
+    image: "/examples/example_rpg_card_designer.png",
+    prompt: {
+      zh: "Create a digital character card in RPG collectible style.\nThe subject is a 【Programmer】, standing confidently with tools or symbols relevant to their job.\nRender it in 3D cartoon style, soft lighting, vivid personality.\nInclude skill bars or stats like [Skill1 +x], [Skill2 +x, e.g., Creativity +10, UI/UX +8].\nAdd a title banner on top and a nameplate on the bottom.\nFrame the card with clean edges like a real figure box.\nMake the background fit the profession's theme.\nColors: warm highlights, profession-matching hues.",
+      en: "Create a digital character card in RPG collectible style.\nThe subject is a 【Programmer】, standing confidently with tools or symbols relevant to their job.\nRender it in 3D cartoon style, soft lighting, vivid personality.\nInclude skill bars or stats like [Skill1 +x], [Skill2 +x, e.g., Creativity +10, UI/UX +8].\nAdd a title banner on top and a nameplate on the bottom.\nFrame the card with clean edges like a real figure box.\nMake the background fit the profession's theme.\nColors: warm highlights, profession-matching hues."
+    },
+    requiresReferenceImage: false,
+    tags: {
+      zh: ["RPG", "卡片", "3D", "卡通"],
+      en: ["RPG", "Card", "3D", "Cartoon"]
+    }
+  },
+  {
+    id: "45",
+    title: {
+      zh: "3D Q版大学拟人化形象",
+      en: "3D Q-version University Mascot"
+    },
+    author: {
+      name: "dotey",
+      twitter: "https://x.com/dotey"
+    },
+    originalLink: "https://x.com/dotey/status/1911988003729203648",
+    image: "/examples/example_university_mascot_npu.jpeg",
+    prompt: {
+      zh: "給【西北工业大学】画一个拟人化的3D Q版美少女形象，体现学校【航空航天航海三航】特色",
+      en: "Draw a personified 3D Q-version beautiful girl mascot for [Northwestern Polytechnical University], reflecting the school's [aeronautics, astronautics, and navigation] characteristics"
+    },
+    requiresReferenceImage: false,
+    tags: {
+      zh: ["3D", "Q版", "拟人化", "大学"],
+      en: ["3D", "Chibi", "Personification", "University"]
+    }
+  },
+  {
+    id: "46",
+    title: {
+      zh: "快乐胶囊制作",
+      en: "Happy Capsule Creation"
+    },
+    author: {
+      name: "ZHO_ZHO_ZHO",
+      twitter: "https://x.com/ZHO_ZHO_ZHO"
+    },
+    originalLink: "https://x.com/ZHO_ZHO_ZHO/status/1911724629460455896",
+    image: "/examples/example_happy_capsule.png",
+    prompt: {
+      zh: "标题（大字）：速效快乐胶囊\n\n一颗上为星巴克绿下为透明的小药丸，上面印有星巴克logo，里面有很多咖啡豆\n\n说明（小字）：请在悲伤难过时服用，一日三次，一次两粒\n\n购买按钮 和 药丸颜色一致，下面价格：$9，请遵循医嘈酌情购买",
+      en: "Title (large text): Fast-acting Happy Capsule\n\nA small pill with Starbucks green on top and transparent on the bottom, printed with the Starbucks logo, filled with many coffee beans\n\nInstructions (small text): Please take when feeling sad, three times a day, two pills each time\n\nPurchase button matches the pill color, price below: $9, please follow medical advice when purchasing"
+    },
+    requiresReferenceImage: false,
+    tags: {
+      zh: ["创意", "药丸", "广告", "广告牌"],
+      en: ["Creative", "Pill", "Advertisement", "Ad"]
+    }
+  },
+  {
+    id: "47",
+    title: {
+      zh: "键盘ESC 键帽微型立体模型",
+      en: "Keyboard ESC Key Cap Miniature Diorama"
+    },
+    author: {
+      name: "egeberkina",
+      twitter: "https://x.com/egeberkina"
+    },
+    originalLink: "https://x.com/egeberkina/status/1911368319212408926",
+    image: "/examples/example_esc_keycap_diorama.jpeg",
+    prompt: {
+      zh: "一个超写实的等距视角 3D 渲染图，展示了一个微型电脑工作室，它位于一个半透明的机械键盘键帽内，该键帽特别放置在一个真实的哗光表面机械键盘的 ESC 键上。键帽内部，一个小人穿着舒适的有纹理连帽衣，坐在现代人体工学椅子上，正在一个发光的超逐真电脑屏幕前工作。环境充满了逐真的微型科技配件：真实材质的台灯、带有反光的显示器、微小的扬声器格栅、缠绕的电线和陶瓷杯子。场景底部由泥土、岩石和苔藓构成，具有照片级的纹理和瑕疵。键帽内部的光线模仿自然的清晨阳光，投下柔和的阴影和温暖的色调，而外部则有来自周围键盘的冷色调环境反射。单词“ESC”以微弱的磨砂玻璃效果巧妙地蚀刃在半透明键帽的顶部——根据角度仅勤强可见。周围的键盘按键如 F1、Q、Shift 和 CTRL 清晰、有纹理，并具有照片级的逐真光照。拍摄效果如同使用高端手机相机，具有浅景深、完美的白平衡和电影般的细节。",
+      en: "A hyper-realistic isometric 3D render of a miniature computer workspace contained inside a translucent mechanical keyboard keycap, specifically placed on the ESC key of a real matte-surface mechanical keyboard. Inside the keycap, a tiny person wearing a comfortable textured hoodie sits in a modern ergonomic chair, working at a glowing, ultra-realistic computer screen. The environment is filled with realistic miniature tech accessories: a desk lamp with real materials, a monitor with reflections, tiny speaker grilles, tangled wires, and a ceramic mug. The scene's floor is made of soil, rocks, and moss with photographic textures and imperfections. Lighting inside the keycap mimics natural morning sunlight, casting soft shadows and warm tones, while the exterior has cool-toned ambient reflections from the surrounding keyboard. The word 'ESC' is subtly etched into the top of the translucent keycap with a faint frosted glass effect—barely visible depending on the angle. Surrounding keyboard keys like F1, Q, Shift, and CTRL are crisp, textured, and have photographic realistic lighting. The shot appears as if taken with a high-end phone camera, with shallow depth of field, perfect white balance, and cinematic details."
+    },
+    requiresReferenceImage: false,
+    tags: {
+      zh: ["微型", "立体场景", "3D", "键盘"],
+      en: ["Miniature", "Diorama", "3D", "Keyboard"]
+    }
+  },
+  {
+    id: "48",
+    title: {
+      zh: "体素风格 3D 图标转换",
+      en: "Voxel Style 3D Icon Conversion"
+    },
+    author: {
+      name: "BrettFromDJ",
+      twitter: "https://x.com/BrettFromDJ"
+    },
+    originalLink: "https://x.com/BrettFromDJ/status/1910387413404234076",
+    image: "/examples/example_voxel_icons.jpeg",
+    prompt: {
+      zh: "三个步骤\n1. 上传参考图\n2. 上传要转换的照片\n3. 提示词：将图片/描述/emoji转换为参考图一样的体素 3D 图标，Octane 渲染，8k",
+      en: "Three steps\n1. Upload reference image\n2. Upload the photo to be converted\n3. Prompt: Convert the image/description/emoji into a voxel 3D icon like the reference image, Octane render, 8k"
+    },
+    requiresReferenceImage: true,
+    tags: {
+      zh: ["体素", "3D", "图标", "转换"],
+      en: ["Voxel", "3D", "Icon", "Conversion"]
+    }
+  },
+  {
+    id: "49",
+    title: {
+      zh: "时尚杂志封面风格",
+      en: "Fashion Magazine Cover Style"
+    },
+    author: {
+      name: "dotey",
+      twitter: "https://x.com/dotey"
+    },
+    originalLink: "https://x.com/dotey/status/1912536019905233194",
+    image: "/examples/example_fashion_design_cover.jpeg",
+    prompt: {
+      zh: "一位美丽的女子身穿粉色旗袖，头戴精致的花饰，秀发中点缀着色彩缤纷的花朵，颈间装饰着优雅的白色蕾丝领子。她的一只手轻托着几只大型蝶蝉。整体拍摄风格呈现高清细节质感，类似时尚杂志封面设计，照片上方中央位置标有文字「FASHION DESIGN」。画面背景采用简约的纯浅灰色，以突出人物主体。",
+      en: "A beautiful woman wearing a pink qipao, adorned with delicate floral accessories, her hair decorated with colorful flowers, and an elegant white lace collar around her neck. One of her hands gently holds several large butterflies. The overall photography style presents high-definition detail quality, similar to fashion magazine cover design, with text 'FASHION DESIGN' prominently displayed at the top center of the photo. The background uses a minimalist pure light gray to highlight the main subject."
+    },
+    requiresReferenceImage: false,
+    tags: {
+      zh: ["时尚", "杂志", "封面", "旗袖"],
+      en: ["Fashion", "Magazine", "Cover", "Qipao"]
+    }
+  },
+  {
+    id: "50",
+    title: {
+      zh: "物理破坏效果卡片 (劳拉)",
+      en: "Physical Break Effect Card (Lara)"
+    },
+    author: {
+      name: "op7418",
+      twitter: "https://x.com/op7418"
+    },
+    originalLink: "https://x.com/op7418/status/1912782048160542886",
+    image: "/examples/example_lara_croft_card_break.jpeg",
+    prompt: {
+      zh: "一幅超写实、电影感的插画，描绘了劳拉·克劳馴动态地撞穿一张“考古探险”集换卡片的边框。她正处于跳跃中或用绳索摆荡，穿着标志性的冒险装备，可能正在使用双枪射击，枪口的火焰帮助将卡片古老的石雕边框震碎，在破口周围制造出可见的维度破裂效果，如能量裂纹和空间扭曲，使灰尘和碎片四散飞滫。她的身体充满活力地向前冲出，带有明显的运动深度，突破了卡片的平面，卡片内部（背景）描绘着茂密的丛林遗迹或布满陷阱的古墓内部。卡片的碎屑与 crumbling 的石头、飘舞的藤蔓、古钱币碎片和用过的弹壳混合在一起。“考古探险”的标题和“劳拉·克劳馴”的名字（带有一个风格化的文物图标）在卡片剩余的、布满裂纹和风化痕迹的部分上可见。充满冒险感的、动态的灯光突出了她的运动能力和危险的环境。",
+      en: "A hyper-realistic, cinematic illustration depicting Lara Croft dynamically breaking through the border of an 'Archaeological Adventure' collectible card. She is in mid-jump or swinging on a rope, wearing her iconic adventure gear, possibly firing dual pistols with muzzle flashes helping to shatter the card's ancient stone-carved border, creating visible dimensional break effects around the rupture, such as energy cracks and spatial distortions, sending dust and fragments flying. Her body lunges forward energetically with notable motion depth, breaking through the card's plane, with the card's interior (background) depicting a lush jungle ruin or trap-filled ancient tomb interior. The card's debris mixes with crumbling stones, flying vines, ancient coin fragments, and spent shell casings. The title 'Archaeological Adventure' and the name 'Lara Croft' (with a stylized artifact icon) are visible on the remaining, crack-filled and weathered portions of the card. Adventure-filled, dynamic lighting highlights her movement capabilities and the dangerous environment."
+    },
+    requiresReferenceImage: false,
+    tags: {
+      zh: ["破坏效果", "卡片", "电影感", "游戏"],
+      en: ["Break Effect", "Card", "Cinematic", "Game"]
+    }
+  },
+  {
+    id: "51",
+    title: {
+      zh: "护照入境印章",
+      en: "Passport Entry Stamp"
+    },
+    author: {
+      name: "ZHO_ZHO_ZHO",
+      twitter: "https://x.com/ZHO_ZHO_ZHO"
+    },
+    originalLink: "https://x.com/ZHO_ZHO_ZHO/status/1912188562944250035",
+    image: "/examples/example_passport_stamp_beijing.jpeg",
+    prompt: {
+      zh: "创建一个逐真的护照页，并盖上[北京, 中国]的入境章。章面应以粗体英文写明“欢迎来到北京”，并设计成圆形或椭圆形，并带有装饰性边框。章面应包含“ARRIVAL”字样和一个虚构的日期，例如“2025年4月16日”。在章面中加入{故宫}的微妙轮廓作为背景细节。使用深蓝色或红色墨水并略加晕染，以增强真实感。章面应略微倾斜，如同手工压印。护照页应清晰可见纸张纹理和安全图案",
+      en: "Create a realistic passport page stamped with an entry seal from [Beijing, China]. The stamp should say 'WELCOME TO BEIJING' in bold English text and be designed in a circular or oval shape with a decorative border. The stamp should include the word 'ARRIVAL' and a fictional date, such as 'April 16, 2025'. Incorporate a subtle outline of {the Forbidden City} as a background detail in the stamp. Use deep blue or red ink with slight smudging to enhance authenticity. The stamp should be slightly tilted, as if hand-pressed. The passport page should clearly show paper texture and security patterns."
+    },
+    requiresReferenceImage: false,
+    tags: {
+      zh: ["护照", "印章", "旅行", "创意"],
+      en: ["Passport", "Stamp", "Travel", "Creative"]
+    }
+  },
+  {
+    id: "52",
+    title: {
+      zh: "纸艺风格 Emoji 图标",
+      en: "Paper Craft Style Emoji Icon"
+    },
+    author: {
+      name: "egeberkina",
+      twitter: "https://x.com/egeberkina"
+    },
+    originalLink: "https://x.com/egeberkina/status/1912521263085482464",
+    image: "/examples/example_paper_craft_emoji_fire.jpeg",
+    prompt: {
+      zh: "A paper craft-style 🔥 floating on a pure white background. The emoji is handcrafted from colorful cut paper with visible textures, creases, and layered shapes. It casts a soft drop shadow beneath, giving a sense of lightness and depth. The design is minimal, playful, and clean — centered in the frame with lots of negative space. Use soft studio lighting to highlight the paper texture and edges.",
+      en: "A paper craft-style 🔥 floating on a pure white background. The emoji is handcrafted from colorful cut paper with visible textures, creases, and layered shapes. It casts a soft drop shadow beneath, giving a sense of lightness and depth. The design is minimal, playful, and clean — centered in the frame with lots of negative space. Use soft studio lighting to highlight the paper texture and edges."
+    },
+    requiresReferenceImage: false,
+    tags: {
+      zh: ["纸艺", "Emoji", "创意", "极简主义"],
+      en: ["Paper Craft", "Emoji", "Creative", "Minimalist"]
+    }
+  },
+  {
+    id: "53",
+    title: {
+      zh: "Emoji 充气感靠垫",
+      en: "Emoji Inflatable Cushion"
+    },
+    author: {
+      name: "gizakdag",
+      twitter: "https://x.com/gizakdag"
+    },
+    originalLink: "https://x.com/gizakdag/status/1912858535643197927",
+    image: "/examples/example_emoji_cushion_pleading.jpeg",
+    prompt: {
+      zh: "创建一个高分辨率的3D渲染图，将[🥹]设计成一个充气的、蓬松的物体。形状应该看起来柔软、圆润、充满空气——像一个毛绒气球或充气玩具。使用光滑的哑光纹理，带有微妙的织物褶皱和缝线，以强调充气的外观。形状应该略微不规则且有弹性，带有柔和的阴影和柔和的光线，突出体积感和真实感。将其放置在干净、极简的背景上（浅灰色或淡蓝色），并保持一种俏皮、雕塑般的美感。",
+      en: "Create a high-resolution 3D render of [🥹] designed as an inflatable, puffy object. The shape should appear soft, rounded, and air-filled — like a plush balloon or blow-up toy. Use a smooth, matte texture with subtle fabric creases and stitching to emphasize the inflatable look. The form should be slightly irregular and squishy, with gentle shadows and soft lighting that highlight volume and realism. Place it on a clean, minimal background (light gray or pale blue), and maintain a playful, sculptural aesthetic."
+    },
+    requiresReferenceImage: false,
+    tags: {
+      zh: ["Emoji", "充气", "3D", "极简主义"],
+      en: ["Emoji", "Inflatable", "3D", "Minimalist"]
+    }
+  },
+  {
+    id: "54",
+    title: {
+      zh: "极其平凡的iPhone自拍",
+      en: "Extremely Ordinary iPhone Selfie"
+    },
+    author: {
+      name: "jiamimaodashu",
+      twitter: "https://x.com/jiamimaodashu"
+    },
+    originalLink: "https://x.com/jiamimaodashu/status/1912653073190879410",
+    image: "/examples/example_ordinary_selfie_eason_nicholas.jpeg",
+    prompt: {
+      zh: "请画一张极其平凡无奇的iPhone 自拍照，没有明确的主体或构图感，就像是随手一拍的快照。照片略带运动模糊，阳光或店内灯光不均导致轻微曝光过度。角度尴尬、构图混乱，整体呈现出一种刻意的平庸感-就像是从口袋里拿手机时不小心拍到的一张自拍。主角是陈奕迅和谢霆锋，晚上，旁边是香港会展中心，在香港维多利亚港旁边。",
+      en: "Please draw an extremely ordinary iPhone selfie with no clear subject or composition, like a casual snapshot. The photo has slight motion blur, with uneven sunlight or indoor lighting causing mild overexposure. The angle is awkward, the composition is messy, presenting an intentionally mediocre feeling - like a selfie accidentally taken while pulling the phone out of a pocket. The main characters are Eason Chan and Nicholas Tse, at night, next to the Hong Kong Convention Center, by Victoria Harbour in Hong Kong."
+    },
+    requiresReferenceImage: false,
+    tags: {
+      zh: ["自拍", "iPhone", "平凡", "香港"],
+      en: ["Selfie", "iPhone", "Ordinary", "Hong Kong"]
+    }
+  },
+  {
+    id: "55",
+    title: {
+      zh: "低多边形 (Low-Poly) 3D 渲染",
+      en: "Low-Poly 3D Rendering"
+    },
+    author: {
+      name: "azed_ai",
+      twitter: "https://x.com/azed_ai"
+    },
+    originalLink: "https://x.com/azed_ai/status/1912084257918595342",
+    image: "/examples/example_low_poly_lizard.jpeg",
+    prompt: {
+      zh: "一个 [subject] 的低多边形 3D 渲染图，由干净的三角形面构成，具有平坦的 [color1] 和 [color2] 表面。环境是一个风格化的数字沙漠，具有极简的几何形状和环境光遮蔽效果。",
+      en: "A low-poly 3D render of a [subject], made up of clean triangular faces with flat [color1] and [color2] surfaces. The environment is a stylized digital desert with minimalist geometric shapes and ambient occlusion effects."
+    },
+    requiresReferenceImage: false,
+    tags: {
+      zh: ["低多边形", "3D", "几何", "极简主义"],
+      en: ["Low-Poly", "3D", "Geometric", "Minimalist"]
+    }
+  },
+  {
+    id: "56",
+    title: {
+      zh: "迷你 3D 建筑",
+      en: "Miniature 3D Building"
+    },
+    author: {
+      name: "dotey",
+      twitter: "https://x.com/dotey"
+    },
+    originalLink: "https://x.com/dotey/status/1913759515700285569",
+    image: "/examples/example_miniature_starbucks_cup_building.jpeg",
+    prompt: {
+      zh: "3D Q版迷你风格，一个充满奇趣的迷你星巴克咖啡馆，外观就像一个巨大的外带咖啡杯，还有盖子和吸管。建筑共两层，大大的玻璃窗清晰地展示出内部温馨而精致的设计：木质的家具、温暖的灯光以及忙碌的咖啡师们。街道上有可爱的小人偏漫步或坐着，四周布置着长凳、街灯和植物盆栽，营造出迷人的城市一角。整体采用城市微缩景观风格，细节丰富、逼真，画面光线柔和、呈现出午后的惬意感受。",
+      en: "3D chibi miniature style, a whimsical miniature Starbucks cafe that looks like a giant takeaway coffee cup, complete with lid and straw. The two-story building has large glass windows clearly showing the cozy and intricate interior design: wooden furniture, warm lighting, and busy baristas. Adorable little figurines stroll or sit on the street, surrounded by benches, street lamps, and potted plants, creating a charming urban corner. The overall style is a city miniature landscape, rich in details and realistic, with soft lighting that creates an afternoon relaxed feeling."
+    },
+    requiresReferenceImage: false,
+    tags: {
+      zh: ["3D", "Q版", "建筑", "微缩模型"],
+      en: ["3D", "Chibi", "Building", "Miniature"]
+    }
+  },
+  {
+    id: "57",
+    title: {
+      zh: "8位像素图标",
+      en: "8-bit Pixel Icon"
+    },
+    author: {
+      name: "egeberkina",
+      twitter: "https://x.com/egeberkina"
+    },
+    originalLink: "https://x.com/egeberkina/status/1913654508330058064",
+    image: "/examples/example_8bit_pixel_burger.jpeg",
+    prompt: {
+      zh: "创建一个 [🍔] 的极简 8 位像素标志，居中放置在纯白背景上。使用有限的复古调色板，带有像素化细节、锐利边缘和干净的块状形态。该标志应简洁、具有标志性，并能在像素艺术风格中清晰识别——灵感来自经典街机游戏美学。",
+      en: "Create a minimalist 8-bit pixel logo of [🍔], centered on a pure white background. Use a limited retro color palette with pixelated details, sharp edges, and clean blocky forms. The logo should be simple, iconic, and clearly recognizable in pixel art style - inspired by classic arcade game aesthetics."
+    },
+    requiresReferenceImage: false,
+    tags: {
+      zh: ["8位", "像素艺术", "游戏", "极简"],
+      en: ["8-bit", "Pixel Art", "Game", "Minimalist"]
+    }
+  },
+  {
+    id: "58",
+    title: {
+      zh: "云彩艺术",
+      en: "Cloud Art"
+    },
+    author: {
+      name: "umesh_ai",
+      twitter: "https://x.com/umesh_ai"
+    },
+    originalLink: "https://x.com/umesh_ai/status/1913628737872027805",
+    image: "/examples/example_cloud_art_dragon_great_wall.png",
+    prompt: {
+      zh: "生成一张照片：捕捉了白天的场景，天空中散落的云彩组成了 [主体/物体] 的形状，位于 [地点] 的上方。",
+      en: "Generate a photo capturing a daytime scene where scattered clouds in the sky form the shape of [SUBJECT/OBJECT] above [LOCATION]."
+    },
+    requiresReferenceImage: false,
+    tags: {
+      zh: ["云彩", "自然", "风景", "创意"],
+      en: ["Cloud", "Nature", "Landscape", "Creative"]
+    }
+  },
+  {
+    id: "59",
+    title: {
+      zh: "彩色矢量艺术海报",
+      en: "Colorful Vector Art Poster"
+    },
+    author: {
+      name: "michaelrabone",
+      twitter: "https://x.com/michaelrabone"
+    },
+    originalLink: "https://x.com/michaelrabone/status/1913865394139316291",
+    image: "/examples/example_vector_poster_london.png",
+    prompt: {
+      zh: "地点是“[城市]”，生成一张夏季的彩色矢量艺术海报，顶部有大的“[城市英文名]”标题，下方有较小的“[国家英文名]”标题",
+      en: "Create a summer colorful vector art poster for [CITY] with a large 'CITY_NAME' title at the top and a smaller 'COUNTRY_NAME' title below"
+    },
+    requiresReferenceImage: false,
+    tags: {
+      zh: ["矢量艺术", "海报", "夏季", "城市"],
+      en: ["Vector Art", "Poster", "Summer", "City"]
+    }
+  },
+  {
+    id: "60",
+    title: {
+      zh: "Emoji 簧绒地毯",
+      en: "Emoji Tufted Rug"
+    },
+    author: {
+      name: "gizakdag",
+      twitter: "https://x.com/gizakdag"
+    },
+    originalLink: "https://x.com/gizakdag/status/1913925062568144924",
+    image: "/examples/example_tufted_rug_dino_emoji.jpeg",
+    prompt: {
+      zh: "创建一张色彩鲜艳的手工簧绒地毯图片，形状为 [🦖] 表情符号，放置在简单的地板背景上。地毯设计大胆、有趣，具有柔软蓄松的质地和粗纽线细节。从上方拍摄，在自然日光下，带有略微古怪的 DIY 美学风格。色彩鲜艳、卡通轮廓、触感舒适的材料——类似于手工簧绒艺术地毯。",
+      en: "Create a vibrant hand-tufted rug image in the shape of [🦖] emoji, placed on a simple floor background. The rug design should be bold and playful with soft, fluffy textures and chunky yarn details. Shot from above in natural daylight with a slightly quirky DIY aesthetic. Bright colors, cartoon outlines, and tactile materials - like a handmade tufted art rug."
+    },
+    requiresReferenceImage: false,
+    tags: {
+      zh: ["簧绒", "Emoji", "DIY", "地毯"],
+      en: ["Tufted", "Emoji", "DIY", "Rug"]
+    }
+  },
+  {
+    id: "61",
+    title: {
+      zh: "虚构推文截图 (爱因斯坦)",
+      en: "Fake Tweet Screenshot (Einstein)"
+    },
+    author: {
+      name: "egeberkina",
+      twitter: "https://x.com/egeberkina"
+    },
+    originalLink: "https://x.com/egeberkina/status/1914299716394778713",
+    image: "/examples/example_fake_tweet_einstein.jpeg",
+    prompt: {
+      zh: "一个超现实的推特帖子，由阿尔伯特·爱因斯坦在完成相对论后立即发布。包含一张自拍照，可以清晰看到背景中潦草的方程式和黑板。要能看到该帖子被尼古拉·特斯拉点赞了。",
+      en: "A hyper realistic twitter post by Albert Einstein right after finishing the theory of relativity. Include a selfie where you can clearly see scribbled equations and a chalkboard in the background. Have it visible that the post was liked by Nikola Tesla"
+    },
+    requiresReferenceImage: false,
+    tags: {
+      zh: ["社交媒体", "超现实", "历史", "科学"],
+      en: ["Social Media", "Surreal", "History", "Science"]
+    }
   }
 ];
 
 
-
 export const authors = [
   { name: 'balconychy', count: 7, twitter: 'https://x.com/balconychy' },
-  { name: 'dotey', count: 15, twitter: 'https://x.com/dotey' },
-  { name: 'AnimeAI', count: 2, twitter: 'https://animeai.online'  },
-  { name: 'ZHO_ZHO_ZHO', count: 9, twitter: 'https://x.com/ZHO_ZHO_ZHO' },
+  { name: 'dotey', count: 21, twitter: 'https://x.com/dotey' }, // Corrected count
+  { name: 'AnimeAI', count: 2, twitter: 'https://animeai.online' },
+  { name: 'ZHO_ZHO_ZHO', count: 13, twitter: 'https://x.com/ZHO_ZHO_ZHO' }, // Corrected count
   { name: '0xdlk', count: 1, twitter: 'https://x.com/0xdlk' },
   { name: 'richardchang', count: 1, twitter: 'https://x.com/richardchang' },
-  { name: 'gizakdag', count: 1, twitter: 'https://x.com/gizakdag' },
-  { name: 'op7418', count: 1, twitter: 'https://x.com/op7418' },
-  { name: 'hellokaton', count: 1, twitter: 'https://x.com/hellokaton' }
-]; 
+  { name: 'gizakdag', count: 3, twitter: 'https://x.com/gizakdag' }, // Corrected count
+  { name: 'op7418', count: 2, twitter: 'https://x.com/op7418' }, // Corrected count
+  { name: 'hellokaton', count: 1, twitter: 'https://x.com/hellokaton' },
+  { name: 'jiamimaodashu', count: 1, twitter: 'https://x.com/jiamimaodashu' },
+  { name: 'azed_ai', count: 1, twitter: 'https://x.com/azed_ai' },
+  { name: 'umesh_ai', count: 1, twitter: 'https://x.com/umesh_ai' },
+  { name: 'michaelrabone', count: 1, twitter: 'https://x.com/michaelrabone' },
+  { name: 'egeberkina', count: 4, twitter: 'https://x.com/egeberkina' }, // Corrected count
+  { name: 'berryxia_ai', count: 1, twitter: 'https://x.com/berryxia_ai' }, // Added missing author
+  { name: 'BrettFromDJ', count: 1, twitter: 'https://x.com/BrettFromDJ' } // Added missing author
+];
+
