@@ -1346,26 +1346,70 @@ export const cases: Case[] = [
       zh: ["社交媒体", "超现实", "历史", "科学"],
       en: ["Social Media", "Surreal", "History", "Science"]
     }
+  },
+  {
+    id: "62",
+    title: {
+      zh: "可爱珐琅别针",
+      en: "Kawaii Enamel Pin"
+    },
+    author: {
+      name: "gnrlyxyz",
+      twitter: "https://x.com/gnrlyxyz"
+    },
+    originalLink: "https://x.com/gnrlyxyz/status/1914303110853583302",
+    image: "/examples/example_enamel_pins_pop_culture.jpeg",
+    prompt: {
+      zh: "将附图中的主题变成可爱的珐琅别针。使用光泽的金属轮廓和鲜艳的珐琅填充。无需额外添加任何功能。方形模型格式。白色背景。 ",
+      en: "Turn the subject in the attached image into a kawaii enamel pin. Use glossy metal outlines and vibrant enamel fill. No extra added features. Square mockup format. White background."
+    },
+    requiresReferenceImage: false,
+    tags: {
+      zh: ["卡通", "创意", "贴纸"],
+      en: ["Cartoon", "Creative", "Sticker"]
+    }
+  },
+  {
+    id: "63",
+    title: {
+      zh: "Emoji 奶油雪糕",
+      en: "Kawaii Enamel Pin"
+    },
+    author: {
+      name: "ZHO_ZHO_ZHO",
+      twitter: "https://x.com/ZHO_ZHO_ZHO"
+    },
+    originalLink: "https://x.com/ZHO_ZHO_ZHO/status/1914574278911000967",
+    image: "/examples/example_ice_cream_emoji_strawberry.png",
+    prompt: {
+      zh: "为我生成：将【🍓】变成变成一根奶油雪糕，奶油在雪糕顶上呈曲线流动状看起来美味可口，45度悬浮在空中，q版 3d 可爱风格，一致色系的纯色背景",
+      en: "Turn 【🍓】 into a cream popsicle, with cream swirling deliciously on top, suspended at a 45-degree angle in the air, cute Q-version 3D style, solid background with matching color scheme."
+    },
+    requiresReferenceImage: false,
+    tags: {
+      zh: ["卡通", "创意", "贴纸", "3D","Q版"],
+      en: ["Cartoon", "Creative", "Sticker","3D","Chibi"]
+    }
   }
 ];
 
 
 export const authors = [
+  { name: 'dotey', count: 21, twitter: 'https://x.com/dotey' },
+  { name: 'ZHO_ZHO_ZHO', count: 14, twitter: 'https://x.com/ZHO_ZHO_ZHO' },
   { name: 'balconychy', count: 7, twitter: 'https://x.com/balconychy' },
-  { name: 'dotey', count: 21, twitter: 'https://x.com/dotey' }, // Corrected count
+  { name: 'egeberkina', count: 4, twitter: 'https://x.com/egeberkina' },
+  { name: 'gizakdag', count: 3, twitter: 'https://x.com/gizakdag' },
   { name: 'AnimeAI', count: 2, twitter: 'https://animeai.online' },
-  { name: 'ZHO_ZHO_ZHO', count: 13, twitter: 'https://x.com/ZHO_ZHO_ZHO' }, // Corrected count
+  { name: 'op7418', count: 2, twitter: 'https://x.com/op7418' },
   { name: '0xdlk', count: 1, twitter: 'https://x.com/0xdlk' },
   { name: 'richardchang', count: 1, twitter: 'https://x.com/richardchang' },
-  { name: 'gizakdag', count: 3, twitter: 'https://x.com/gizakdag' }, // Corrected count
-  { name: 'op7418', count: 2, twitter: 'https://x.com/op7418' }, // Corrected count
   { name: 'hellokaton', count: 1, twitter: 'https://x.com/hellokaton' },
   { name: 'jiamimaodashu', count: 1, twitter: 'https://x.com/jiamimaodashu' },
   { name: 'azed_ai', count: 1, twitter: 'https://x.com/azed_ai' },
   { name: 'umesh_ai', count: 1, twitter: 'https://x.com/umesh_ai' },
   { name: 'michaelrabone', count: 1, twitter: 'https://x.com/michaelrabone' },
-  { name: 'egeberkina', count: 4, twitter: 'https://x.com/egeberkina' }, // Corrected count
-  { name: 'berryxia_ai', count: 1, twitter: 'https://x.com/berryxia_ai' }, // Added missing author
-  { name: 'BrettFromDJ', count: 1, twitter: 'https://x.com/BrettFromDJ' } // Added missing author
+  { name: 'berryxia_ai', count: 1, twitter: 'https://x.com/berryxia_ai' },
+  { name: 'BrettFromDJ', count: 1, twitter: 'https://x.com/BrettFromDJ' },
+  { name: 'gnrlyxyz', count: 1, twitter: 'https://x.com/gnrlyxyz' }
 ];
-
